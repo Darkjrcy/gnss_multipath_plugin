@@ -1,0 +1,4 @@
+Invoking command in '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/kap/ros2_ws/src/multipath_sim/build/multipath_sim -- -j20 -l20
+Invoked command in '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --build /home/kap/ros2_ws/src/multipath_sim/build/multipath_sim -- -j20 -l20
+Invoking command in '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/kap/ros2_ws/src/multipath_sim/build/multipath_sim
+Invoked command in '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/foxy /usr/bin/cmake --install /home/kap/ros2_ws/src/multipath_sim/build/multipath_sim

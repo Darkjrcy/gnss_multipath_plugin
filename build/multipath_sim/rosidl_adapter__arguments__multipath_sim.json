@@ -1,0 +1,6 @@
+{
+  "package_name": "multipath_sim",
+  "non_idl_tuples": [
+    "/home/kap/ros2_ws/src/multipath_sim:msg/MultipathOffset.msg"
+  ]
+}

@@ -1,0 +1,858 @@
+[0.000000] (-) TimerEvent: {}
+[0.000100] (multipath_sim) JobQueued: {'identifier': 'multipath_sim', 'dependencies': OrderedDict()}
+[0.000124] (multipath_sim) JobStarted: {'identifier': 'multipath_sim'}
+[0.009443] (multipath_sim) JobProgress: {'identifier': 'multipath_sim', 'progress': 'cmake'}
+[0.009504] (multipath_sim) Command: {'cmd': ['/usr/bin/cmake', '/home/kap/ros2_ws/src/multipath_sim', '-DCMAKE_INSTALL_PREFIX=/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim'], 'cwd': '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'kap'), ('SSH_AGENT_PID', '2068'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/kap/ros2_ws/install/multipath_sim/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('HOME', '/home/kap'), ('CONDA_SHLVL', '0'), ('OLDPWD', '/home/kap/ros2_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1850'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=f58def8820d80c46e69f34356388be3d'), ('COLORTERM', 'truecolor'), ('_CE_M', ''), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/kap/ros2_ws/install'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'kap'), ('JOURNAL_STREAM', '8:59769'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kap'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('_CE_CONDA', ''), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/foxy/bin:/home/kap/anaconda3/condabin:/home/kap/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/kap-XPS-15-9520:@/tmp/.ICE-unix/2106,unix/kap-XPS-15-9520:/tmp/.ICE-unix/2106'), ('INVOCATION_ID', '7e98cab57aa648f0bdbfc9261a34c673'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/34d6b182_28b1_4a8f_9a8f_b0d1c9ae2d46'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.122'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/kap/ros2_ws/install/multipath_sim:/opt/ros/foxy'), ('CONDA_PYTHON_EXE', '/home/kap/anaconda3/bin/python'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('CONDA_EXE', '/home/kap/anaconda3/bin/conda'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=f58def8820d80c46e69f34356388be3d'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/kap/ros2_ws/install/multipath_sim/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/kap/ros2_ws/install/multipath_sim:/opt/ros/foxy')]), 'shell': False}
+[0.092566] (multipath_sim) StdoutLine: {'line': b'-- The C compiler identification is GNU 9.4.0\n'}
+[0.099542] (-) TimerEvent: {}
+[0.152757] (multipath_sim) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 9.4.0\n'}
+[0.156079] (multipath_sim) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc\n'}
+[0.199735] (-) TimerEvent: {}
+[0.204266] (multipath_sim) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc -- works\n'}
+[0.206025] (multipath_sim) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.257545] (multipath_sim) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.264943] (multipath_sim) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.265295] (multipath_sim) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.267133] (multipath_sim) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++\n'}
+[0.299861] (-) TimerEvent: {}
+[0.317444] (multipath_sim) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ -- works\n'}
+[0.318158] (multipath_sim) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.368730] (multipath_sim) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.376839] (multipath_sim) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.377116] (multipath_sim) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.378470] (multipath_sim) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.0.1 (/opt/ros/foxy/share/rosidl_default_generators/cmake)\n'}
+[0.379098] (multipath_sim) StdoutLine: {'line': b'-- Found ament_cmake_core: 0.9.11 (/opt/ros/foxy/share/ament_cmake_core/cmake)\n'}
+[0.394269] (multipath_sim) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3") \n'}
+[0.394427] (multipath_sim) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[0.400070] (-) TimerEvent: {}
+[0.500345] (-) TimerEvent: {}
+[0.507988] (multipath_sim) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.522769] (multipath_sim) StdoutLine: {'line': b'-- Found rosidl_adapter: 1.3.0 (/opt/ros/foxy/share/rosidl_adapter/cmake)\n'}
+[0.600476] (-) TimerEvent: {}
+[0.606290] (multipath_sim) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "1.1.1f")  \n'}
+[0.626884] (multipath_sim) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/foxy/include  \n'}
+[0.679582] (multipath_sim) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.696682] (multipath_sim) StdoutLine: {'line': b'-- Found builtin_interfaces: 1.0.0 (/opt/ros/foxy/share/builtin_interfaces/cmake)\n'}
+[0.700691] (-) TimerEvent: {}
+[0.705168] (multipath_sim) StdoutLine: {'line': b'-- Found std_msgs: 2.0.5 (/opt/ros/foxy/share/std_msgs/cmake)\n'}
+[0.717012] (multipath_sim) StdoutLine: {'line': b'-- Found sensor_msgs: 2.0.5 (/opt/ros/foxy/share/sensor_msgs/cmake)\n'}
+[0.800907] (-) TimerEvent: {}
+[0.810959] (multipath_sim) StdoutLine: {'line': b'-- Found rclcpp: 2.4.2 (/opt/ros/foxy/share/rclcpp/cmake)\n'}
+[0.840022] (multipath_sim) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 1.0.3 (/opt/ros/foxy/share/rmw_implementation_cmake/cmake)\n'}
+[0.840942] (multipath_sim) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[0.841892] (multipath_sim) StdoutLine: {'line': b'-- Looking for pthread.h\n'}
+[0.889709] (multipath_sim) StdoutLine: {'line': b'-- Looking for pthread.h - found\n'}
+[0.889964] (multipath_sim) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[0.901081] (-) TimerEvent: {}
+[0.937967] (multipath_sim) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed\n'}
+[0.938231] (multipath_sim) StdoutLine: {'line': b'-- Looking for pthread_create in pthreads\n'}
+[0.976629] (multipath_sim) StdoutLine: {'line': b'-- Looking for pthread_create in pthreads - not found\n'}
+[0.976834] (multipath_sim) StdoutLine: {'line': b'-- Looking for pthread_create in pthread\n'}
+[1.001323] (-) TimerEvent: {}
+[1.023995] (multipath_sim) StdoutLine: {'line': b'-- Looking for pthread_create in pthread - found\n'}
+[1.024907] (multipath_sim) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[1.101421] (-) TimerEvent: {}
+[1.119969] (multipath_sim) StdoutLine: {'line': b'-- Found rclpy: 1.0.11 (/opt/ros/foxy/share/rclpy/cmake)\n'}
+[1.121770] (multipath_sim) StdoutLine: {'line': b'-- Found gazebo_ros: 3.5.3 (/opt/ros/foxy/share/gazebo_ros/cmake)\n'}
+[1.128911] (multipath_sim) StdoutLine: {'line': b'-- Found PkgConfig: /usr/bin/pkg-config (found version "0.29.1") \n'}
+[1.130184] (multipath_sim) StdoutLine: {'line': b"-- Checking for module 'bullet>=2.82'\n"}
+[1.140035] (multipath_sim) StdoutLine: {'line': b'--   Found bullet, version 2.88\n'}
+[1.201517] (-) TimerEvent: {}
+[1.217464] (multipath_sim) StdoutLine: {'line': b'-- Found ccd: /usr/include (found suitable version "2.0", minimum required is "2.0") \n'}
+[1.252645] (multipath_sim) StdoutLine: {'line': b'-- Found fcl: /usr/include (found suitable version "0.5.0", minimum required is "0.3.2") \n'}
+[1.288056] (multipath_sim) StdoutLine: {'line': b'-- Found assimp: /usr/include (found version "5.0.0") \n'}
+[1.301616] (-) TimerEvent: {}
+[1.306280] (multipath_sim) StdoutLine: {'line': b'-- Found DART: /usr/include (Required is at least version "6.6") found components: dart \n'}
+[1.326695] (multipath_sim) StdoutLine: {'line': b'-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.71.0/BoostConfig.cmake (found suitable version "1.71.0", minimum required is "1.40.0") found components: thread system filesystem program_options regex iostreams date_time \n'}
+[1.339262] (multipath_sim) StdoutLine: {'line': b'-- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so;-lpthread (found version "3.6.1") \n'}
+[1.341974] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.13.0\n'}
+[1.346259] (multipath_sim) StdoutLine: {'line': b'-- Searching for dependencies of ignition-math6\n'}
+[1.347548] (multipath_sim) StdoutLine: {'line': b'-- Looking for OGRE...\n'}
+[1.347801] (multipath_sim) StdoutLine: {'line': b'-- OGRE_PREFIX_WATCH changed.\n'}
+[1.351892] (multipath_sim) StdoutLine: {'line': b"-- Checking for module 'OGRE'\n"}
+[1.363123] (multipath_sim) StdoutLine: {'line': b'--   Found OGRE, version 1.9.0\n'}
+[1.389706] (multipath_sim) StdoutLine: {'line': b'-- Found Ogre Ghadamon (1.9.0)\n'}
+[1.398167] (multipath_sim) StdoutLine: {'line': b'-- Found OGRE: optimized;/usr/lib/x86_64-linux-gnu/libOgreMain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreMain.so\n'}
+[1.401738] (-) TimerEvent: {}
+[1.409813] (multipath_sim) StdoutLine: {'line': b'-- Looking for OGRE_Paging...\n'}
+[1.416496] (multipath_sim) StdoutLine: {'line': b'-- Found OGRE_Paging: optimized;/usr/lib/x86_64-linux-gnu/libOgrePaging.so;debug;/usr/lib/x86_64-linux-gnu/libOgrePaging.so\n'}
+[1.416688] (multipath_sim) StdoutLine: {'line': b'-- Looking for OGRE_Terrain...\n'}
+[1.422628] (multipath_sim) StdoutLine: {'line': b'-- Found OGRE_Terrain: optimized;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so;debug;/usr/lib/x86_64-linux-gnu/libOgreTerrain.so\n'}
+[1.422825] (multipath_sim) StdoutLine: {'line': b'-- Looking for OGRE_Property...\n'}
+[1.429110] (multipath_sim) StdoutLine: {'line': b'-- Found OGRE_Property: optimized;/usr/lib/x86_64-linux-gnu/libOgreProperty.so;debug;/usr/lib/x86_64-linux-gnu/libOgreProperty.so\n'}
+[1.429305] (multipath_sim) StdoutLine: {'line': b'-- Looking for OGRE_RTShaderSystem...\n'}
+[1.435159] (multipath_sim) StdoutLine: {'line': b'-- Found OGRE_RTShaderSystem: optimized;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so;debug;/usr/lib/x86_64-linux-gnu/libOgreRTShaderSystem.so\n'}
+[1.435337] (multipath_sim) StdoutLine: {'line': b'-- Looking for OGRE_Volume...\n'}
+[1.439000] (multipath_sim) StdoutLine: {'line': b'-- Found OGRE_Volume: optimized;/usr/lib/x86_64-linux-gnu/libOgreVolume.so;debug;/usr/lib/x86_64-linux-gnu/libOgreVolume.so\n'}
+[1.439204] (multipath_sim) StdoutLine: {'line': b'-- Looking for OGRE_Overlay...\n'}
+[1.442846] (multipath_sim) StdoutLine: {'line': b'-- Found OGRE_Overlay: optimized;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so;debug;/usr/lib/x86_64-linux-gnu/libOgreOverlay.so\n'}
+[1.501866] (-) TimerEvent: {}
+[1.520823] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.13.0\n'}
+[1.521740] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-transport8 -- found version 8.3.0\n'}
+[1.521988] (multipath_sim) StdoutLine: {'line': b'-- Searching for dependencies of ignition-transport8\n'}
+[1.534224] (multipath_sim) StdoutLine: {'line': b'-- Found Protobuf: /usr/lib/x86_64-linux-gnu/libprotobuf.so;-lpthread (found suitable version "3.6.1", minimum required is "3") \n'}
+[1.541234] (multipath_sim) StdoutLine: {'line': b'-- Config-file not installed for ZeroMQ -- checking for pkg-config\n'}
+[1.544486] (multipath_sim) StdoutLine: {'line': b"-- Checking for module 'libzmq >= 4'\n"}
+[1.554068] (multipath_sim) StdoutLine: {'line': b'--   Found libzmq , version 4.3.2\n'}
+[1.578437] (multipath_sim) StdoutLine: {'line': b'-- Found ZeroMQ: TRUE (Required is at least version "4") \n'}
+[1.582359] (multipath_sim) StdoutLine: {'line': b"-- Checking for module 'uuid'\n"}
+[1.591827] (multipath_sim) StdoutLine: {'line': b'--   Found uuid, version 2.34.0\n'}
+[1.601982] (-) TimerEvent: {}
+[1.616035] (multipath_sim) StdoutLine: {'line': b'-- Found UUID: TRUE  \n'}
+[1.626196] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-msgs5 -- found version 5.10.0\n'}
+[1.626772] (multipath_sim) StdoutLine: {'line': b'-- Searching for dependencies of ignition-msgs5\n'}
+[1.650242] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.13.0\n'}
+[1.653448] (multipath_sim) StdoutLine: {'line': b"-- Checking for module 'tinyxml2'\n"}
+[1.663029] (multipath_sim) StdoutLine: {'line': b'--   Found tinyxml2, version 6.2.0\n'}
+[1.688568] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-msgs5 -- found version 5.10.0\n'}
+[1.690714] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-common3 -- found version 3.14.2\n'}
+[1.691037] (multipath_sim) StdoutLine: {'line': b'-- Searching for dependencies of ignition-common3\n'}
+[1.691254] (multipath_sim) StdoutLine: {'line': b'-- Looking for dlfcn.h - found\n'}
+[1.691749] (multipath_sim) StdoutLine: {'line': b'-- Looking for libdl - found\n'}
+[1.693147] (multipath_sim) StdoutLine: {'line': b'-- Found DL: TRUE  \n'}
+[1.699563] (multipath_sim) StdoutLine: {'line': b'-- Searching for <ignition-common3> component [graphics]\n'}
+[1.700578] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-common3-graphics -- found version 3.14.2\n'}
+[1.700821] (multipath_sim) StdoutLine: {'line': b'-- Searching for dependencies of ignition-common3-graphics\n'}
+[1.700948] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.13.0\n'}
+[1.702176] (-) TimerEvent: {}
+[1.702693] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-fuel_tools4 -- found version 4.6.0\n'}
+[1.702972] (multipath_sim) StdoutLine: {'line': b'-- Searching for dependencies of ignition-fuel_tools4\n'}
+[1.753007] (multipath_sim) StdoutLine: {'line': b'-- Found CURL: /usr/lib/x86_64-linux-gnu/libcurl.so (found version "7.68.0")  \n'}
+[1.759298] (multipath_sim) StdoutLine: {'line': b"-- Checking for module 'jsoncpp'\n"}
+[1.768859] (multipath_sim) StdoutLine: {'line': b'--   Found jsoncpp, version 1.7.4\n'}
+[1.791924] (multipath_sim) StdoutLine: {'line': b'-- Found JSONCPP: TRUE  \n'}
+[1.795592] (multipath_sim) StdoutLine: {'line': b"-- Checking for module 'libzip'\n"}
+[1.802342] (-) TimerEvent: {}
+[1.804540] (multipath_sim) StdoutLine: {'line': b'--   Found libzip, version 1.5.1\n'}
+[1.826201] (multipath_sim) StdoutLine: {'line': b'-- Found ZIP: TRUE  \n'}
+[1.826418] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-common3 -- found version 3.14.2\n'}
+[1.826652] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-math6 -- found version 6.13.0\n'}
+[1.826841] (multipath_sim) StdoutLine: {'line': b'-- Looking for ignition-msgs5 -- found version 5.10.0\n'}
+[1.827833] (multipath_sim) StdoutLine: {'line': b'-- Gazebo version: 11.11\n'}
+[1.832028] (multipath_sim) StdoutLine: {'line': b'-- Found gazebo_plugins: 3.5.3 (/opt/ros/foxy/share/gazebo_plugins/cmake)\n'}
+[1.902529] (-) TimerEvent: {}
+[2.002784] (-) TimerEvent: {}
+[2.031250] (multipath_sim) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found version "3.8.10") \n'}
+[2.102974] (-) TimerEvent: {}
+[2.128524] (multipath_sim) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.9.2 (/opt/ros/foxy/share/ament_cmake_ros/cmake)\n'}
+[2.203157] (-) TimerEvent: {}
+[2.244386] (multipath_sim) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[2.282304] (multipath_sim) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[2.299620] (multipath_sim) StdoutLine: {'line': b'-- Found PythonInterp: /usr/bin/python3 (found suitable version "3.8.10", minimum required is "3.5") \n'}
+[2.300468] (multipath_sim) StdoutLine: {'line': b'-- Found python_cmake_module: 0.8.1 (/opt/ros/foxy/share/python_cmake_module/cmake)\n'}
+[2.303319] (-) TimerEvent: {}
+[2.318844] (multipath_sim) StdoutLine: {'line': b'-- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.8.so (found suitable version "3.8.10", minimum required is "3.5") \n'}
+[2.318941] (multipath_sim) StdoutLine: {'line': b'-- Using PYTHON_EXECUTABLE: /usr/bin/python3\n'}
+[2.318982] (multipath_sim) StdoutLine: {'line': b'-- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.8\n'}
+[2.319015] (multipath_sim) StdoutLine: {'line': b'-- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.8.so\n'}
+[2.336798] (multipath_sim) StdoutLine: {'line': b'-- Found PythonExtra: .so  \n'}
+[2.379464] (multipath_sim) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.9.7 (/opt/ros/foxy/share/ament_lint_auto/cmake)\n'}
+[2.403497] (-) TimerEvent: {}
+[2.408759] (multipath_sim) StdoutLine: {'line': b"-- Added test 'copyright' to check source files copyright and LICENSE\n"}
+[2.425204] (multipath_sim) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[2.428820] (multipath_sim) StdoutLine: {'line': b'-- Configured cppcheck include dirs: /home/kap/ros2_ws/src/multipath_sim/include;$<BUILD_INTERFACE:/home/kap/ros2_ws/src/multipath_sim/include>;$<BUILD_INTERFACE:/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim/rosidl_generator_cpp>;$<BUILD_INTERFACE:/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim/rosidl_generator_c>;/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim/rosidl_generator_c;/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim/rosidl_generator_cpp;/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim/rosidl_typesupport_fastrtps_c;/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim/rosidl_typesupport_fastrtps_cpp;$<BUILD_INTERFACE:/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim/rosidl_typesupport_introspection_c>;$<BUILD_INTERFACE:/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim/rosidl_typesupport_c>;/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim/rosidl_generator_py\n'}
+[2.428914] (multipath_sim) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[2.444559] (multipath_sim) StdoutLine: {'line': b"-- Added test 'cpplint' to check C / C++ code against the Google style\n"}
+[2.444638] (multipath_sim) StdoutLine: {'line': b'-- Configured cpplint exclude dirs and/or files: \n'}
+[2.446839] (multipath_sim) StdoutLine: {'line': b"-- Added test 'flake8' to check Python code syntax and style conventions\n"}
+[2.450895] (multipath_sim) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[2.453159] (multipath_sim) StdoutLine: {'line': b"-- Added test 'pep257' to check Python code against some of the style conventions in PEP 257\n"}
+[2.468770] (multipath_sim) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[2.468877] (multipath_sim) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[2.470957] (multipath_sim) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[2.474432] (multipath_sim) StdoutLine: {'line': b'-- Configuring done\n'}
+[2.503601] (-) TimerEvent: {}
+[2.603965] (-) TimerEvent: {}
+[2.618645] (multipath_sim) StdoutLine: {'line': b'-- Generating done\n'}
+[2.621361] (multipath_sim) StdoutLine: {'line': b'-- Build files have been written to: /home/kap/ros2_ws/src/multipath_sim/build/multipath_sim\n'}
+[2.629490] (multipath_sim) CommandEnded: {'returncode': 0}
+[2.631745] (multipath_sim) JobProgress: {'identifier': 'multipath_sim', 'progress': 'build'}
+[2.631876] (multipath_sim) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim', '--', '-j20', '-l20'], 'cwd': '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'kap'), ('SSH_AGENT_PID', '2068'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/kap/ros2_ws/install/multipath_sim/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('HOME', '/home/kap'), ('CONDA_SHLVL', '0'), ('OLDPWD', '/home/kap/ros2_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1850'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=f58def8820d80c46e69f34356388be3d'), ('COLORTERM', 'truecolor'), ('_CE_M', ''), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/kap/ros2_ws/install'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'kap'), ('JOURNAL_STREAM', '8:59769'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kap'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('_CE_CONDA', ''), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/foxy/bin:/home/kap/anaconda3/condabin:/home/kap/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/kap-XPS-15-9520:@/tmp/.ICE-unix/2106,unix/kap-XPS-15-9520:/tmp/.ICE-unix/2106'), ('INVOCATION_ID', '7e98cab57aa648f0bdbfc9261a34c673'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/34d6b182_28b1_4a8f_9a8f_b0d1c9ae2d46'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.122'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/kap/ros2_ws/install/multipath_sim:/opt/ros/foxy'), ('CONDA_PYTHON_EXE', '/home/kap/anaconda3/bin/python'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('CONDA_EXE', '/home/kap/anaconda3/bin/conda'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=f58def8820d80c46e69f34356388be3d'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/kap/ros2_ws/install/multipath_sim/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/kap/ros2_ws/install/multipath_sim:/opt/ros/foxy')]), 'shell': False}
+[2.661241] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__cpp\x1b[0m\n'}
+[2.661482] (multipath_sim) StdoutLine: {'line': b'[  2%] \x1b[34m\x1b[1mGenerating C code for ROS interfaces\x1b[0m\n'}
+[2.667526] (multipath_sim) StdoutLine: {'line': b'[  5%] \x1b[34m\x1b[1mGenerating C++ code for ROS interfaces\x1b[0m\n'}
+[2.704146] (-) TimerEvent: {}
+[2.804479] (-) TimerEvent: {}
+[2.807491] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__rosidl_generator_c\x1b[0m\n'}
+[2.810493] (multipath_sim) StdoutLine: {'line': b'[  5%] Built target multipath_sim__cpp\n'}
+[2.816146] (multipath_sim) StdoutLine: {'line': b'[  8%] \x1b[32mBuilding C object CMakeFiles/multipath_sim__rosidl_generator_c.dir/rosidl_generator_c/multipath_sim/msg/detail/multipath_offset__functions.c.o\x1b[0m\n'}
+[2.816652] (multipath_sim) StdoutLine: {'line': b'[ 11%] \x1b[34m\x1b[1mGenerating C++ type support dispatch for ROS interfaces\x1b[0m\n'}
+[2.816809] (multipath_sim) StdoutLine: {'line': b'[ 17%] \x1b[34m\x1b[1mGenerating C++ type support for eProsima Fast-RTPS\x1b[0m\n'}
+[2.816851] (multipath_sim) StdoutLine: {'line': b'[ 17%] \x1b[34m\x1b[1mGenerating C++ introspection for ROS interfaces\x1b[0m\n'}
+[2.849406] (multipath_sim) StdoutLine: {'line': b'[ 20%] \x1b[32m\x1b[1mLinking C shared library libmultipath_sim__rosidl_generator_c.so\x1b[0m\n'}
+[2.872921] (multipath_sim) StdoutLine: {'line': b'[ 20%] Built target multipath_sim__rosidl_generator_c\n'}
+[2.879382] (multipath_sim) StdoutLine: {'line': b'[ 22%] \x1b[34m\x1b[1mGenerating C introspection for ROS interfaces\x1b[0m\n'}
+[2.879551] (multipath_sim) StdoutLine: {'line': b'[ 25%] \x1b[34m\x1b[1mGenerating C type support dispatch for ROS interfaces\x1b[0m\n'}
+[2.904689] (-) TimerEvent: {}
+[2.934237] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__rosidl_typesupport_cpp\x1b[0m\n'}
+[2.943146] (multipath_sim) StdoutLine: {'line': b'[ 28%] \x1b[32mBuilding CXX object CMakeFiles/multipath_sim__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/multipath_sim/msg/multipath_offset__type_support.cpp.o\x1b[0m\n'}
+[2.948254] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__rosidl_typesupport_fastrtps_cpp\x1b[0m\n'}
+[2.951959] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__rosidl_typesupport_introspection_cpp\x1b[0m\n'}
+[2.959308] (multipath_sim) StdoutLine: {'line': b'[ 31%] \x1b[32mBuilding CXX object CMakeFiles/multipath_sim__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/multipath_sim/msg/detail/dds_fastrtps/multipath_offset__type_support.cpp.o\x1b[0m\n'}
+[2.960033] (multipath_sim) StdoutLine: {'line': b'[ 34%] \x1b[32mBuilding CXX object CMakeFiles/multipath_sim__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/multipath_sim/msg/detail/multipath_offset__type_support.cpp.o\x1b[0m\n'}
+[2.996631] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__rosidl_typesupport_c\x1b[0m\n'}
+[3.004835] (multipath_sim) StdoutLine: {'line': b'[ 37%] \x1b[32mBuilding CXX object CMakeFiles/multipath_sim__rosidl_typesupport_c.dir/rosidl_typesupport_c/multipath_sim/msg/multipath_offset__type_support.cpp.o\x1b[0m\n'}
+[3.004986] (-) TimerEvent: {}
+[3.009003] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__rosidl_typesupport_introspection_c\x1b[0m\n'}
+[3.017373] (multipath_sim) StdoutLine: {'line': b'[ 40%] \x1b[32mBuilding C object CMakeFiles/multipath_sim__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/multipath_sim/msg/detail/multipath_offset__type_support.c.o\x1b[0m\n'}
+[3.024984] (multipath_sim) StdoutLine: {'line': b'[ 42%] \x1b[32m\x1b[1mLinking CXX shared library libmultipath_sim__rosidl_typesupport_c.so\x1b[0m\n'}
+[3.040343] (multipath_sim) StdoutLine: {'line': b'[ 45%] \x1b[32m\x1b[1mLinking C shared library libmultipath_sim__rosidl_typesupport_introspection_c.so\x1b[0m\n'}
+[3.050636] (multipath_sim) StdoutLine: {'line': b'[ 45%] Built target multipath_sim__rosidl_typesupport_c\n'}
+[3.059490] (multipath_sim) StdoutLine: {'line': b'[ 45%] Built target multipath_sim__rosidl_typesupport_introspection_c\n'}
+[3.096231] (multipath_sim) StdoutLine: {'line': b'[ 48%] \x1b[32m\x1b[1mLinking CXX shared library libmultipath_sim__rosidl_typesupport_cpp.so\x1b[0m\n'}
+[3.105236] (-) TimerEvent: {}
+[3.122296] (multipath_sim) StdoutLine: {'line': b'[ 48%] Built target multipath_sim__rosidl_typesupport_cpp\n'}
+[3.184366] (multipath_sim) StdoutLine: {'line': b'[ 51%] \x1b[32m\x1b[1mLinking CXX shared library libmultipath_sim__rosidl_typesupport_introspection_cpp.so\x1b[0m\n'}
+[3.205330] (-) TimerEvent: {}
+[3.230045] (multipath_sim) StdoutLine: {'line': b'[ 51%] Built target multipath_sim__rosidl_typesupport_introspection_cpp\n'}
+[3.231949] (multipath_sim) StdoutLine: {'line': b'[ 54%] \x1b[32m\x1b[1mLinking CXX shared library libmultipath_sim__rosidl_typesupport_fastrtps_cpp.so\x1b[0m\n'}
+[3.295116] (multipath_sim) StdoutLine: {'line': b'[ 54%] Built target multipath_sim__rosidl_typesupport_fastrtps_cpp\n'}
+[3.302157] (multipath_sim) StdoutLine: {'line': b'[ 57%] \x1b[34m\x1b[1mGenerating C type support for eProsima Fast-RTPS\x1b[0m\n'}
+[3.305421] (-) TimerEvent: {}
+[3.405790] (-) TimerEvent: {}
+[3.442576] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__rosidl_typesupport_fastrtps_c\x1b[0m\n'}
+[3.453466] (multipath_sim) StdoutLine: {'line': b'[ 60%] \x1b[32mBuilding CXX object CMakeFiles/multipath_sim__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/multipath_sim/msg/detail/multipath_offset__type_support_c.cpp.o\x1b[0m\n'}
+[3.505978] (-) TimerEvent: {}
+[3.606327] (-) TimerEvent: {}
+[3.660587] (multipath_sim) StdoutLine: {'line': b'[ 62%] \x1b[32m\x1b[1mLinking CXX shared library libmultipath_sim__rosidl_typesupport_fastrtps_c.so\x1b[0m\n'}
+[3.706544] (-) TimerEvent: {}
+[3.715991] (multipath_sim) StdoutLine: {'line': b'[ 62%] Built target multipath_sim__rosidl_typesupport_fastrtps_c\n'}
+[3.722253] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim\x1b[0m\n'}
+[3.728825] (multipath_sim) StdoutLine: {'line': b'[ 62%] Built target multipath_sim\n'}
+[3.734972] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__py\x1b[0m\n'}
+[3.737276] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target MultipathSensorPlugin\x1b[0m\n'}
+[3.739336] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target SphereModelPlugin\x1b[0m\n'}
+[3.741546] (multipath_sim) StdoutLine: {'line': b'[ 65%] \x1b[34m\x1b[1mGenerating Python code for ROS interfaces\x1b[0m\n'}
+[3.806709] (-) TimerEvent: {}
+[3.818350] (multipath_sim) StdoutLine: {'line': b'[ 68%] \x1b[32mBuilding CXX object CMakeFiles/SphereModelPlugin.dir/src/sphere_model_plugin.cpp.o\x1b[0m\n'}
+[3.822499] (multipath_sim) StdoutLine: {'line': b'[ 71%] \x1b[32mBuilding CXX object CMakeFiles/MultipathSensorPlugin.dir/src/multipath_sensor.cpp.o\x1b[0m\n'}
+[3.906922] (-) TimerEvent: {}
+[3.961282] (multipath_sim) StdoutLine: {'line': b'[ 71%] Built target multipath_sim__py\n'}
+[3.967952] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__python\x1b[0m\n'}
+[3.990215] (multipath_sim) StdoutLine: {'line': b'[ 74%] \x1b[32mBuilding C object CMakeFiles/multipath_sim__python.dir/rosidl_generator_py/multipath_sim/msg/_multipath_offset_s.c.o\x1b[0m\n'}
+[4.007149] (-) TimerEvent: {}
+[4.053693] (multipath_sim) StdoutLine: {'line': b'[ 77%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/multipath_sim/libmultipath_sim__python.so\x1b[0m\n'}
+[4.082677] (multipath_sim) StdoutLine: {'line': b'[ 77%] Built target multipath_sim__python\n'}
+[4.089167] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__rosidl_typesupport_introspection_c__pyext\x1b[0m\n'}
+[4.089351] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__rosidl_typesupport_fastrtps_c__pyext\x1b[0m\n'}
+[4.092725] (multipath_sim) StdoutLine: {'line': b'\x1b[35m\x1b[1mScanning dependencies of target multipath_sim__rosidl_typesupport_c__pyext\x1b[0m\n'}
+[4.101166] (multipath_sim) StdoutLine: {'line': b'[ 80%] \x1b[32mBuilding C object CMakeFiles/multipath_sim__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/multipath_sim/_multipath_sim_s.ep.rosidl_typesupport_introspection_c.c.o\x1b[0m\n'}
+[4.103776] (multipath_sim) StdoutLine: {'line': b'[ 82%] \x1b[32mBuilding C object CMakeFiles/multipath_sim__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/multipath_sim/_multipath_sim_s.ep.rosidl_typesupport_fastrtps_c.c.o\x1b[0m\n'}
+[4.107270] (-) TimerEvent: {}
+[4.107735] (multipath_sim) StdoutLine: {'line': b'[ 85%] \x1b[32mBuilding C object CMakeFiles/multipath_sim__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/multipath_sim/_multipath_sim_s.ep.rosidl_typesupport_c.c.o\x1b[0m\n'}
+[4.154385] (multipath_sim) StdoutLine: {'line': b'[ 88%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/multipath_sim/multipath_sim_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so\x1b[0m\n'}
+[4.167198] (multipath_sim) StdoutLine: {'line': b'[ 91%] \x1b[32m\x1b[1mLinking C shared library rosidl_generator_py/multipath_sim/multipath_sim_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so\x1b[0m\n'}
+[4.172793] (multipath_sim) StdoutLine: {'line': b'[ 94%] \x1b[32m\x1b[1mLinking CXX shared library rosidl_generator_py/multipath_sim/multipath_sim_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so\x1b[0m\n'}
+[4.180236] (multipath_sim) StdoutLine: {'line': b'[ 94%] Built target multipath_sim__rosidl_typesupport_introspection_c__pyext\n'}
+[4.190940] (multipath_sim) StdoutLine: {'line': b'[ 94%] Built target multipath_sim__rosidl_typesupport_c__pyext\n'}
+[4.207409] (-) TimerEvent: {}
+[4.214459] (multipath_sim) StdoutLine: {'line': b'[ 94%] Built target multipath_sim__rosidl_typesupport_fastrtps_c__pyext\n'}
+[4.307635] (-) TimerEvent: {}
+[4.408046] (-) TimerEvent: {}
+[4.508456] (-) TimerEvent: {}
+[4.608870] (-) TimerEvent: {}
+[4.709215] (-) TimerEvent: {}
+[4.817065] (-) TimerEvent: {}
+[4.917413] (-) TimerEvent: {}
+[5.017721] (-) TimerEvent: {}
+[5.118116] (-) TimerEvent: {}
+[5.218519] (-) TimerEvent: {}
+[5.318914] (-) TimerEvent: {}
+[5.419326] (-) TimerEvent: {}
+[5.519732] (-) TimerEvent: {}
+[5.620118] (-) TimerEvent: {}
+[5.720516] (-) TimerEvent: {}
+[5.820918] (-) TimerEvent: {}
+[5.921341] (-) TimerEvent: {}
+[6.021768] (-) TimerEvent: {}
+[6.122155] (-) TimerEvent: {}
+[6.222549] (-) TimerEvent: {}
+[6.322962] (-) TimerEvent: {}
+[6.423372] (-) TimerEvent: {}
+[6.523683] (-) TimerEvent: {}
+[6.624084] (-) TimerEvent: {}
+[6.724484] (-) TimerEvent: {}
+[6.824880] (-) TimerEvent: {}
+[6.925368] (-) TimerEvent: {}
+[7.025655] (-) TimerEvent: {}
+[7.125987] (-) TimerEvent: {}
+[7.226333] (-) TimerEvent: {}
+[7.326673] (-) TimerEvent: {}
+[7.427037] (-) TimerEvent: {}
+[7.527377] (-) TimerEvent: {}
+[7.627713] (-) TimerEvent: {}
+[7.728054] (-) TimerEvent: {}
+[7.828394] (-) TimerEvent: {}
+[7.928735] (-) TimerEvent: {}
+[8.028971] (-) TimerEvent: {}
+[8.129281] (-) TimerEvent: {}
+[8.229519] (-) TimerEvent: {}
+[8.329860] (-) TimerEvent: {}
+[8.430201] (-) TimerEvent: {}
+[8.530535] (-) TimerEvent: {}
+[8.630822] (-) TimerEvent: {}
+[8.731163] (-) TimerEvent: {}
+[8.831506] (-) TimerEvent: {}
+[8.931852] (-) TimerEvent: {}
+[9.032198] (-) TimerEvent: {}
+[9.132535] (-) TimerEvent: {}
+[9.232872] (-) TimerEvent: {}
+[9.333226] (-) TimerEvent: {}
+[9.433485] (-) TimerEvent: {}
+[9.533822] (-) TimerEvent: {}
+[9.634157] (-) TimerEvent: {}
+[9.734499] (-) TimerEvent: {}
+[9.834847] (-) TimerEvent: {}
+[9.935201] (-) TimerEvent: {}
+[10.035545] (-) TimerEvent: {}
+[10.135871] (-) TimerEvent: {}
+[10.236215] (-) TimerEvent: {}
+[10.336554] (-) TimerEvent: {}
+[10.436900] (-) TimerEvent: {}
+[10.537243] (-) TimerEvent: {}
+[10.637488] (-) TimerEvent: {}
+[10.737761] (-) TimerEvent: {}
+[10.838101] (-) TimerEvent: {}
+[10.938456] (-) TimerEvent: {}
+[11.038795] (-) TimerEvent: {}
+[11.139132] (-) TimerEvent: {}
+[11.239464] (-) TimerEvent: {}
+[11.339797] (-) TimerEvent: {}
+[11.440132] (-) TimerEvent: {}
+[11.540469] (-) TimerEvent: {}
+[11.640807] (-) TimerEvent: {}
+[11.741152] (-) TimerEvent: {}
+[11.787081] (multipath_sim) StdoutLine: {'line': b'[ 97%] \x1b[32m\x1b[1mLinking CXX shared library libMultipathSensorPlugin.so\x1b[0m\n'}
+[11.841308] (-) TimerEvent: {}
+[11.941573] (-) TimerEvent: {}
+[12.041910] (-) TimerEvent: {}
+[12.142252] (-) TimerEvent: {}
+[12.242599] (-) TimerEvent: {}
+[12.342937] (-) TimerEvent: {}
+[12.443269] (-) TimerEvent: {}
+[12.543606] (-) TimerEvent: {}
+[12.643941] (-) TimerEvent: {}
+[12.744292] (-) TimerEvent: {}
+[12.844630] (-) TimerEvent: {}
+[12.894284] (multipath_sim) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX shared library libSphereModelPlugin.so\x1b[0m\n'}
+[12.944820] (-) TimerEvent: {}
+[13.027346] (multipath_sim) StdoutLine: {'line': b'[100%] Built target MultipathSensorPlugin\n'}
+[13.044986] (-) TimerEvent: {}
+[13.145185] (-) TimerEvent: {}
+[13.245435] (-) TimerEvent: {}
+[13.345786] (-) TimerEvent: {}
+[13.446117] (-) TimerEvent: {}
+[13.546505] (-) TimerEvent: {}
+[13.646776] (-) TimerEvent: {}
+[13.690608] (multipath_sim) StdoutLine: {'line': b'[100%] Built target SphereModelPlugin\n'}
+[13.700548] (multipath_sim) CommandEnded: {'returncode': 0}
+[13.731349] (multipath_sim) JobProgress: {'identifier': 'multipath_sim', 'progress': 'install'}
+[13.738275] (multipath_sim) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim'], 'cwd': '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim', 'env': OrderedDict([('LESSOPEN', '| /usr/bin/lesspipe %s'), ('USER', 'kap'), ('SSH_AGENT_PID', '2068'), ('XDG_SESSION_TYPE', 'x11'), ('SHLVL', '1'), ('LD_LIBRARY_PATH', '/home/kap/ros2_ws/install/multipath_sim/lib:/usr/lib/x86_64-linux-gnu/gazebo-11/plugins:/opt/ros/foxy/opt/yaml_cpp_vendor/lib:/opt/ros/foxy/opt/rviz_ogre_vendor/lib:/opt/ros/foxy/lib/x86_64-linux-gnu:/opt/ros/foxy/lib'), ('HOME', '/home/kap'), ('CONDA_SHLVL', '0'), ('OLDPWD', '/home/kap/ros2_ws'), ('DESKTOP_SESSION', 'ubuntu'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('MANAGERPID', '1850'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=f58def8820d80c46e69f34356388be3d'), ('COLORTERM', 'truecolor'), ('_CE_M', ''), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/kap/ros2_ws/install'), ('ROS_DISTRO', 'foxy'), ('LOGNAME', 'kap'), ('JOURNAL_STREAM', '8:59769'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'kap'), ('TERM', 'xterm-256color'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('_CE_CONDA', ''), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('PATH', '/opt/ros/foxy/bin:/home/kap/anaconda3/condabin:/home/kap/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin'), ('SESSION_MANAGER', 'local/kap-XPS-15-9520:@/tmp/.ICE-unix/2106,unix/kap-XPS-15-9520:/tmp/.ICE-unix/2106'), ('INVOCATION_ID', '7e98cab57aa648f0bdbfc9261a34c673'), ('XDG_MENU_PREFIX', 'gnome-'), ('GNOME_TERMINAL_SCREEN', '/org/gnome/Terminal/screen/34d6b182_28b1_4a8f_9a8f_b0d1c9ae2d46'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('DISPLAY', ':1'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:'), ('GNOME_TERMINAL_SERVICE', ':1.122'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('AMENT_PREFIX_PATH', '/home/kap/ros2_ws/install/multipath_sim:/opt/ros/foxy'), ('CONDA_PYTHON_EXE', '/home/kap/anaconda3/bin/python'), ('SHELL', '/bin/bash'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('QT_IM_MODULE', 'ibus'), ('PWD', '/home/kap/ros2_ws/src/multipath_sim/build/multipath_sim'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('CONDA_EXE', '/home/kap/anaconda3/bin/conda'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=f58def8820d80c46e69f34356388be3d'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/kap/ros2_ws/install/multipath_sim/lib/python3.8/site-packages:/opt/ros/foxy/lib/python3.8/site-packages'), ('COLCON', '1'), ('VTE_VERSION', '6003'), ('CMAKE_PREFIX_PATH', '/home/kap/ros2_ws/install/multipath_sim:/opt/ros/foxy')]), 'shell': False}
+[13.744214] (multipath_sim) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[13.744310] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/ament_index/resource_index/rosidl_interfaces/multipath_sim\n'}
+[13.744488] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim\n'}
+[13.744573] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg\n'}
+[13.744606] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/rosidl_generator_c__visibility_control.h\n'}
+[13.744664] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail\n'}
+[13.744695] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__functions.h\n'}
+[13.744726] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__functions.c\n'}
+[13.744758] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__type_support.h\n'}
+[13.744789] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__struct.h\n'}
+[13.744848] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/multipath_offset.h\n'}
+[13.744879] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/environment/library_path.sh\n'}
+[13.744911] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/environment/library_path.dsv\n'}
+[13.744942] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_generator_c.so\n'}
+[13.744999] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_generator_c.so" to ""\n'}
+[13.745080] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim\n'}
+[13.745113] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg\n'}
+[13.745154] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/rosidl_typesupport_fastrtps_c__visibility_control.h\n'}
+[13.745184] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail\n'}
+[13.745213] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__rosidl_typesupport_fastrtps_c.h\n'}
+[13.745242] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_fastrtps_c.so\n'}
+[13.745290] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_fastrtps_c.so" to ""\n'}
+[13.745342] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim\n'}
+[13.745408] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg\n'}
+[13.745438] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h\n'}
+[13.745469] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail\n'}
+[13.745529] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__rosidl_typesupport_fastrtps_cpp.hpp\n'}
+[13.745559] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/dds_fastrtps\n'}
+[13.745608] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_fastrtps_cpp.so\n'}
+[13.745801] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_fastrtps_cpp.so" to ""\n'}
+[13.745852] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim\n'}
+[13.745884] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg\n'}
+[13.745935] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/rosidl_typesupport_introspection_c__visibility_control.h\n'}
+[13.746000] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail\n'}
+[13.746032] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__rosidl_typesupport_introspection_c.h\n'}
+[13.746063] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__type_support.c\n'}
+[13.746115] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_introspection_c.so\n'}
+[13.746192] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_introspection_c.so" to ""\n'}
+[13.746246] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_c.so\n'}
+[13.746462] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_c.so" to ""\n'}
+[13.746529] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim\n'}
+[13.746561] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg\n'}
+[13.746593] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/multipath_offset.hpp\n'}
+[13.746665] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail\n'}
+[13.746718] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__traits.hpp\n'}
+[13.746751] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__builder.hpp\n'}
+[13.746785] (-) TimerEvent: {}
+[13.746870] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__struct.hpp\n'}
+[13.746933] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim\n'}
+[13.746963] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg\n'}
+[13.746991] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail\n'}
+[13.747020] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__type_support.cpp\n'}
+[13.747049] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/msg/detail/multipath_offset__rosidl_typesupport_introspection_cpp.hpp\n'}
+[13.747078] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_introspection_cpp.so\n'}
+[13.747137] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_introspection_cpp.so" to ""\n'}
+[13.747169] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_cpp.so\n'}
+[13.747321] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__rosidl_typesupport_cpp.so" to ""\n'}
+[13.747354] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/environment/pythonpath.sh\n'}
+[13.747402] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/environment/pythonpath.dsv\n'}
+[13.747562] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/__init__.py\n'}
+[13.769057] (multipath_sim) StdoutLine: {'line': b"Compiling '/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/__init__.py'...\n"}
+[13.771871] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/msg\n'}
+[13.771952] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/msg/_multipath_offset_s.c\n'}
+[13.771989] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/msg/__init__.py\n'}
+[13.772027] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/msg/_multipath_offset.py\n'}
+[13.772152] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/multipath_sim_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so\n'}
+[13.772316] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/multipath_sim_s__rosidl_typesupport_fastrtps_c.cpython-38-x86_64-linux-gnu.so" to ""\n'}
+[13.772497] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/multipath_sim_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so\n'}
+[13.772822] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/multipath_sim_s__rosidl_typesupport_introspection_c.cpython-38-x86_64-linux-gnu.so" to ""\n'}
+[13.772904] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/multipath_sim_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so\n'}
+[13.773169] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/multipath_sim_s__rosidl_typesupport_c.cpython-38-x86_64-linux-gnu.so" to ""\n'}
+[13.773223] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__python.so\n'}
+[13.773341] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libmultipath_sim__python.so" to ""\n'}
+[13.773404] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/msg/MultipathOffset.idl\n'}
+[13.773467] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/msg/MultipathOffset.msg\n'}
+[13.773508] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libMultipathSensorPlugin.so\n'}
+[13.775783] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libMultipathSensorPlugin.so" to ""\n'}
+[13.775833] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libSphereModelPlugin.so\n'}
+[13.778734] (multipath_sim) StdoutLine: {'line': b'-- Set runtime path of "/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/libSphereModelPlugin.so" to ""\n'}
+[13.778770] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include\n'}
+[13.778799] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim\n'}
+[13.778827] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/sphere_model_plugin.hpp\n'}
+[13.778855] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/include/multipath_sim/multipath_sensor.hpp\n'}
+[13.778882] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//worlds\n'}
+[13.778909] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//worlds/multipath.world\n'}
+[13.779778] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//worlds/hong_kong.world\n'}
+[13.779824] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//worlds/video_gz_hk.world\n'}
+[13.780236] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//worlds/test.world\n'}
+[13.780594] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//worlds/abu_dhabi_sim.world\n'}
+[13.780942] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//worlds/abu_dhabi.world\n'}
+[13.781297] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models\n'}
+[13.781351] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red\n'}
+[13.781381] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/meshes\n'}
+[13.781409] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/meshes/CF.png\n'}
+[13.783092] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/meshes/NXP-HGD-CF.dae\n'}
+[13.799524] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/meshes/5010Bell.dae\n'}
+[13.800264] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/meshes/5010Base.dae\n'}
+[13.800994] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/meshes/1345_prop_ccw.stl\n'}
+[13.801822] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/meshes/1345_prop_cw.stl\n'}
+[13.802913] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/thumbnails\n'}
+[13.802946] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/thumbnails/5.png\n'}
+[13.803406] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/thumbnails/4.png\n'}
+[13.803843] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/thumbnails/3.png\n'}
+[13.804119] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/thumbnails/2.png\n'}
+[13.804727] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/thumbnails/1.png\n'}
+[13.804909] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/model.config\n'}
+[13.805050] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/materials\n'}
+[13.805091] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/materials/textures\n'}
+[13.805152] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/materials/textures/CF.png\n'}
+[13.807085] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/materials/textures/rd.png\n'}
+[13.807120] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/materials/textures/nxp.png\n'}
+[13.807329] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red/model.sdf\n'}
+[13.807733] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision\n'}
+[13.807763] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/meshes\n'}
+[13.807792] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/meshes/CF.png\n'}
+[13.809547] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/meshes/NXP-HGD-CF.dae\n'}
+[13.824600] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/meshes/5010Bell.dae\n'}
+[13.825564] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/meshes/5010Base.dae\n'}
+[13.826320] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/meshes/1345_prop_ccw.stl\n'}
+[13.827166] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/meshes/1345_prop_cw.stl\n'}
+[13.828055] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/thumbnails\n'}
+[13.828085] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/thumbnails/5.png\n'}
+[13.828156] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/thumbnails/4.png\n'}
+[13.828630] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/thumbnails/3.png\n'}
+[13.828807] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/thumbnails/2.png\n'}
+[13.829050] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/thumbnails/1.png\n'}
+[13.829558] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/model.config\n'}
+[13.829896] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/materials\n'}
+[13.829926] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/materials/textures\n'}
+[13.829956] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/materials/textures/CF.png\n'}
+[13.831691] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/materials/textures/rd.png\n'}
+[13.831854] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/materials/textures/nxp.png\n'}
+[13.832072] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_no_collision/model.sdf\n'}
+[13.832292] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/building\n'}
+[13.832322] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/building/model.config\n'}
+[13.832687] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/building/model.sdf\n'}
+[13.832886] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi\n'}
+[13.832915] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/model.config\n'}
+[13.833048] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media\n'}
+[13.833114] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_c5765d_pro_6908_256.png\n'}
+[13.833783] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_7b422f_pro_2353_256.png\n'}
+[13.834137] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_a3865f_pro_2353_256.png\n'}
+[13.834562] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_7b422f_pro_2157_256.png\n'}
+[13.834860] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_c5765d_pro_2901_256.png\n'}
+[13.835343] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_a6653f_roof_tiles.png\n'}
+[13.835517] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_976c6b_pro_2353_256.png\n'}
+[13.836175] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_976c6b_pro_2161_256.png\n'}
+[13.836739] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_7b422f_pro_2901_256.png\n'}
+[13.837069] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_976c6b_pro_2901_256.png\n'}
+[13.837278] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_976c6b_pro_2901_256.png\n'}
+[13.837627] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_afafaf_concrete.png\n'}
+[13.838230] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_976c6b_brick.png\n'}
+[13.838493] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_c5765d_pro_2901_256.png\n'}
+[13.838772] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/overlay.png.002.png\n'}
+[13.846845] (-) TimerEvent: {}
+[13.898959] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_b8a594_pro_2161_256.png\n'}
+[13.899323] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_b8a594_pro_2353_256.png\n'}
+[13.899481] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_d9d8c4_pro_2161_256.png\n'}
+[13.900121] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/pine_seamless_done.png\n'}
+[13.900878] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_976c6b_pro_2157_256.png\n'}
+[13.901232] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_c8c2b6_concrete.png\n'}
+[13.901514] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_c5765d_pro_2353_256.png\n'}
+[13.901809] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_7b422f_pro_2353_256.png\n'}
+[13.902103] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_5e2a31_metal.png\n'}
+[13.902702] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_a3865f_pro_2157_256.png\n'}
+[13.903195] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_c5765d_pro_2161_256.png\n'}
+[13.903627] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_b8a594_pro_2353_256.png\n'}
+[13.903817] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cfbc8e_plaster.png\n'}
+[13.904307] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_cfbc8e_pro_2901_256.png\n'}
+[13.904465] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_7b422f_pro_6908_256.png\n'}
+[13.904980] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_c5765d_pro_2353_256.png\n'}
+[13.905477] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_976c6b_pro_2161_256.png\n'}
+[13.905645] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_a3865f_pro_6908_256.png\n'}
+[13.906202] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_c5765d_brick.png\n'}
+[13.906401] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_cfbc8e_pro_6908_256.png\n'}
+[13.906842] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_cfbc8e_pro_2901_256.png\n'}
+[13.907032] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_7b422f_pro_2161_256.png\n'}
+[13.907298] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_a3865f_pro_2353_256.png\n'}
+[13.907557] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_976c6b_pro_2353_256.png\n'}
+[13.907821] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_c5765d_pro_2157_256.png\n'}
+[13.908206] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_b8a594_pro_2901_256.png\n'}
+[13.908426] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_a3865f_pro_6908_256.png\n'}
+[13.908822] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/buildings.dae\n'}
+[13.910994] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_976c6b_pro_2353_256.png\n'}
+[13.911398] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_c5765d_pro_2157_256.png\n'}
+[13.911868] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_c57a63_roof_tiles.png\n'}
+[13.912347] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_a3865f_pro_2901_256.png\n'}
+[13.912560] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_494c57_metal.png\n'}
+[13.912826] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_7b422f_pro_2353_256.png\n'}
+[13.913050] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_7b422f_pro_2901_256.png\n'}
+[13.913390] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_818b8f_metal.png\n'}
+[13.913674] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_c5765d_pro_6908_256.png\n'}
+[13.914058] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_7b422f_pro_6908_256.png\n'}
+[13.914439] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_cfbc8e_pro_2157_256.png\n'}
+[13.914689] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_a3865f_pro_2161_256.png\n'}
+[13.915031] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_c5765d_pro_2161_256.png\n'}
+[13.915279] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_c5765d_pro_2161_256.png\n'}
+[13.915642] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_c5765d_pro_6908_256.png\n'}
+[13.916244] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_cfbc8e_pro_2161_256.png\n'}
+[13.916702] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_a3865f_plaster.png\n'}
+[13.916969] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_b8a594_pro_2157_256.png\n'}
+[13.917253] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_7b422f_pro_2157_256.png\n'}
+[13.917524] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_7b422f_pro_2161_256.png\n'}
+[13.917802] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_cfbc8e_pro_2353_256.png\n'}
+[13.918090] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_a3865f_pro_2901_256.png\n'}
+[13.918352] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_c5765d_pro_2901_256.png\n'}
+[13.918720] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_976c6b_pro_6908_256.png\n'}
+[13.919088] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_b8a594_pro_2157_256.png\n'}
+[13.919300] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_976c6b_pro_2901_256.png\n'}
+[13.919597] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_7b422f_pro_2157_256.png\n'}
+[13.919898] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_976c6b_pro_2157_256.png\n'}
+[13.920268] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/terrain.dae\n'}
+[13.922268] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_b8a594_pro_6908_256.png\n'}
+[13.922618] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_976c6b_pro_2157_256.png\n'}
+[13.922851] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_cfbc8e_pro_2161_256.png\n'}
+[13.923445] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_c5765d_pro_2353_256.png\n'}
+[13.923714] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_8a5c4d_roof_tiles.png\n'}
+[13.924068] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_976c6b_pro_2161_256.png\n'}
+[13.924323] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_b8a594_pro_2161_256.png\n'}
+[13.924609] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_976c6b_pro_6908_256.png\n'}
+[13.925001] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_b8a594_pro_2901_256.png\n'}
+[13.925215] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_c5765d_pro_2157_256.png\n'}
+[13.925490] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_7b422f_brick.png\n'}
+[13.925760] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_b8a594_plaster.png\n'}
+[13.926093] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_b2b2a6_concrete.png\n'}
+[13.926318] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_01_D_256.png_976c6b_pro_6908_256.png\n'}
+[13.926749] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_a3865f_pro_2161_256.png\n'}
+[13.926970] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_d9d8c4_pro_2157_256.png\n'}
+[13.927365] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_sprinkled_01_D_256.png_b8a594_pro_6908_256.png\n'}
+[13.927691] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_7b422f_pro_2901_256.png\n'}
+[13.927918] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_cfbc8e_pro_6908_256.png\n'}
+[13.928332] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_bricks_classic_02_D_256.png_7b422f_pro_6908_256.png\n'}
+[13.928680] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_cfbc8e_pro_2353_256.png\n'}
+[13.928915] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_cfbc8e_pro_2157_256.png\n'}
+[13.929312] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_duion_plaster_stucco_01_D_256.png_a3865f_pro_2157_256.png\n'}
+[13.929702] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/media/baked_cc0textures_bricks11_col_256.jpg_7b422f_pro_2161_256.png\n'}
+[13.929948] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/abu_dhabi/abu_dhabi.sdf\n'}
+[13.930055] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green\n'}
+[13.930111] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/meshes\n'}
+[13.930155] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/meshes/CF.png\n'}
+[13.931919] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/meshes/NXP-HGD-CF.dae\n'}
+[13.946905] (-) TimerEvent: {}
+[13.948732] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/meshes/5010Bell.dae\n'}
+[13.949265] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/meshes/5010Base.dae\n'}
+[13.949827] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/meshes/1345_prop_ccw.stl\n'}
+[13.950687] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/meshes/1345_prop_cw.stl\n'}
+[13.951684] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/thumbnails\n'}
+[13.951714] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/thumbnails/5.png\n'}
+[13.951774] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/thumbnails/4.png\n'}
+[13.952235] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/thumbnails/3.png\n'}
+[13.952362] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/thumbnails/2.png\n'}
+[13.952598] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/thumbnails/1.png\n'}
+[13.953285] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/model.config\n'}
+[13.953316] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/materials\n'}
+[13.953347] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/materials/textures\n'}
+[13.953377] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/materials/textures/CF.png\n'}
+[13.954960] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/materials/textures/rd.png\n'}
+[13.955047] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/materials/textures/nxp.png\n'}
+[13.955225] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_green/model.sdf\n'}
+[13.955757] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/iris_virtual_ray\n'}
+[13.955786] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/iris_virtual_ray/iris_virtual_ray.sdf\n'}
+[13.955814] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/iris_virtual_ray/meshes\n'}
+[13.955841] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/iris_virtual_ray/meshes/iris_prop_ccw.dae\n'}
+[13.956613] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/iris_virtual_ray/meshes/iris_prop_cw.dae\n'}
+[13.957406] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/iris_virtual_ray/meshes/iris.stl\n'}
+[13.960510] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/iris_virtual_ray/model.config\n'}
+[13.960553] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision\n'}
+[13.960582] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/meshes\n'}
+[13.960608] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/meshes/CF.png\n'}
+[13.962384] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/meshes/NXP-HGD-CF.dae\n'}
+[13.977650] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/meshes/5010Bell.dae\n'}
+[13.978227] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/meshes/5010Base.dae\n'}
+[13.978804] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/meshes/1345_prop_ccw.stl\n'}
+[13.979687] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/meshes/1345_prop_cw.stl\n'}
+[13.980449] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/thumbnails\n'}
+[13.980481] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/thumbnails/5.png\n'}
+[13.980542] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/thumbnails/4.png\n'}
+[13.980726] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/thumbnails/3.png\n'}
+[13.980887] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/thumbnails/2.png\n'}
+[13.981244] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/thumbnails/1.png\n'}
+[13.981764] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/model.config\n'}
+[13.981850] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/materials\n'}
+[13.981891] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/materials/textures\n'}
+[13.981932] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/materials/textures/CF.png\n'}
+[13.983693] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/materials/textures/rd.png\n'}
+[13.983796] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/materials/textures/nxp.png\n'}
+[13.984025] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500_red_no_collision/model.sdf\n'}
+[13.984295] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500\n'}
+[13.984389] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/meshes\n'}
+[13.984446] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/meshes/CF.png\n'}
+[13.986216] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/meshes/NXP-HGD-CF.dae\n'}
+[14.004082] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/meshes/5010Bell.dae\n'}
+[14.005000] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/meshes/5010Base.dae\n'}
+[14.005820] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/meshes/1345_prop_ccw.stl\n'}
+[14.006739] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/meshes/1345_prop_cw.stl\n'}
+[14.008024] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/thumbnails\n'}
+[14.008141] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/thumbnails/5.png\n'}
+[14.008543] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/thumbnails/4.png\n'}
+[14.008806] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/thumbnails/3.png\n'}
+[14.009136] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/thumbnails/2.png\n'}
+[14.009822] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/thumbnails/1.png\n'}
+[14.010276] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/model.config\n'}
+[14.010618] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/materials\n'}
+[14.010746] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/materials/textures\n'}
+[14.010807] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/materials/textures/CF.png\n'}
+[14.012741] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/materials/textures/rd.png\n'}
+[14.012982] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/materials/textures/nxp.png\n'}
+[14.013621] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/x500/model.sdf\n'}
+[14.013952] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong\n'}
+[14.014120] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/model.config\n'}
+[14.014369] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/hong_kong.sdf\n'}
+[14.014544] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media\n'}
+[14.014622] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_976c6b_pro_2157_exp.png\n'}
+[14.014846] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_c5765d_pro_2161_exp.png\n'}
+[14.015183] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_976c6b_pro_2157_exp.png\n'}
+[14.015550] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_b8a594_pro_6908_exp.png\n'}
+[14.016013] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_7b422f_pro_6908_exp.png\n'}
+[14.016445] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_c5765d_pro_2157_exp.png\n'}
+[14.016894] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_a6653f_roof_tiles.png\n'}
+[14.017166] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_c5765d_pro_2901_exp.png\n'}
+[14.017690] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_b8a594_pro_2901_exp.png\n'}
+[14.018153] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_b8a594_pro_2157_exp.png\n'}
+[14.018491] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_afafaf_concrete.png\n'}
+[14.018846] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_976c6b_brick.png\n'}
+[14.019227] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_c5765d_pro_2157_exp.png\n'}
+[14.019496] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_7b422f_pro_2161_exp.png\n'}
+[14.020022] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_976c6b_pro_2353_exp.png\n'}
+[14.020398] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_976c6b_pro_2161_exp.png\n'}
+[14.020817] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_a3865f_pro_2161_exp.png\n'}
+[14.021194] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_cfbc8e_pro_2161_exp.png\n'}
+[14.021657] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_7b422f_pro_6908_exp.png\n'}
+[14.022139] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_c8c2b6_concrete.png\n'}
+[14.022557] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_7b422f_pro_2161_exp.png\n'}
+[14.022923] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_a3865f_pro_2157_exp.png\n'}
+[14.023352] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_5e2a31_metal.png\n'}
+[14.023666] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_c5765d_pro_2161_exp.png\n'}
+[14.024090] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_cfbc8e_pro_2901_exp.png\n'}
+[14.024382] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_cfbc8e_pro_2161_exp.png\n'}
+[14.024732] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_a3865f_pro_2161_exp.png\n'}
+[14.025165] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_cfbc8e_pro_6908_exp.png\n'}
+[14.025575] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cfbc8e_plaster.png\n'}
+[14.026249] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_7b422f_pro_2157_exp.png\n'}
+[14.026571] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_c5765d_brick.png\n'}
+[14.026985] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_c5765d_pro_2901_exp.png\n'}
+[14.027281] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_976c6b_pro_2901_exp.png\n'}
+[14.027640] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_c5765d_pro_2353_exp.png\n'}
+[14.028206] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_cfbc8e_pro_2157_exp.png\n'}
+[14.028519] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/buildings.dae\n'}
+[14.031861] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_cfbc8e_pro_2353_exp.png\n'}
+[14.032181] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_a3865f_pro_2157_exp.png\n'}
+[14.032474] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_c57a63_roof_tiles.png\n'}
+[14.032866] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_b8a594_pro_2157_exp.png\n'}
+[14.033204] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_494c57_metal.png\n'}
+[14.033466] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_c5765d_pro_2161_exp.png\n'}
+[14.033869] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_976c6b_pro_2353_exp.png\n'}
+[14.034155] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_818b8f_metal.png\n'}
+[14.034487] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_976c6b_pro_2901_exp.png\n'}
+[14.034815] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_c5765d_pro_2353_exp.png\n'}
+[14.035137] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_cfbc8e_pro_2901_exp.png\n'}
+[14.035436] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_7b422f_pro_2157_exp.png\n'}
+[14.035755] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_976c6b_pro_2161_exp.png\n'}
+[14.036167] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_7b422f_pro_2353_exp.png\n'}
+[14.036441] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_c5765d_pro_2901_exp.png\n'}
+[14.036793] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_a3865f_plaster.png\n'}
+[14.037100] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_7b422f_pro_2161_exp.png\n'}
+[14.037432] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_7b422f_pro_2353_exp.png\n'}
+[14.037777] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_7b422f_pro_6908_exp.png\n'}
+[14.038238] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_7b422f_pro_2901_exp.png\n'}
+[14.038502] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_b8a594_pro_2901_exp.png\n'}
+[14.038824] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_cfbc8e_pro_2157_exp.png\n'}
+[14.039174] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_ff0000_pro_2353_exp.png\n'}
+[14.039506] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_a3865f_pro_2901_exp.png\n'}
+[14.039746] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_976c6b_pro_6908_exp.png\n'}
+[14.040167] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_c5765d_pro_2353_exp.png\n'}
+[14.040530] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_976c6b_pro_2161_exp.png\n'}
+[14.040952] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_b8a594_pro_6908_exp.png\n'}
+[14.041297] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_b8a594_pro_2353_exp.png\n'}
+[14.041680] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/terrain.dae\n'}
+[14.044545] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/overlay.png\n'}
+[14.047009] (-) TimerEvent: {}
+[14.051058] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_976c6b_pro_2353_exp.png\n'}
+[14.051232] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_a3865f_pro_2353_exp.png\n'}
+[14.051536] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_cc0textures_bricks11_col_exp.jpg_7b422f_pro_2901_exp.png\n'}
+[14.051960] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_8a5c4d_roof_tiles.png\n'}
+[14.052078] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_cfbc8e_pro_2353_exp.png\n'}
+[14.052447] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_c5765d_pro_6908_exp.png\n'}
+[14.052951] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_976c6b_pro_2901_exp.png\n'}
+[14.053102] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_b8a594_pro_2161_exp.png\n'}
+[14.053455] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_7b422f_pro_2353_exp.png\n'}
+[14.053696] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_7b422f_brick.png\n'}
+[14.054013] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_a3865f_pro_2901_exp.png\n'}
+[14.054310] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_cfbc8e_pro_6908_exp.png\n'}
+[14.054626] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_d4af37_pro_2353_exp.png\n'}
+[14.054894] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_b8a594_plaster.png\n'}
+[14.055175] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_b2b2a6_concrete.png\n'}
+[14.055593] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_b8a594_pro_2353_exp.png\n'}
+[14.055845] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_7b422f_pro_2901_exp.png\n'}
+[14.056162] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_976c6b_pro_2157_exp.png\n'}
+[14.056430] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_stucco_01_D_exp.png_b8a594_pro_2161_exp.png\n'}
+[14.056727] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_01_D_exp.png_7b422f_pro_2157_exp.png\n'}
+[14.057002] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_plaster_sprinkled_01_D_exp.png_a3865f_pro_2353_exp.png\n'}
+[14.057265] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/overlay_old\n'}
+[14.057365] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/overlay_old/overlay.png\n'}
+[14.063271] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//models/hong_kong/media/baked_duion_bricks_classic_02_D_exp.png_c5765d_pro_2157_exp.png\n'}
+[14.063703] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//launch\n'}
+[14.063735] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//launch/test.launch.py\n'}
+[14.063764] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//launch/abu_dhabi_sim.launch\n'}
+[14.063809] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//launch/hong_kong.launch.py\n'}
+[14.063839] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//launch/bag.launch\n'}
+[14.063909] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//launch/multipath_live_test.launch\n'}
+[14.064027] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//launch/abu_dhabi.launch.py\n'}
+[14.064056] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//launch/hong_kong.launch\n'}
+[14.064190] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//config\n'}
+[14.064219] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//config/multipath_sim.rviz\n'}
+[14.064466] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//config/qualisys.rviz\n'}
+[14.064791] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim//config/hk_sim.rviz\n'}
+[14.064946] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data\n'}
+[14.064985] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_nominal_traj.csv\n'}
+[14.065354] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_attack_traj.csv\n'}
+[14.065827] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hksc135c.21n\n'}
+[14.065880] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/map.png\n'}
+[14.066936] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data\n'}
+[14.066995] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.xiaomi.mi8.nmea\n'}
+[14.068223] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.ublox.m8t.GR.obs\n'}
+[14.069159] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.google.pixel4.obs\n'}
+[14.070494] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.novatel.flexpak6.obs\n'}
+[14.071513] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.ublox.f9p.splitter.obs\n'}
+[14.074532] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.huawei.p40pro.obs\n'}
+[14.075410] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.ublox.m8t.GR.nmea\n'}
+[14.076479] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.xiaomi.mi8.obs\n'}
+[14.077562] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.ublox.m8t.GEJ.obs\n'}
+[14.078575] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.ublox.m8t.GEJ.nmea\n'}
+[14.079276] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.ublox.m8t.GC.nmea\n'}
+[14.080565] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.samsung.note8.obs\n'}
+[14.081650] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.ublox.f9p.obs\n'}
+[14.084229] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.ublox.f9p.nmea\n'}
+[14.086256] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.huawei.p40pro.nmea\n'}
+[14.088376] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.samsung.note8.nmea\n'}
+[14.089723] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.ublox.m8t.GC.obs\n'}
+[14.090729] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.ublox.f9p.splitter.nmea\n'}
+[14.092324] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data/20210517.light-urban.tste.google.pixel4.nmea\n'}
+[14.094125] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/topic_list.txt\n'}
+[14.094228] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data_car_gps_log.json\n'}
+[14.094312] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data_affect_pos_heatmap.json\n'}
+[14.096090] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data_sv_mean.json\n'}
+[14.096241] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/pos_data_log.json\n'}
+[14.096447] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/car_ground_truth.json\n'}
+[14.096541] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/1_lightUrban_tsimShaTsuiEast_20210517.zip\n'}
+[14.113894] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data_affect_pos.json\n'}
+[14.114324] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_data_heatmap.json\n'}
+[14.116507] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib//data/hk_map_bounds.txt\n'}
+[14.116621] (multipath_sim) StdoutLine: {'line': b'-- Up-to-date: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim\n'}
+[14.116699] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/coord.py\n'}
+[14.116736] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/trialteration.py\n'}
+[14.116789] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/__init__.py\n'}
+[14.116823] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/kalman_filter.py\n'}
+[14.116866] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/sat_pos.py\n'}
+[14.142417] (multipath_sim) StdoutLine: {'line': b"Listing '/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim'...\n"}
+[14.142537] (multipath_sim) StdoutLine: {'line': b"Compiling '/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/__init__.py'...\n"}
+[14.142573] (multipath_sim) StdoutLine: {'line': b"Compiling '/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/coord.py'...\n"}
+[14.142605] (multipath_sim) StdoutLine: {'line': b"Compiling '/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/kalman_filter.py'...\n"}
+[14.142636] (multipath_sim) StdoutLine: {'line': b"Listing '/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/msg'...\n"}
+[14.142672] (multipath_sim) StdoutLine: {'line': b"Compiling '/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/msg/__init__.py'...\n"}
+[14.142701] (multipath_sim) StdoutLine: {'line': b"Compiling '/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/msg/_multipath_offset.py'...\n"}
+[14.142729] (multipath_sim) StdoutLine: {'line': b"Compiling '/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/sat_pos.py'...\n"}
+[14.142759] (multipath_sim) StdoutLine: {'line': b"Compiling '/home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/python3.8/site-packages/multipath_sim/trialteration.py'...\n"}
+[14.145260] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/multipath_sim/set_model_state.py\n'}
+[14.145345] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/multipath_sim/set_model_state_heatmap.py\n'}
+[14.145378] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/multipath_sim/stream_skycam.py\n'}
+[14.145434] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/multipath_sim/broadcast_pos.py\n'}
+[14.145521] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/lib/multipath_sim/broadcast_pos_heatmap.py\n'}
+[14.145670] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/ament_index/resource_index/package_run_dependencies/multipath_sim\n'}
+[14.145780] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/ament_index/resource_index/parent_prefix_path/multipath_sim\n'}
+[14.145822] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/environment/ament_prefix_path.sh\n'}
+[14.145884] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/environment/ament_prefix_path.dsv\n'}
+[14.145945] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/environment/path.sh\n'}
+[14.146010] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/environment/path.dsv\n'}
+[14.146068] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/local_setup.bash\n'}
+[14.146132] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/local_setup.sh\n'}
+[14.146188] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/local_setup.zsh\n'}
+[14.146250] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/local_setup.dsv\n'}
+[14.146383] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/package.dsv\n'}
+[14.146488] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/ament_index/resource_index/packages/multipath_sim\n'}
+[14.146598] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_generator_cExport.cmake\n'}
+[14.146679] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_generator_cExport-noconfig.cmake\n'}
+[14.146777] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_typesupport_introspection_cExport.cmake\n'}
+[14.146849] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_typesupport_introspection_cExport-noconfig.cmake\n'}
+[14.146934] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_typesupport_cExport.cmake\n'}
+[14.147003] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_typesupport_cExport-noconfig.cmake\n'}
+[14.147033] (-) TimerEvent: {}
+[14.147104] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_generator_cppExport.cmake\n'}
+[14.147288] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_typesupport_introspection_cppExport.cmake\n'}
+[14.147394] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_typesupport_introspection_cppExport-noconfig.cmake\n'}
+[14.147503] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_typesupport_cppExport.cmake\n'}
+[14.147608] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_sim__rosidl_typesupport_cppExport-noconfig.cmake\n'}
+[14.147655] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/rosidl_cmake-extras.cmake\n'}
+[14.147741] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/ament_cmake_export_dependencies-extras.cmake\n'}
+[14.147790] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/ament_cmake_export_libraries-extras.cmake\n'}
+[14.147874] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/ament_cmake_export_targets-extras.cmake\n'}
+[14.147906] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/ament_cmake_export_include_directories-extras.cmake\n'}
+[14.147949] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake\n'}
+[14.147993] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake\n'}
+[14.148033] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_simConfig.cmake\n'}
+[14.148076] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/cmake/multipath_simConfig-version.cmake\n'}
+[14.148120] (multipath_sim) StdoutLine: {'line': b'-- Installing: /home/kap/ros2_ws/src/multipath_sim/install/multipath_sim/share/multipath_sim/package.xml\n'}
+[14.150067] (multipath_sim) CommandEnded: {'returncode': 0}
+[14.210221] (multipath_sim) JobEnded: {'identifier': 'multipath_sim', 'rc': 0}
+[14.210691] (-) EventReactorShutdown: {}
