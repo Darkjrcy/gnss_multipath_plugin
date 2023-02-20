@@ -4,7 +4,7 @@ GPS Multipath Plugin in Gazebo
 Install:
 ```bash
 mkdir -p ros2_ws/src
-cd ros2_/src
+cd ros2_ws/src
 git clone https://github.com/kpant14/gnss_multipath_plugin.git
 cd ../
 colcon build
