@@ -26,6 +26,7 @@ if __name__ == "__main__":
             azimuth.append(obs.azimuth)
             elevation.append(obs.elevation)
             prn.append(obs.prn)
+        print(elevation, azimuth, prn)
         ax.scatter(azimuth,elevation, color = 'r', marker='H', label = 'Satellite', s = 300)
         for i in range(len(azimuth)):    
             ax.set_rlim(bottom=90, top=0)

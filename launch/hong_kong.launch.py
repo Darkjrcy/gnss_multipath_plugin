@@ -19,10 +19,11 @@ def generate_launch_description():
   pkg_gazebo_ros = FindPackageShare(package='gazebo_ros').find('gazebo_ros')   
    
   # Set the path to this package.
-  pkg_share = FindPackageShare(package='multipath_sim').find('multipath_sim')
+  pkg_share = FindPackageShare(package='gnss_multipath_plugin').find('gnss_multipath_plugin')
  
   # Set the path to the world file
   world_file_name = 'hong_kong.world'
+  #world_file_name = 'purdue.world'
   #world_file_name = 'video_gz_hk.world'
   
   world_path = os.path.join(pkg_share, 'worlds', world_file_name)
@@ -70,31 +71,10 @@ def generate_launch_description():
   start_gazebo_client_cmd = IncludeLaunchDescription(
     PythonLaunchDescriptionSource(os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')),
     condition=IfCondition(PythonExpression([use_simulator, ' and not ', headless])))
-  
-  set_model_state_cmd = Node(
-        package="multipath_sim",
-        executable="set_model_state.py",
-        output='screen'
-    )
-  set_model_state_heatmap_cmd = Node(
-        package="multipath_sim",
-        executable="set_model_state_heatmap.py",
-        output='screen'
-    )  
-  stream_skycam_cmd = Node(
-        package="multipath_sim",
-        executable="stream_skycam.py",
-        output='screen'
-    )
-  broadcast_pos_cmd = Node(
-        package="multipath_sim",
-        executable="broadcast_pos.py",
-        output='screen'
-    )  
   rviz2_cmd = Node(
         package='rviz2',
         executable='rviz2',
-        arguments=['-d', get_package_share_directory('multipath_sim') + '/config/hk_sim.rviz'],
+        arguments=['-d', get_package_share_directory('gnss_multipath_plugin') + '/config/hk_sim.rviz'],
         output='screen'
     )  
   # Create the launch description and populate
@@ -109,9 +89,5 @@ def generate_launch_description():
   # Add any actions
   ld.add_action(start_gazebo_server_cmd)
   ld.add_action(start_gazebo_client_cmd)
-  ld.add_action(set_model_state_cmd)
-  #ld.add_action(set_model_state_heatmap_cmd)
-  ld.add_action(stream_skycam_cmd)
-  ld.add_action(broadcast_pos_cmd)
-  ld.add_action(rviz2_cmd)
+  #ld.add_action(rviz2_cmd)
   return ld

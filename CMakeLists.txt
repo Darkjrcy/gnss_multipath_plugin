@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(multipath_sim)
+project(gnss_multipath_plugin)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -10,7 +10,6 @@ endif()
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
 endif()
-
 find_package(rosidl_default_generators REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(std_msgs REQUIRED)
@@ -21,11 +20,34 @@ find_package(gazebo_ros REQUIRED)
 find_package(gazebo REQUIRED)
 find_package(gazebo_plugins REQUIRED)
 include_directories(include ${GAZEBO_INCLUDE_DIRS})
-add_library(MultipathSensorPlugin SHARED src/multipath_sensor.cpp)
-add_library(SphereModelPlugin SHARED src/sphere_model_plugin.cpp)
+add_subdirectory(libpredict)
+# add_library(libpredict SHARED 
+# libpredict/src/julian_date.c 
+# libpredict/src/moon.c 
+# libpredict/src/observer.c 
+# libpredict/src/orbit.c 
+# libpredict/src/refraction.c 
+# libpredict/src/sdp4.c 
+# libpredict/src/sgp4.c 
+# libpredict/src/sun.c
+# libpredict/src/unsorted.c
+# libpredict/src/version.c   
+# )
+
+add_library(GNSSMultipathSensorPlugin SHARED src/multipath_sensor.cpp
+libpredict/src/julian_date.c 
+libpredict/src/moon.c 
+libpredict/src/observer.c 
+libpredict/src/orbit.c 
+libpredict/src/refraction.c 
+libpredict/src/sdp4.c 
+libpredict/src/sgp4.c 
+libpredict/src/sun.c
+libpredict/src/unsorted.c
+libpredict/src/version.c)
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/MultipathOffset.msg"
-  DEPENDENCIES std_msgs builtin_interfaces
+  "msg/GNSSMultipathFix.msg"
+  DEPENDENCIES std_msgs sensor_msgs builtin_interfaces
 )
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -47,43 +69,26 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-#ament_export_libraries(multipath_sim)
-target_include_directories(MultipathSensorPlugin PUBLIC
+target_include_directories(GNSSMultipathSensorPlugin PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 
-target_include_directories(SphereModelPlugin PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)  
+# target_include_directories(libpredict PUBLIC
+#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/libpredict/include>
+#   $<INSTALL_INTERFACE:libpredict/include>)  
 
-target_link_libraries(MultipathSensorPlugin ${GAZEBO_LIBRARIES} ${rclcpp_LIBRARIES} ${std_msgs_LIBRARIES})
-ament_target_dependencies(MultipathSensorPlugin
+target_link_libraries(GNSSMultipathSensorPlugin ${GAZEBO_LIBRARIES} ${rclcpp_LIBRARIES} ${std_msgs_LIBRARIES})
+ament_target_dependencies(GNSSMultipathSensorPlugin
  "gazebo_ros"
  "rclcpp"
  "sensor_msgs"
  "std_msgs")
 
-target_link_libraries(SphereModelPlugin ${GAZEBO_LIBRARIES} ${rclcpp_LIBRARIES} ${std_msgs_LIBRARIES})
-ament_target_dependencies(SphereModelPlugin
- "gazebo_ros"
- "rclcpp"
- "sensor_msgs"
- "std_msgs"
- )
-
-rosidl_target_interfaces(MultipathSensorPlugin
+rosidl_target_interfaces(GNSSMultipathSensorPlugin
  ${PROJECT_NAME} "rosidl_typesupport_cpp")
 
-install(TARGETS MultipathSensorPlugin
+install(TARGETS GNSSMultipathSensorPlugin
   DESTINATION lib)
-
-rosidl_target_interfaces(SphereModelPlugin
-${PROJECT_NAME} "rosidl_typesupport_cpp")
-
-install(TARGETS SphereModelPlugin
-  DESTINATION lib)
-
-
 install(DIRECTORY include/
   DESTINATION include)
 
@@ -91,12 +96,10 @@ install(DIRECTORY
   worlds
   DESTINATION share/${PROJECT_NAME}/
 )  
-
 install(DIRECTORY
   models
   DESTINATION share/${PROJECT_NAME}/
 ) 
-
 install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}/
@@ -105,24 +108,10 @@ install(DIRECTORY
   config
   DESTINATION share/${PROJECT_NAME}/
 ) 
-
 install(DIRECTORY
   data
   DESTINATION lib/
 ) 
-
-ament_python_install_package(${PROJECT_NAME})
-
-install(
-  PROGRAMS
-  scripts/set_model_state.py
-  scripts/set_model_state_heatmap.py
-  scripts/stream_skycam.py
-  scripts/broadcast_pos.py
-  scripts/broadcast_pos_heatmap.py
-  DESTINATION lib/${PROJECT_NAME}
-)
-
 ament_export_include_directories(include)
 ament_export_dependencies(std_msgs)
 ament_package()

@@ -9,7 +9,7 @@ import tf2_ros
 from rclpy.node import Node
 from gazebo_msgs.srv import GetEntityState
 from numpy.core.numeric import NaN
-from multipath_sim.msg import MultipathOffset
+from gnss_multipath_plugin.msg import MultipathOffset
 from geometry_msgs.msg import TransformStamped
 from geometry_msgs.msg import PoseStamped
 from nav_msgs.msg import Odometry
@@ -21,6 +21,9 @@ from multipath_sim.trialteration import Trilateration
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
 
+
+from multipath_sim.laika.astro_dog import AstroDog
+from multipath_sim.laika.helpers import get_el_az
 
 def get_ranges(sat_ecef, rec_ecef):
     ranges = []
@@ -71,6 +74,8 @@ class BroadcastGPSNode(Node):
             self.get_logger().info('gazebo get_entity_state service is not availabel, waiting...')
         self.true_pos_list =[]
         self.gps_pos_list = []
+        self.astrodog = AstroDog(valid_const = ['GPS'])
+
     def send_request(self):
         self.request = GetEntityState.Request()
         self.request.name = 'laser_0'
@@ -125,11 +130,13 @@ class BroadcastGPSNode(Node):
         t.transform.rotation.z = true_pose.pose.orientation.z
         t.transform.rotation.w = true_pose.pose.orientation.w
         self.br.sendTransform(t)
+        
         #self.get_logger().info('Visible Sat:{}'.format(len(sats_vis)))
         if len(sats_vis) > 5 :  
             sat_pos = get_sat_position_ecef(self.nav_data, sats_vis)    
             ranges = get_ranges(sat_pos, rec_ecef) 
             ranges += multipath_offset
+            print(sat_pos, ranges)
             TriGPS = Trilateration(sat_pos, np.array(ranges))
             rec_pos, _ = TriGPS.optimize()
             pos_geodetic = ecef2geodetic(rec_pos)

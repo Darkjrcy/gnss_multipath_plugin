@@ -11,7 +11,7 @@ import utm
 data_dir = os.path.abspath( os.path.join(os.path.dirname(__file__), os.pardir)) + "/data/" 
 
 
-gps_pos_file = '/home/kap/ros2_ws/src/install/multipath_sim/lib/data/' + "pos_data_log.json"
+gps_pos_file = data_dir + "pos_data_log.json"
 
 gzb_gps_info = {}
 with open(gps_pos_file, "r") as fs:

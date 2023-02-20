@@ -9,7 +9,7 @@ from rclpy.action import ActionClient
 from gazebo_msgs.msg import EntityState
 from gazebo_msgs.srv import SetEntityState
 from geometry_msgs.msg import Pose
-
+from gps_conv import GPS_utils
 
 def quaternion_from_euler(ai, aj, ak):
     ai /= 2.0
@@ -104,26 +104,6 @@ class TargetTrajNode(Node):
             response = future.result()
             #self.get_logger().info("response: " + response)
 
-def conv_gzb_to_latlon(x_coordinate, y_coordinate, lat_bound, lon_bound, origin_offset):
-    origin_lon = lon_bound[0] + (lon_bound[1]-lon_bound[0])/2.0 
-    origin_lat = lat_bound[0] + (lat_bound[1]-lat_bound[0])/2.0
-    origin_x, origin_y, zone_number, zone_letter = utm.from_latlon(origin_lat, origin_lon)
-    origin = np.array([origin_x, origin_y])
-    x_coordinate += origin[0] - origin_offset[0]
-    y_coordinate += origin[1] - origin_offset[1]
-    lat, lon = utm.to_latlon(x_coordinate, y_coordinate, zone_number, zone_letter)
-    return lat, lon
-
-def conv_latlon_to_gzb(lat, lon, lat_bound, lon_bound, origin_offset):
-    origin_lon = lon_bound[0] + (lon_bound[1]-lon_bound[0])/2.0 
-    origin_lat = lat_bound[0] + (lat_bound[1]-lat_bound[0])/2.0
-    origin_utm = utm.from_latlon(origin_lat, origin_lon)
-    origin_utm = np.array([origin_utm[0], origin_utm[1]])
-    x, y,_,_ = utm.from_latlon(lat, lon)
-    x += -origin_utm[0] + origin_offset[0]
-    y += -origin_utm[1] + origin_offset[1]
-    return x, y
-
 def main(args=None):
     rclpy.init(args=args)
     executor = rclpy.get_global_executor()
@@ -131,21 +111,24 @@ def main(args=None):
     data_dir = os.path.abspath( os.path.join(os.path.dirname(__file__), os.pardir)) + "/data/" 
     with open(data_dir + "car_ground_truth.json", "r") as fstream:
         car_data = json.load(fstream)
-    # Lat/Lon bounds for the segment of the map in gazebo     
-    lat_bound = np.array([22.3066, 22.2903])
-    lon_bound = np.array([114.171, 114.188])
-
+    
+    origin_lat = 22.298251
+    origin_lon = 114.178761
+    origin_alt = 0
+    gps_conv = GPS_utils()
+    gps_conv.setENUorigin(lat = origin_lat, lon = origin_lon, height = origin_alt)
     # Lat/Lon from the datset 
     lat =np.array(car_data['lat'])
     lon = np.array(car_data['lon'])
-    
-    # Applying correction in the offset to align the origin
-    origin_offset = np.array([77, 15])
-    
-    # NED (ground truth) to ENU (gzb world)
-    # Get the x y position in ENU (gzb world)
-    gzb_x, gzb_y = conv_latlon_to_gzb(lat, lon, lat_bound, lon_bound, origin_offset)
-    
+    gzb_x = []
+    gzb_y = []
+    for i in range(lat.shape[0]):
+       enu = gps_conv.geo2enu(lat[i],lon[i],0)
+       gzb_x.append(enu[0,0])
+       gzb_y.append(enu[1,0])
+    gzb_x = np.array(gzb_x)
+    gzb_y = np.array(gzb_y)   
+
     # Add heading and create a np array. 
     car_data_heading = np.deg2rad(90 - np.array(car_data["heading"]))
     car_data_gzb = np.vstack([gzb_x, gzb_y]).T
@@ -156,31 +139,6 @@ def main(args=None):
 
     traj = TargetTrajNode("laser_0", target_traj_gps, x0_car, car_data_gzb)
     executor.add_node(traj)
-
-    # car_data_gzb = np.vstack([gzb_x-1, gzb_y-1]).T
-    # car_data_gzb = np.vstack([car_data_gzb.T, car_data_heading]).T
-    # traj = TargetTrajNode("drone_0", target_traj_gps, x0_car, car_data_gzb)
-    # executor.add_node(traj)
-
-    # car_data_gzb = np.vstack([gzb_x-2, gzb_y-2]).T
-    # car_data_gzb = np.vstack([car_data_gzb.T, car_data_heading]).T
-    # traj = TargetTrajNode("drone_1", target_traj_gps, x0_car, car_data_gzb)
-    # executor.add_node(traj)
-    # car_data_gzb = np.vstack([gzb_x+1, gzb_y+1]).T
-    # car_data_gzb = np.vstack([car_data_gzb.T, car_data_heading]).T
-    # traj = TargetTrajNode("drone_2", target_traj_gps, x0_car, car_data_gzb)
-    # executor.add_node(traj)
-    # car_data_gzb = np.vstack([gzb_x+2, gzb_y+2]).T
-    # car_data_gzb = np.vstack([car_data_gzb.T, car_data_heading]).T
-    # traj = TargetTrajNode("drone_3", target_traj_gps, x0_car, car_data_gzb)
-    # executor.add_node(traj)
-    # car_data_gzb = np.vstack([gzb_x+3, gzb_y+3]).T
-    # car_data_gzb = np.vstack([car_data_gzb.T, car_data_heading]).T
-    # traj = TargetTrajNode("drone_4", target_traj_gps, x0_car, car_data_gzb)
-    # executor.add_node(traj)
-    traj_sphere = TargetTrajNode("sphere", target_traj_gps, x0_car, car_data_gzb)
-    executor.add_node(traj_sphere)
-    
     
     executor.spin()
     traj.destroy_node()
