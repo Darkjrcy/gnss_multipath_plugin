@@ -64,7 +64,7 @@ class TargetTrajNode(Node):
         self.begin_pose = begin_pose
         self.traj_args = traj_args
 
-        timer_period = 0.005
+        timer_period = 0.01
         self.timer = self.create_timer(timer_period, self.traj_callback)
         self.elapsed = 0
         self.time_last = self.get_clock().now()

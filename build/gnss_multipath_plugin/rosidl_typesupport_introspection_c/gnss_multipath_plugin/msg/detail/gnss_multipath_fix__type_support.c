@@ -23,8 +23,6 @@
 #include "sensor_msgs/msg/detail/nav_sat_fix__rosidl_typesupport_introspection_c.h"
 // Member `enu_true`
 // Member `enu_gnss_fix`
-// Member `range_offset`
-// Member `sats_blocked`
 #include "rosidl_runtime_c/primitives_sequence_functions.h"
 
 #ifdef __cplusplus
@@ -46,7 +44,7 @@ void GNSSMultipathFix__rosidl_typesupport_introspection_c__GNSSMultipathFix_fini
   gnss_multipath_plugin__msg__GNSSMultipathFix__fini(message_memory);
 }
 
-static rosidl_typesupport_introspection_c__MessageMember GNSSMultipathFix__rosidl_typesupport_introspection_c__GNSSMultipathFix_message_member_array[8] = {
+static rosidl_typesupport_introspection_c__MessageMember GNSSMultipathFix__rosidl_typesupport_introspection_c__GNSSMultipathFix_message_member_array[5] = {
   {
     "header",  // name
     rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE,  // type
@@ -79,7 +77,7 @@ static rosidl_typesupport_introspection_c__MessageMember GNSSMultipathFix__rosid
   },
   {
     "enu_true",  // name
-    rosidl_typesupport_introspection_c__ROS_TYPE_FLOAT,  // type
+    rosidl_typesupport_introspection_c__ROS_TYPE_DOUBLE,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
     true,  // is array
@@ -94,43 +92,13 @@ static rosidl_typesupport_introspection_c__MessageMember GNSSMultipathFix__rosid
   },
   {
     "enu_gnss_fix",  // name
-    rosidl_typesupport_introspection_c__ROS_TYPE_FLOAT,  // type
+    rosidl_typesupport_introspection_c__ROS_TYPE_DOUBLE,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
     true,  // is array
     0,  // array size
     false,  // is upper bound
     offsetof(gnss_multipath_plugin__msg__GNSSMultipathFix, enu_gnss_fix),  // bytes offset in struct
-    NULL,  // default value
-    NULL,  // size() function pointer
-    NULL,  // get_const(index) function pointer
-    NULL,  // get(index) function pointer
-    NULL  // resize(index) function pointer
-  },
-  {
-    "range_offset",  // name
-    rosidl_typesupport_introspection_c__ROS_TYPE_FLOAT,  // type
-    0,  // upper bound of string
-    NULL,  // members of sub message
-    true,  // is array
-    0,  // array size
-    false,  // is upper bound
-    offsetof(gnss_multipath_plugin__msg__GNSSMultipathFix, range_offset),  // bytes offset in struct
-    NULL,  // default value
-    NULL,  // size() function pointer
-    NULL,  // get_const(index) function pointer
-    NULL,  // get(index) function pointer
-    NULL  // resize(index) function pointer
-  },
-  {
-    "sats_blocked",  // name
-    rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
-    0,  // upper bound of string
-    NULL,  // members of sub message
-    true,  // is array
-    0,  // array size
-    false,  // is upper bound
-    offsetof(gnss_multipath_plugin__msg__GNSSMultipathFix, sats_blocked),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -151,28 +119,13 @@ static rosidl_typesupport_introspection_c__MessageMember GNSSMultipathFix__rosid
     NULL,  // get_const(index) function pointer
     NULL,  // get(index) function pointer
     NULL  // resize(index) function pointer
-  },
-  {
-    "num_block_sat",  // name
-    rosidl_typesupport_introspection_c__ROS_TYPE_INT32,  // type
-    0,  // upper bound of string
-    NULL,  // members of sub message
-    false,  // is array
-    0,  // array size
-    false,  // is upper bound
-    offsetof(gnss_multipath_plugin__msg__GNSSMultipathFix, num_block_sat),  // bytes offset in struct
-    NULL,  // default value
-    NULL,  // size() function pointer
-    NULL,  // get_const(index) function pointer
-    NULL,  // get(index) function pointer
-    NULL  // resize(index) function pointer
   }
 };
 
 static const rosidl_typesupport_introspection_c__MessageMembers GNSSMultipathFix__rosidl_typesupport_introspection_c__GNSSMultipathFix_message_members = {
   "gnss_multipath_plugin__msg",  // message namespace
   "GNSSMultipathFix",  // message name
-  8,  // number of fields
+  5,  // number of fields
   sizeof(gnss_multipath_plugin__msg__GNSSMultipathFix),
   GNSSMultipathFix__rosidl_typesupport_introspection_c__GNSSMultipathFix_message_member_array,  // message members
   GNSSMultipathFix__rosidl_typesupport_introspection_c__GNSSMultipathFix_init_function,  // function to initialize message memory (memory has to be allocated)

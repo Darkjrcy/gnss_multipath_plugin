@@ -18,8 +18,6 @@
 #include "sensor_msgs/msg/detail/nav_sat_fix__functions.h"
 // Member `enu_true`
 // Member `enu_gnss_fix`
-// Member `range_offset`
-// Member `sats_blocked`
 #include "rosidl_runtime_c/primitives_sequence_functions.h"
 
 bool
@@ -39,27 +37,16 @@ gnss_multipath_plugin__msg__GNSSMultipathFix__init(gnss_multipath_plugin__msg__G
     return false;
   }
   // enu_true
-  if (!rosidl_runtime_c__float__Sequence__init(&msg->enu_true, 0)) {
+  if (!rosidl_runtime_c__double__Sequence__init(&msg->enu_true, 0)) {
     gnss_multipath_plugin__msg__GNSSMultipathFix__fini(msg);
     return false;
   }
   // enu_gnss_fix
-  if (!rosidl_runtime_c__float__Sequence__init(&msg->enu_gnss_fix, 0)) {
-    gnss_multipath_plugin__msg__GNSSMultipathFix__fini(msg);
-    return false;
-  }
-  // range_offset
-  if (!rosidl_runtime_c__float__Sequence__init(&msg->range_offset, 0)) {
-    gnss_multipath_plugin__msg__GNSSMultipathFix__fini(msg);
-    return false;
-  }
-  // sats_blocked
-  if (!rosidl_runtime_c__int32__Sequence__init(&msg->sats_blocked, 0)) {
+  if (!rosidl_runtime_c__double__Sequence__init(&msg->enu_gnss_fix, 0)) {
     gnss_multipath_plugin__msg__GNSSMultipathFix__fini(msg);
     return false;
   }
   // num_vis_sat
-  // num_block_sat
   return true;
 }
 
@@ -74,15 +61,10 @@ gnss_multipath_plugin__msg__GNSSMultipathFix__fini(gnss_multipath_plugin__msg__G
   // navsatfix
   sensor_msgs__msg__NavSatFix__fini(&msg->navsatfix);
   // enu_true
-  rosidl_runtime_c__float__Sequence__fini(&msg->enu_true);
+  rosidl_runtime_c__double__Sequence__fini(&msg->enu_true);
   // enu_gnss_fix
-  rosidl_runtime_c__float__Sequence__fini(&msg->enu_gnss_fix);
-  // range_offset
-  rosidl_runtime_c__float__Sequence__fini(&msg->range_offset);
-  // sats_blocked
-  rosidl_runtime_c__int32__Sequence__fini(&msg->sats_blocked);
+  rosidl_runtime_c__double__Sequence__fini(&msg->enu_gnss_fix);
   // num_vis_sat
-  // num_block_sat
 }
 
 bool
@@ -104,35 +86,19 @@ gnss_multipath_plugin__msg__GNSSMultipathFix__are_equal(const gnss_multipath_plu
     return false;
   }
   // enu_true
-  if (!rosidl_runtime_c__float__Sequence__are_equal(
+  if (!rosidl_runtime_c__double__Sequence__are_equal(
       &(lhs->enu_true), &(rhs->enu_true)))
   {
     return false;
   }
   // enu_gnss_fix
-  if (!rosidl_runtime_c__float__Sequence__are_equal(
+  if (!rosidl_runtime_c__double__Sequence__are_equal(
       &(lhs->enu_gnss_fix), &(rhs->enu_gnss_fix)))
-  {
-    return false;
-  }
-  // range_offset
-  if (!rosidl_runtime_c__float__Sequence__are_equal(
-      &(lhs->range_offset), &(rhs->range_offset)))
-  {
-    return false;
-  }
-  // sats_blocked
-  if (!rosidl_runtime_c__int32__Sequence__are_equal(
-      &(lhs->sats_blocked), &(rhs->sats_blocked)))
   {
     return false;
   }
   // num_vis_sat
   if (lhs->num_vis_sat != rhs->num_vis_sat) {
-    return false;
-  }
-  // num_block_sat
-  if (lhs->num_block_sat != rhs->num_block_sat) {
     return false;
   }
   return true;
@@ -159,33 +125,19 @@ gnss_multipath_plugin__msg__GNSSMultipathFix__copy(
     return false;
   }
   // enu_true
-  if (!rosidl_runtime_c__float__Sequence__copy(
+  if (!rosidl_runtime_c__double__Sequence__copy(
       &(input->enu_true), &(output->enu_true)))
   {
     return false;
   }
   // enu_gnss_fix
-  if (!rosidl_runtime_c__float__Sequence__copy(
+  if (!rosidl_runtime_c__double__Sequence__copy(
       &(input->enu_gnss_fix), &(output->enu_gnss_fix)))
-  {
-    return false;
-  }
-  // range_offset
-  if (!rosidl_runtime_c__float__Sequence__copy(
-      &(input->range_offset), &(output->range_offset)))
-  {
-    return false;
-  }
-  // sats_blocked
-  if (!rosidl_runtime_c__int32__Sequence__copy(
-      &(input->sats_blocked), &(output->sats_blocked)))
   {
     return false;
   }
   // num_vis_sat
   output->num_vis_sat = input->num_vis_sat;
-  // num_block_sat
-  output->num_block_sat = input->num_block_sat;
   return true;
 }
 

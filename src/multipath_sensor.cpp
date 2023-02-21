@@ -43,7 +43,6 @@
 
 #include <predict/predict.h>
 #include <gnss_multipath_plugin/multipath_sensor.hpp>
-//#include "gnss_multipath_plugin/msg/multipath_offset.hpp" 
 #include "gnss_multipath_plugin/msg/gnss_multipath_fix.hpp"
 #include "gnss_multipath_plugin/geodetic_conv.hpp"
 
@@ -92,37 +91,28 @@ public:
   // Time information to get the satellite position
   struct tm *timeinfo_;
 
-  int num_sat_;
+  
   bool disable_noise_;
   geodetic_converter::GeodeticConverter g_geodetic_converter;
-  std::vector<double> rec_lla_;
-
-  std::vector<double> elevation_;
-  std::vector<double> azimuth_; 
-  std::vector<double> ray_elevation_;
-  std::vector<double> ray_azimuth_;
   
+  int num_sat_;
   // TlE parameters to store the satellite's orbital parameters
   const char **tle_lines_;
 
   // Satellite orbital parameters to predict satellite's position
   predict_orbital_elements_t **sat_orbit_elements_;
-  
+
   // Satellite position information at a given time
   struct predict_position *sat_position_;
 
   void SetRayAngles(std::vector<double> _azimuth, std::vector<double> _elevation); 
   bool GetLeastSquaresEstimate(std::vector<double> _meas, std::vector<std::vector<double>> _sat_ecef, Eigen::Vector3d & _rec_ecef);
   void ParseSatelliteTLE();
-  int GetSatelliteCount();
-  void GetSatellitesECEF(struct tm *_timeinfo, std::vector<std::vector<double>> &_sat_ecef);
-  void GetSatellitesTrueRange(std::vector<double> _rec_lla , std::vector<double> &_true_range);
-  void GetSatellitesAzimuthElevationAngles(std::vector<double> _rec_lla , std::vector<double> &_azimuth, std::vector<double> &_elevation);  
+  void GetSatellitesInfo(struct tm *_timeinfo, std::vector<double> _rec_lla,
+      std::vector<std::vector<double>> &_sat_ecef, std::vector<double> &_true_range, std::vector<double> &_azimuth,
+      std::vector<double> &_elevation);
   time_t MakeTimeUTC(const struct tm* timeinfo_utc);
-
-  ignition::math::Vector3d true_rec_world_pos_;
   double origin_lat_, origin_lon_, origin_alt_;
-  double rec_lat_, rec_lon_, rec_alt_; 
   
   //Offset publisher to publish multipath offset
   rclcpp::Publisher<gnss_multipath_plugin::msg::GNSSMultipathFix>::SharedPtr gnss_multipath_fix_publisher_;
@@ -246,7 +236,6 @@ void GazeboRosMultipathSensor::Load(gazebo::sensors::SensorPtr _sensor, sdf::Ele
   RCLCPP_INFO(impl_->ros_node_->get_logger(), "Num sat:%d", impl_->num_sat_);
   RCLCPP_INFO(impl_->ros_node_->get_logger(), std::filesystem::current_path());
   impl_->ParseSatelliteTLE();
-  impl_->num_sat_ = impl_->GetSatelliteCount();
   // Create gazebo transport node and subscribe to sensor's laser scan
   impl_->gazebo_node_ = boost::make_shared<gazebo::transport::Node>();
   impl_->gazebo_node_->Init(_sensor->WorldName());
@@ -270,37 +259,41 @@ void GazeboRosMultipathSensorPrivate::SubscribeGazeboLaserScan()
 
 void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr & _msg)
 {
-
-  rec_lla_.resize(3);
+  //rclcpp::Time t1 = rclcpp::Clock{}.now();
+  std::vector<double> sat_true_range_;
+  std::vector<std::vector<double>> sat_ecef_;
+  std::vector<double> elevation_;
+  std::vector<double> azimuth_; 
+  std::vector<double> ray_elevation_;
+  std::vector<double> ray_azimuth_;
+  std::vector<double> rec_lla_{0,0,0};
   // Reciever's pose in ENU world coordinates
-  true_rec_world_pos_ = parent_entity_->WorldPose().Pos();
+  ignition::math::Vector3d true_rec_world_pos_ = parent_entity_->WorldPose().Pos();
   // Reciever's position in geodetic (LLA) coordinates
   g_geodetic_converter.enu2Geodetic(true_rec_world_pos_[0], true_rec_world_pos_[1],
                               true_rec_world_pos_[2], &rec_lla_[0], &rec_lla_[1], &rec_lla_[2]);
+  
+  // Constructing a time structure for getting satellites position
   timeinfo_->tm_year = 2021 - 1900;
   timeinfo_->tm_mon = 5 - 1;
   timeinfo_->tm_mday = 15;
   timeinfo_->tm_hour = 2;
-  timeinfo_->tm_min = 30;
+  timeinfo_->tm_min = 35;
   timeinfo_->tm_sec = 0;
   timeinfo_->tm_isdst = 0;
 
-  std::vector<double> true_range_;
-  std::vector<std::vector<double>> sat_ecef_;
-
-  GetSatellitesECEF(timeinfo_, sat_ecef_);
-  GetSatellitesTrueRange(rec_lla_, true_range_);
-  GetSatellitesAzimuthElevationAngles(rec_lla_, azimuth_, elevation_);
-
-  ray_azimuth_.resize(2*num_sat_);
-  ray_elevation_.resize(2*num_sat_);
+  // GetSatellitesECEF(timeinfo_, sat_ecef_);
+  // GetSatellitesTrueRange(rec_lla_, sat_true_range_);
+  // GetSatellitesAzimuthElevationAngles(rec_lla_, azimuth_, elevation_);
+  GetSatellitesInfo(timeinfo_,rec_lla_, sat_ecef_, sat_true_range_, azimuth_, elevation_ );
+  num_sat_ = sat_true_range_.size();
   for ( int i = 0; i < num_sat_; i++ )
   {
-    //Setting the azimuth and elevation angles for the satellite ray and the reflected ray for each satellite.
-    ray_azimuth_[i*2] = azimuth_[i];
-    ray_azimuth_[i*2+1] = azimuth_[i]+ M_PI; // assume reflection is 180 deg azimuth from the direct ray
-    ray_elevation_[i*2] = elevation_[i];
-    ray_elevation_[i*2+1] = elevation_[i]; // assume reflection has the same elevation as the direct ray
+    // Setting the azimuth and elevation angles for the satellite ray and the reflected ray for each satellite.
+    ray_azimuth_.push_back(azimuth_[i]);
+    ray_azimuth_.push_back(azimuth_[i]+ M_PI); // assume reflection is 180 deg azimuth from the direct ray
+    ray_elevation_.push_back(elevation_[i]);
+    ray_elevation_.push_back(elevation_[i]); // assume reflection has the same elevation as the direct ray
   }
   //Updating the ray angles for sateliite and reflected ray.
   SetRayAngles(ray_azimuth_, ray_elevation_);
@@ -321,12 +314,11 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   gnss_multipath_fix_msg.navsatfix.header.frame_id = frame_name_;
   gnss_multipath_fix_msg.enu_true.resize(3);
   gnss_multipath_fix_msg.enu_gnss_fix.resize(3);
-  gnss_multipath_fix_msg.sats_blocked.resize(num_sat_);
   int num_sat_blocked_ = 0;
-  std::vector<double> range_offset;
   std::vector<double> visible_sat_range_meas;
   std::vector<std::vector<double>> visible_sat_ecef;
-
+  
+  // Iterate for all the visible satellites (positive elevation angles)
   for (int i=0; i < num_sat_; i++)
   {
     // noise
@@ -346,33 +338,35 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
         // check if mirror ray also is obstructed, providing a reflection
         if (mir_ray_range_ < _msg->scan().range_max())
         {
-          visible_sat_range_meas.push_back(true_range_[i] + mir_ray_range_ * ( 1 + sin(M_PI/2.0 - 2*ray_elevation_[2*i])) +  noise_);
-          visible_sat_ecef.push_back(sat_ecef_[i]);
-          range_offset.push_back(mir_ray_range_ * ( 1 + sin(M_PI/2.0 - 2*ray_elevation_[2*i])) +  noise_);
+          double range_offset =  mir_ray_range_ * ( 1 + sin(M_PI/2.0 - 2*ray_elevation_[2*i]));
+          if (range_offset < 100)
+          {
+            visible_sat_range_meas.push_back(sat_true_range_[i] + range_offset +  noise_);
+            visible_sat_ecef.push_back(sat_ecef_[i]);
+          }
+          else
+          {
+            // The multipath distance is large, signal intensity will be degraded significantly, so ignored.
+            num_sat_blocked_++;
+          }
         } 
         else 
         {
           // otherwise no line of sight to any satellites and no reflections, no reading
           num_sat_blocked_++;
-          range_offset.push_back(0);
-          gnss_multipath_fix_msg.sats_blocked[i] = 1;
         }
-        
       } 
       else 
       {
         // unobstructed sat reading
-        visible_sat_range_meas.push_back(true_range_[i] + noise_);
+        visible_sat_range_meas.push_back(sat_true_range_[i] + noise_);
         visible_sat_ecef.push_back(sat_ecef_[i]);
-        range_offset.push_back(noise_);
       }
     }
     else
     {
       // low elevation sat reading
       num_sat_blocked_++;
-      range_offset.push_back(noise_);
-      gnss_multipath_fix_msg.sats_blocked[i] = 1;
     }
   }
   if ((num_sat_ - num_sat_blocked_) > 4)
@@ -402,7 +396,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   }
   else 
   {
-    //RCLCPP_INFO(ros_node_->get_logger(), "No Fix");
+    // RCLCPP_INFO(ros_node_->get_logger(), "No Fix");
     gnss_multipath_fix_msg.navsatfix.status.status = 0;
     gnss_multipath_fix_msg.enu_gnss_fix[0] = NAN;
     gnss_multipath_fix_msg.enu_gnss_fix[1] = NAN;
@@ -411,12 +405,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   gnss_multipath_fix_msg.enu_true[0] = true_rec_world_pos_[0];
   gnss_multipath_fix_msg.enu_true[1] = true_rec_world_pos_[1];
   gnss_multipath_fix_msg.enu_true[2] = true_rec_world_pos_[2];
-  
-  
-  gnss_multipath_fix_msg.range_offset.resize(range_offset.size());
-  std::copy(range_offset.begin(),
-            range_offset.end(),
-            gnss_multipath_fix_msg.range_offset.begin());
+  gnss_multipath_fix_msg.visible_sat_count = num_sat_ - num_sat_blocked_;
   gnss_multipath_fix_publisher_->publish(gnss_multipath_fix_msg);
 
   // Convert Laser scan to ROS LaserScan
@@ -425,6 +414,8 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   ls.header.frame_id = frame_name_;
   // Publish output
   boost::get<LaserScanPub>(pub_)->publish(ls);
+  // rclcpp::Time t2 = rclcpp::Clock{}.now();
+  // RCLCPP_INFO(ros_node_->get_logger(), "Exec time %f", t1.seconds()- t2.seconds());
 }
 
 void GazeboRosMultipathSensorPrivate::SetRayAngles(std::vector<double> _azimuth, std::vector<double> _elevation) 
@@ -566,46 +557,26 @@ void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
   }
 }
 
-int GazeboRosMultipathSensorPrivate::GetSatelliteCount()
+void GazeboRosMultipathSensorPrivate::GetSatellitesInfo(struct tm *_timeinfo, std::vector<double> _rec_lla,
+      std::vector<std::vector<double>> &_sat_ecef, std::vector<double> &_true_range, std::vector<double> &_azimuth,
+      std::vector<double> &_elevation)
 {
-  return num_sat_;
-}
-
-void GazeboRosMultipathSensorPrivate::GetSatellitesECEF(struct tm *_timeinfo, std::vector<std::vector<double>> &_sat_ecef)
-{
-  _sat_ecef.resize(num_sat_, std::vector<double>(3));
   // Predict the julian time using the current utc time
   predict_julian_date_t curr_time = predict_to_julian(MakeTimeUTC(_timeinfo));
+  std::vector<double> ecef = {0,0,0};
   for ( int i = 0; i < num_sat_; i++ )
   {
     // Predict satellite's position based on the current time.
     predict_orbit(sat_orbit_elements_[i], &sat_position_[i], curr_time);
     g_geodetic_converter.geodetic2Ecef(sat_position_[i].latitude*180.0/M_PI, sat_position_[i].longitude*180.0/M_PI , 
-                  sat_position_[i].altitude*1000 , &_sat_ecef[i][0], &_sat_ecef[i][1], &_sat_ecef[i][2]);
-  }
-}
-
-void GazeboRosMultipathSensorPrivate::GetSatellitesTrueRange(std::vector<double> _rec_lla , std::vector<double> &_true_range)  
-{
-  for ( int i = 0; i < num_sat_; i++ )
-  {
+                  sat_position_[i].altitude*1000 , &ecef[0], &ecef[1], &ecef[2]);
     predict_observer_t *obs = predict_create_observer("obs", _rec_lla[0]*M_PI/180.0, _rec_lla[1]*M_PI/180.0, _rec_lla[2]);
     struct predict_observation reciever_obs;
     predict_observe_orbit(obs, &sat_position_[i], &reciever_obs);
-    _true_range.push_back(reciever_obs.range*1000); //From Km to m
-  }
-}
-
-void GazeboRosMultipathSensorPrivate::GetSatellitesAzimuthElevationAngles(std::vector<double> _rec_lla , std::vector<double> &_azimuth, std::vector<double> &_elevation )  
-{
-  for ( int i = 0; i < num_sat_; i++ )
-  {
-    predict_observer_t *obs = predict_create_observer("obs", _rec_lla[0]*M_PI/180.0, _rec_lla[1]*M_PI/180.0, _rec_lla[2]);
-    struct predict_observation reciever_obs;
-    predict_observe_orbit(obs, &sat_position_[i], &reciever_obs);
-    // Setting the azimuth and elevation angles for the satellite ray and the reflected ray for each satellite.
+    _sat_ecef.push_back(ecef);
+    _true_range.push_back(reciever_obs.range*1000); //From Km to m  
     _azimuth.push_back(reciever_obs.azimuth);
-    _elevation.push_back(reciever_obs.elevation); // assume reflection has the same elevation as the direct ray
+    _elevation.push_back(reciever_obs.elevation);
   }
 }
 

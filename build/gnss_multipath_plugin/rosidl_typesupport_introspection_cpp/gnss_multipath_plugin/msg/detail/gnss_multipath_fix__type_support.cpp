@@ -39,113 +39,59 @@ void GNSSMultipathFix_fini_function(void * message_memory)
 
 size_t size_function__GNSSMultipathFix__enu_true(const void * untyped_member)
 {
-  const auto * member = reinterpret_cast<const std::vector<float> *>(untyped_member);
+  const auto * member = reinterpret_cast<const std::vector<double> *>(untyped_member);
   return member->size();
 }
 
 const void * get_const_function__GNSSMultipathFix__enu_true(const void * untyped_member, size_t index)
 {
   const auto & member =
-    *reinterpret_cast<const std::vector<float> *>(untyped_member);
+    *reinterpret_cast<const std::vector<double> *>(untyped_member);
   return &member[index];
 }
 
 void * get_function__GNSSMultipathFix__enu_true(void * untyped_member, size_t index)
 {
   auto & member =
-    *reinterpret_cast<std::vector<float> *>(untyped_member);
+    *reinterpret_cast<std::vector<double> *>(untyped_member);
   return &member[index];
 }
 
 void resize_function__GNSSMultipathFix__enu_true(void * untyped_member, size_t size)
 {
   auto * member =
-    reinterpret_cast<std::vector<float> *>(untyped_member);
+    reinterpret_cast<std::vector<double> *>(untyped_member);
   member->resize(size);
 }
 
 size_t size_function__GNSSMultipathFix__enu_gnss_fix(const void * untyped_member)
 {
-  const auto * member = reinterpret_cast<const std::vector<float> *>(untyped_member);
+  const auto * member = reinterpret_cast<const std::vector<double> *>(untyped_member);
   return member->size();
 }
 
 const void * get_const_function__GNSSMultipathFix__enu_gnss_fix(const void * untyped_member, size_t index)
 {
   const auto & member =
-    *reinterpret_cast<const std::vector<float> *>(untyped_member);
+    *reinterpret_cast<const std::vector<double> *>(untyped_member);
   return &member[index];
 }
 
 void * get_function__GNSSMultipathFix__enu_gnss_fix(void * untyped_member, size_t index)
 {
   auto & member =
-    *reinterpret_cast<std::vector<float> *>(untyped_member);
+    *reinterpret_cast<std::vector<double> *>(untyped_member);
   return &member[index];
 }
 
 void resize_function__GNSSMultipathFix__enu_gnss_fix(void * untyped_member, size_t size)
 {
   auto * member =
-    reinterpret_cast<std::vector<float> *>(untyped_member);
+    reinterpret_cast<std::vector<double> *>(untyped_member);
   member->resize(size);
 }
 
-size_t size_function__GNSSMultipathFix__range_offset(const void * untyped_member)
-{
-  const auto * member = reinterpret_cast<const std::vector<float> *>(untyped_member);
-  return member->size();
-}
-
-const void * get_const_function__GNSSMultipathFix__range_offset(const void * untyped_member, size_t index)
-{
-  const auto & member =
-    *reinterpret_cast<const std::vector<float> *>(untyped_member);
-  return &member[index];
-}
-
-void * get_function__GNSSMultipathFix__range_offset(void * untyped_member, size_t index)
-{
-  auto & member =
-    *reinterpret_cast<std::vector<float> *>(untyped_member);
-  return &member[index];
-}
-
-void resize_function__GNSSMultipathFix__range_offset(void * untyped_member, size_t size)
-{
-  auto * member =
-    reinterpret_cast<std::vector<float> *>(untyped_member);
-  member->resize(size);
-}
-
-size_t size_function__GNSSMultipathFix__sats_blocked(const void * untyped_member)
-{
-  const auto * member = reinterpret_cast<const std::vector<int32_t> *>(untyped_member);
-  return member->size();
-}
-
-const void * get_const_function__GNSSMultipathFix__sats_blocked(const void * untyped_member, size_t index)
-{
-  const auto & member =
-    *reinterpret_cast<const std::vector<int32_t> *>(untyped_member);
-  return &member[index];
-}
-
-void * get_function__GNSSMultipathFix__sats_blocked(void * untyped_member, size_t index)
-{
-  auto & member =
-    *reinterpret_cast<std::vector<int32_t> *>(untyped_member);
-  return &member[index];
-}
-
-void resize_function__GNSSMultipathFix__sats_blocked(void * untyped_member, size_t size)
-{
-  auto * member =
-    reinterpret_cast<std::vector<int32_t> *>(untyped_member);
-  member->resize(size);
-}
-
-static const ::rosidl_typesupport_introspection_cpp::MessageMember GNSSMultipathFix_message_member_array[8] = {
+static const ::rosidl_typesupport_introspection_cpp::MessageMember GNSSMultipathFix_message_member_array[5] = {
   {
     "header",  // name
     ::rosidl_typesupport_introspection_cpp::ROS_TYPE_MESSAGE,  // type
@@ -178,7 +124,7 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMember GNSSMultipath
   },
   {
     "enu_true",  // name
-    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_FLOAT,  // type
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_DOUBLE,  // type
     0,  // upper bound of string
     nullptr,  // members of sub message
     true,  // is array
@@ -193,7 +139,7 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMember GNSSMultipath
   },
   {
     "enu_gnss_fix",  // name
-    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_FLOAT,  // type
+    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_DOUBLE,  // type
     0,  // upper bound of string
     nullptr,  // members of sub message
     true,  // is array
@@ -205,36 +151,6 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMember GNSSMultipath
     get_const_function__GNSSMultipathFix__enu_gnss_fix,  // get_const(index) function pointer
     get_function__GNSSMultipathFix__enu_gnss_fix,  // get(index) function pointer
     resize_function__GNSSMultipathFix__enu_gnss_fix  // resize(index) function pointer
-  },
-  {
-    "range_offset",  // name
-    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_FLOAT,  // type
-    0,  // upper bound of string
-    nullptr,  // members of sub message
-    true,  // is array
-    0,  // array size
-    false,  // is upper bound
-    offsetof(gnss_multipath_plugin::msg::GNSSMultipathFix, range_offset),  // bytes offset in struct
-    nullptr,  // default value
-    size_function__GNSSMultipathFix__range_offset,  // size() function pointer
-    get_const_function__GNSSMultipathFix__range_offset,  // get_const(index) function pointer
-    get_function__GNSSMultipathFix__range_offset,  // get(index) function pointer
-    resize_function__GNSSMultipathFix__range_offset  // resize(index) function pointer
-  },
-  {
-    "sats_blocked",  // name
-    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT32,  // type
-    0,  // upper bound of string
-    nullptr,  // members of sub message
-    true,  // is array
-    0,  // array size
-    false,  // is upper bound
-    offsetof(gnss_multipath_plugin::msg::GNSSMultipathFix, sats_blocked),  // bytes offset in struct
-    nullptr,  // default value
-    size_function__GNSSMultipathFix__sats_blocked,  // size() function pointer
-    get_const_function__GNSSMultipathFix__sats_blocked,  // get_const(index) function pointer
-    get_function__GNSSMultipathFix__sats_blocked,  // get(index) function pointer
-    resize_function__GNSSMultipathFix__sats_blocked  // resize(index) function pointer
   },
   {
     "num_vis_sat",  // name
@@ -250,28 +166,13 @@ static const ::rosidl_typesupport_introspection_cpp::MessageMember GNSSMultipath
     nullptr,  // get_const(index) function pointer
     nullptr,  // get(index) function pointer
     nullptr  // resize(index) function pointer
-  },
-  {
-    "num_block_sat",  // name
-    ::rosidl_typesupport_introspection_cpp::ROS_TYPE_INT32,  // type
-    0,  // upper bound of string
-    nullptr,  // members of sub message
-    false,  // is array
-    0,  // array size
-    false,  // is upper bound
-    offsetof(gnss_multipath_plugin::msg::GNSSMultipathFix, num_block_sat),  // bytes offset in struct
-    nullptr,  // default value
-    nullptr,  // size() function pointer
-    nullptr,  // get_const(index) function pointer
-    nullptr,  // get(index) function pointer
-    nullptr  // resize(index) function pointer
   }
 };
 
 static const ::rosidl_typesupport_introspection_cpp::MessageMembers GNSSMultipathFix_message_members = {
   "gnss_multipath_plugin::msg",  // message namespace
   "GNSSMultipathFix",  // message name
-  8,  // number of fields
+  5,  // number of fields
   sizeof(gnss_multipath_plugin::msg::GNSSMultipathFix),
   GNSSMultipathFix_message_member_array,  // message members
   GNSSMultipathFix_init_function,  // function to initialize message memory (memory has to be allocated)

@@ -28,10 +28,10 @@ for i in range(gzb_true_pos.shape[0]):
     x_grid = (int)(gzb_true_pos[i,0]/scale + size_x_min)
     error = np.linalg.norm(gzb_true_pos[i,:] - gzb_gps_pos[i,:])
     if not math.isnan(error):
-        if error > 40:
-            error = 40
+        if error > 30:
+            error = 30
         heat_map[y_grid,x_grid] = error
-        heat_map[y_grid,x_grid] = 0
+        #heat_map[y_grid,x_grid] = 0
     else:
         heat_map[y_grid,x_grid] = 40
 
@@ -44,33 +44,3 @@ plt.gca().invert_yaxis()
 plt.axis('off')
 #plt.savefig('ComparisonPlot.png', dpi=500)
 plt.show()
-
-# plt.figure(figsize=(10,10))
-# speed = np.zeros(500)
-# for i in range (1,500):
-#     speed[i]= np.sqrt((grd_truth['lat'][i] - grd_truth['lat'][i-1])**2 + (grd_truth['lon'][i] - grd_truth['lon'][i-1])**2)
-# plt1 = plt.plot(speed, label = 'Speed')
-# print(len(grd_truth['lat']),len(gps_log['lat']))
-# error = np.zeros(500)
-# for i in range (500):
-#     error[i]= np.sqrt((grd_truth['lat'][i] - gps_log['lat'][i])**2 + (grd_truth['lon'][i] - gps_log['lon'][i])**2)
-# plt2 = plt.gca().twinx().plot(error, color = 'r', label = 'Error in GPS position')
-# lns = plt1 + plt2
-# labels = [l.get_label() for l in lns]
-# plt.legend(lns, labels, loc=0)
-# plt.show()
-
-# plt.figure(figsize=(10,10))
-# speed = np.zeros(len(aff_pos['true_x']))
-# for i in range (1,len(aff_pos['true_x'])):
-#     speed[i]= np.sqrt((aff_pos['true_x'][i] - aff_pos['true_x'][i-1])**2 + (aff_pos['true_y'][i] - aff_pos['true_y'][i-1])**2)
-# plt1 = plt.plot(speed, label = 'Speed')
-
-# error = np.zeros(len(aff_pos['true_x']))
-# for i in range (len(aff_pos['true_x'])):
-#     error[i]= np.sqrt((aff_pos['true_x'][i] - aff_pos['aff_x'][i])**2 + (aff_pos['true_y'][i] - aff_pos['aff_y'][i])**2)
-# plt2 = plt.gca().twinx().plot(error, color = 'r', label = 'Error in GPS position')
-# lns = plt1 + plt2
-# labels = [l.get_label() for l in lns]
-# plt.legend(lns, labels, loc=0)
-# plt.show()

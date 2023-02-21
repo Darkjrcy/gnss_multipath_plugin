@@ -24,8 +24,6 @@ extern "C"
 #include "sensor_msgs/msg/detail/nav_sat_fix__struct.h"
 // Member 'enu_true'
 // Member 'enu_gnss_fix'
-// Member 'range_offset'
-// Member 'sats_blocked'
 #include "rosidl_runtime_c/primitives_sequence.h"
 
 // Struct defined in msg/GNSSMultipathFix in the package gnss_multipath_plugin.
@@ -33,12 +31,9 @@ typedef struct gnss_multipath_plugin__msg__GNSSMultipathFix
 {
   std_msgs__msg__Header header;
   sensor_msgs__msg__NavSatFix navsatfix;
-  rosidl_runtime_c__float__Sequence enu_true;
-  rosidl_runtime_c__float__Sequence enu_gnss_fix;
-  rosidl_runtime_c__float__Sequence range_offset;
-  rosidl_runtime_c__int32__Sequence sats_blocked;
+  rosidl_runtime_c__double__Sequence enu_true;
+  rosidl_runtime_c__double__Sequence enu_gnss_fix;
   int32_t num_vis_sat;
-  int32_t num_block_sat;
 } gnss_multipath_plugin__msg__GNSSMultipathFix;
 
 // Struct for a sequence of gnss_multipath_plugin__msg__GNSSMultipathFix.

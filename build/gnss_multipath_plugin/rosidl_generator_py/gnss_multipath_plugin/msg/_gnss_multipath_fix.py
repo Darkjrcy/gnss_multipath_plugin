@@ -7,8 +7,6 @@
 
 # Member 'enu_true'
 # Member 'enu_gnss_fix'
-# Member 'range_offset'
-# Member 'sats_blocked'
 import array  # noqa: E402, I100
 
 import rosidl_parser.definition  # noqa: E402, I100
@@ -71,31 +69,22 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
         '_navsatfix',
         '_enu_true',
         '_enu_gnss_fix',
-        '_range_offset',
-        '_sats_blocked',
         '_num_vis_sat',
-        '_num_block_sat',
     ]
 
     _fields_and_field_types = {
         'header': 'std_msgs/Header',
         'navsatfix': 'sensor_msgs/NavSatFix',
-        'enu_true': 'sequence<float>',
-        'enu_gnss_fix': 'sequence<float>',
-        'range_offset': 'sequence<float>',
-        'sats_blocked': 'sequence<int32>',
+        'enu_true': 'sequence<double>',
+        'enu_gnss_fix': 'sequence<double>',
         'num_vis_sat': 'int32',
-        'num_block_sat': 'int32',
     }
 
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['std_msgs', 'msg'], 'Header'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['sensor_msgs', 'msg'], 'NavSatFix'),  # noqa: E501
-        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('float')),  # noqa: E501
-        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('float')),  # noqa: E501
-        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('float')),  # noqa: E501
-        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('int32')),  # noqa: E501
-        rosidl_parser.definition.BasicType('int32'),  # noqa: E501
+        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('double')),  # noqa: E501
+        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('double')),  # noqa: E501
         rosidl_parser.definition.BasicType('int32'),  # noqa: E501
     )
 
@@ -107,12 +96,9 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
         self.header = kwargs.get('header', Header())
         from sensor_msgs.msg import NavSatFix
         self.navsatfix = kwargs.get('navsatfix', NavSatFix())
-        self.enu_true = array.array('f', kwargs.get('enu_true', []))
-        self.enu_gnss_fix = array.array('f', kwargs.get('enu_gnss_fix', []))
-        self.range_offset = array.array('f', kwargs.get('range_offset', []))
-        self.sats_blocked = array.array('i', kwargs.get('sats_blocked', []))
+        self.enu_true = array.array('d', kwargs.get('enu_true', []))
+        self.enu_gnss_fix = array.array('d', kwargs.get('enu_gnss_fix', []))
         self.num_vis_sat = kwargs.get('num_vis_sat', int())
-        self.num_block_sat = kwargs.get('num_block_sat', int())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -151,13 +137,7 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
             return False
         if self.enu_gnss_fix != other.enu_gnss_fix:
             return False
-        if self.range_offset != other.range_offset:
-            return False
-        if self.sats_blocked != other.sats_blocked:
-            return False
         if self.num_vis_sat != other.num_vis_sat:
-            return False
-        if self.num_block_sat != other.num_block_sat:
             return False
         return True
 
@@ -202,8 +182,8 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
     @enu_true.setter
     def enu_true(self, value):
         if isinstance(value, array.array):
-            assert value.typecode == 'f', \
-                "The 'enu_true' array.array() must have the type code of 'f'"
+            assert value.typecode == 'd', \
+                "The 'enu_true' array.array() must have the type code of 'd'"
             self._enu_true = value
             return
         if __debug__:
@@ -220,7 +200,7 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
                  all(isinstance(v, float) for v in value) and
                  True), \
                 "The 'enu_true' field must be a set or sequence and each value of type 'float'"
-        self._enu_true = array.array('f', value)
+        self._enu_true = array.array('d', value)
 
     @property
     def enu_gnss_fix(self):
@@ -230,8 +210,8 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
     @enu_gnss_fix.setter
     def enu_gnss_fix(self, value):
         if isinstance(value, array.array):
-            assert value.typecode == 'f', \
-                "The 'enu_gnss_fix' array.array() must have the type code of 'f'"
+            assert value.typecode == 'd', \
+                "The 'enu_gnss_fix' array.array() must have the type code of 'd'"
             self._enu_gnss_fix = value
             return
         if __debug__:
@@ -248,63 +228,7 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
                  all(isinstance(v, float) for v in value) and
                  True), \
                 "The 'enu_gnss_fix' field must be a set or sequence and each value of type 'float'"
-        self._enu_gnss_fix = array.array('f', value)
-
-    @property
-    def range_offset(self):
-        """Message field 'range_offset'."""
-        return self._range_offset
-
-    @range_offset.setter
-    def range_offset(self, value):
-        if isinstance(value, array.array):
-            assert value.typecode == 'f', \
-                "The 'range_offset' array.array() must have the type code of 'f'"
-            self._range_offset = value
-            return
-        if __debug__:
-            from collections.abc import Sequence
-            from collections.abc import Set
-            from collections import UserList
-            from collections import UserString
-            assert \
-                ((isinstance(value, Sequence) or
-                  isinstance(value, Set) or
-                  isinstance(value, UserList)) and
-                 not isinstance(value, str) and
-                 not isinstance(value, UserString) and
-                 all(isinstance(v, float) for v in value) and
-                 True), \
-                "The 'range_offset' field must be a set or sequence and each value of type 'float'"
-        self._range_offset = array.array('f', value)
-
-    @property
-    def sats_blocked(self):
-        """Message field 'sats_blocked'."""
-        return self._sats_blocked
-
-    @sats_blocked.setter
-    def sats_blocked(self, value):
-        if isinstance(value, array.array):
-            assert value.typecode == 'i', \
-                "The 'sats_blocked' array.array() must have the type code of 'i'"
-            self._sats_blocked = value
-            return
-        if __debug__:
-            from collections.abc import Sequence
-            from collections.abc import Set
-            from collections import UserList
-            from collections import UserString
-            assert \
-                ((isinstance(value, Sequence) or
-                  isinstance(value, Set) or
-                  isinstance(value, UserList)) and
-                 not isinstance(value, str) and
-                 not isinstance(value, UserString) and
-                 all(isinstance(v, int) for v in value) and
-                 all(val >= -2147483648 and val < 2147483648 for val in value)), \
-                "The 'sats_blocked' field must be a set or sequence and each value of type 'int' and each integer in [-2147483648, 2147483647]"
-        self._sats_blocked = array.array('i', value)
+        self._enu_gnss_fix = array.array('d', value)
 
     @property
     def num_vis_sat(self):
@@ -320,18 +244,3 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
             assert value >= -2147483648 and value < 2147483648, \
                 "The 'num_vis_sat' field must be an integer in [-2147483648, 2147483647]"
         self._num_vis_sat = value
-
-    @property
-    def num_block_sat(self):
-        """Message field 'num_block_sat'."""
-        return self._num_block_sat
-
-    @num_block_sat.setter
-    def num_block_sat(self, value):
-        if __debug__:
-            assert \
-                isinstance(value, int), \
-                "The 'num_block_sat' field must be of type 'int'"
-            assert value >= -2147483648 and value < 2147483648, \
-                "The 'num_block_sat' field must be an integer in [-2147483648, 2147483647]"
-        self._num_block_sat = value

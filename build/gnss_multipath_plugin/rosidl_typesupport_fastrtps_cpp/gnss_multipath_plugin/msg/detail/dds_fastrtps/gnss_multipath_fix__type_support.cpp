@@ -94,18 +94,8 @@ cdr_serialize(
   {
     cdr << ros_message.enu_gnss_fix;
   }
-  // Member: range_offset
-  {
-    cdr << ros_message.range_offset;
-  }
-  // Member: sats_blocked
-  {
-    cdr << ros_message.sats_blocked;
-  }
   // Member: num_vis_sat
   cdr << ros_message.num_vis_sat;
-  // Member: num_block_sat
-  cdr << ros_message.num_block_sat;
   return true;
 }
 
@@ -133,21 +123,8 @@ cdr_deserialize(
     cdr >> ros_message.enu_gnss_fix;
   }
 
-  // Member: range_offset
-  {
-    cdr >> ros_message.range_offset;
-  }
-
-  // Member: sats_blocked
-  {
-    cdr >> ros_message.sats_blocked;
-  }
-
   // Member: num_vis_sat
   cdr >> ros_message.num_vis_sat;
-
-  // Member: num_block_sat
-  cdr >> ros_message.num_block_sat;
 
   return true;
 }
@@ -195,35 +172,9 @@ get_serialized_size(
     current_alignment += array_size * item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
-  // Member: range_offset
-  {
-    size_t array_size = ros_message.range_offset.size();
-
-    current_alignment += padding +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
-    size_t item_size = sizeof(ros_message.range_offset[0]);
-    current_alignment += array_size * item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
-  }
-  // Member: sats_blocked
-  {
-    size_t array_size = ros_message.sats_blocked.size();
-
-    current_alignment += padding +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
-    size_t item_size = sizeof(ros_message.sats_blocked[0]);
-    current_alignment += array_size * item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
-  }
   // Member: num_vis_sat
   {
     size_t item_size = sizeof(ros_message.num_vis_sat);
-    current_alignment += item_size +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
-  }
-  // Member: num_block_sat
-  {
-    size_t item_size = sizeof(ros_message.num_block_sat);
     current_alignment += item_size +
       eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
   }
@@ -277,8 +228,8 @@ max_serialized_size_GNSSMultipathFix(
     current_alignment += padding +
       eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
 
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
+    current_alignment += array_size * sizeof(uint64_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint64_t));
   }
 
   // Member: enu_gnss_fix
@@ -288,41 +239,11 @@ max_serialized_size_GNSSMultipathFix(
     current_alignment += padding +
       eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
 
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-
-  // Member: range_offset
-  {
-    size_t array_size = 0;
-    full_bounded = false;
-    current_alignment += padding +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
-
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-
-  // Member: sats_blocked
-  {
-    size_t array_size = 0;
-    full_bounded = false;
-    current_alignment += padding +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
-
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
+    current_alignment += array_size * sizeof(uint64_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint64_t));
   }
 
   // Member: num_vis_sat
-  {
-    size_t array_size = 1;
-
-    current_alignment += array_size * sizeof(uint32_t) +
-      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
-  }
-
-  // Member: num_block_sat
   {
     size_t array_size = 1;
 

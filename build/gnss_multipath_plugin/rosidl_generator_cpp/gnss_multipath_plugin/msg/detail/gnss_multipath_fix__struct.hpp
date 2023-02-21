@@ -46,7 +46,6 @@ struct GNSSMultipathFix_
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
       this->num_vis_sat = 0l;
-      this->num_block_sat = 0l;
     }
   }
 
@@ -58,7 +57,6 @@ struct GNSSMultipathFix_
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
       this->num_vis_sat = 0l;
-      this->num_block_sat = 0l;
     }
   }
 
@@ -70,23 +68,14 @@ struct GNSSMultipathFix_
     sensor_msgs::msg::NavSatFix_<ContainerAllocator>;
   _navsatfix_type navsatfix;
   using _enu_true_type =
-    std::vector<float, typename ContainerAllocator::template rebind<float>::other>;
+    std::vector<double, typename ContainerAllocator::template rebind<double>::other>;
   _enu_true_type enu_true;
   using _enu_gnss_fix_type =
-    std::vector<float, typename ContainerAllocator::template rebind<float>::other>;
+    std::vector<double, typename ContainerAllocator::template rebind<double>::other>;
   _enu_gnss_fix_type enu_gnss_fix;
-  using _range_offset_type =
-    std::vector<float, typename ContainerAllocator::template rebind<float>::other>;
-  _range_offset_type range_offset;
-  using _sats_blocked_type =
-    std::vector<int32_t, typename ContainerAllocator::template rebind<int32_t>::other>;
-  _sats_blocked_type sats_blocked;
   using _num_vis_sat_type =
     int32_t;
   _num_vis_sat_type num_vis_sat;
-  using _num_block_sat_type =
-    int32_t;
-  _num_block_sat_type num_block_sat;
 
   // setters for named parameter idiom
   Type & set__header(
@@ -102,39 +91,21 @@ struct GNSSMultipathFix_
     return *this;
   }
   Type & set__enu_true(
-    const std::vector<float, typename ContainerAllocator::template rebind<float>::other> & _arg)
+    const std::vector<double, typename ContainerAllocator::template rebind<double>::other> & _arg)
   {
     this->enu_true = _arg;
     return *this;
   }
   Type & set__enu_gnss_fix(
-    const std::vector<float, typename ContainerAllocator::template rebind<float>::other> & _arg)
+    const std::vector<double, typename ContainerAllocator::template rebind<double>::other> & _arg)
   {
     this->enu_gnss_fix = _arg;
-    return *this;
-  }
-  Type & set__range_offset(
-    const std::vector<float, typename ContainerAllocator::template rebind<float>::other> & _arg)
-  {
-    this->range_offset = _arg;
-    return *this;
-  }
-  Type & set__sats_blocked(
-    const std::vector<int32_t, typename ContainerAllocator::template rebind<int32_t>::other> & _arg)
-  {
-    this->sats_blocked = _arg;
     return *this;
   }
   Type & set__num_vis_sat(
     const int32_t & _arg)
   {
     this->num_vis_sat = _arg;
-    return *this;
-  }
-  Type & set__num_block_sat(
-    const int32_t & _arg)
-  {
-    this->num_block_sat = _arg;
     return *this;
   }
 
@@ -192,16 +163,7 @@ struct GNSSMultipathFix_
     if (this->enu_gnss_fix != other.enu_gnss_fix) {
       return false;
     }
-    if (this->range_offset != other.range_offset) {
-      return false;
-    }
-    if (this->sats_blocked != other.sats_blocked) {
-      return false;
-    }
     if (this->num_vis_sat != other.num_vis_sat) {
-      return false;
-    }
-    if (this->num_block_sat != other.num_block_sat) {
       return false;
     }
     return true;
