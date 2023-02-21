@@ -16,6 +16,8 @@
 #include "std_msgs/msg/detail/header__functions.h"
 // Member `navsatfix`
 #include "sensor_msgs/msg/detail/nav_sat_fix__functions.h"
+// Member `enu_true`
+// Member `enu_gnss_fix`
 // Member `range_offset`
 // Member `sats_blocked`
 #include "rosidl_runtime_c/primitives_sequence_functions.h"
@@ -33,6 +35,16 @@ gnss_multipath_plugin__msg__GNSSMultipathFix__init(gnss_multipath_plugin__msg__G
   }
   // navsatfix
   if (!sensor_msgs__msg__NavSatFix__init(&msg->navsatfix)) {
+    gnss_multipath_plugin__msg__GNSSMultipathFix__fini(msg);
+    return false;
+  }
+  // enu_true
+  if (!rosidl_runtime_c__float__Sequence__init(&msg->enu_true, 0)) {
+    gnss_multipath_plugin__msg__GNSSMultipathFix__fini(msg);
+    return false;
+  }
+  // enu_gnss_fix
+  if (!rosidl_runtime_c__float__Sequence__init(&msg->enu_gnss_fix, 0)) {
     gnss_multipath_plugin__msg__GNSSMultipathFix__fini(msg);
     return false;
   }
@@ -61,6 +73,10 @@ gnss_multipath_plugin__msg__GNSSMultipathFix__fini(gnss_multipath_plugin__msg__G
   std_msgs__msg__Header__fini(&msg->header);
   // navsatfix
   sensor_msgs__msg__NavSatFix__fini(&msg->navsatfix);
+  // enu_true
+  rosidl_runtime_c__float__Sequence__fini(&msg->enu_true);
+  // enu_gnss_fix
+  rosidl_runtime_c__float__Sequence__fini(&msg->enu_gnss_fix);
   // range_offset
   rosidl_runtime_c__float__Sequence__fini(&msg->range_offset);
   // sats_blocked
@@ -84,6 +100,18 @@ gnss_multipath_plugin__msg__GNSSMultipathFix__are_equal(const gnss_multipath_plu
   // navsatfix
   if (!sensor_msgs__msg__NavSatFix__are_equal(
       &(lhs->navsatfix), &(rhs->navsatfix)))
+  {
+    return false;
+  }
+  // enu_true
+  if (!rosidl_runtime_c__float__Sequence__are_equal(
+      &(lhs->enu_true), &(rhs->enu_true)))
+  {
+    return false;
+  }
+  // enu_gnss_fix
+  if (!rosidl_runtime_c__float__Sequence__are_equal(
+      &(lhs->enu_gnss_fix), &(rhs->enu_gnss_fix)))
   {
     return false;
   }
@@ -127,6 +155,18 @@ gnss_multipath_plugin__msg__GNSSMultipathFix__copy(
   // navsatfix
   if (!sensor_msgs__msg__NavSatFix__copy(
       &(input->navsatfix), &(output->navsatfix)))
+  {
+    return false;
+  }
+  // enu_true
+  if (!rosidl_runtime_c__float__Sequence__copy(
+      &(input->enu_true), &(output->enu_true)))
+  {
+    return false;
+  }
+  // enu_gnss_fix
+  if (!rosidl_runtime_c__float__Sequence__copy(
+      &(input->enu_gnss_fix), &(output->enu_gnss_fix)))
   {
     return false;
   }

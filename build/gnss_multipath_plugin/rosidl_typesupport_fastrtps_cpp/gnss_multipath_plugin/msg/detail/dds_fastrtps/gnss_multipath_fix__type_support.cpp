@@ -86,6 +86,14 @@ cdr_serialize(
   sensor_msgs::msg::typesupport_fastrtps_cpp::cdr_serialize(
     ros_message.navsatfix,
     cdr);
+  // Member: enu_true
+  {
+    cdr << ros_message.enu_true;
+  }
+  // Member: enu_gnss_fix
+  {
+    cdr << ros_message.enu_gnss_fix;
+  }
   // Member: range_offset
   {
     cdr << ros_message.range_offset;
@@ -114,6 +122,16 @@ cdr_deserialize(
   // Member: navsatfix
   sensor_msgs::msg::typesupport_fastrtps_cpp::cdr_deserialize(
     cdr, ros_message.navsatfix);
+
+  // Member: enu_true
+  {
+    cdr >> ros_message.enu_true;
+  }
+
+  // Member: enu_gnss_fix
+  {
+    cdr >> ros_message.enu_gnss_fix;
+  }
 
   // Member: range_offset
   {
@@ -157,6 +175,26 @@ get_serialized_size(
   current_alignment +=
     sensor_msgs::msg::typesupport_fastrtps_cpp::get_serialized_size(
     ros_message.navsatfix, current_alignment);
+  // Member: enu_true
+  {
+    size_t array_size = ros_message.enu_true.size();
+
+    current_alignment += padding +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
+    size_t item_size = sizeof(ros_message.enu_true[0]);
+    current_alignment += array_size * item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
+  // Member: enu_gnss_fix
+  {
+    size_t array_size = ros_message.enu_gnss_fix.size();
+
+    current_alignment += padding +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
+    size_t item_size = sizeof(ros_message.enu_gnss_fix[0]);
+    current_alignment += array_size * item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
   // Member: range_offset
   {
     size_t array_size = ros_message.range_offset.size();
@@ -230,6 +268,28 @@ max_serialized_size_GNSSMultipathFix(
         sensor_msgs::msg::typesupport_fastrtps_cpp::max_serialized_size_NavSatFix(
         full_bounded, current_alignment);
     }
+  }
+
+  // Member: enu_true
+  {
+    size_t array_size = 0;
+    full_bounded = false;
+    current_alignment += padding +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
+
+    current_alignment += array_size * sizeof(uint32_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
+  }
+
+  // Member: enu_gnss_fix
+  {
+    size_t array_size = 0;
+    full_bounded = false;
+    current_alignment += padding +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
+
+    current_alignment += array_size * sizeof(uint32_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
 
   // Member: range_offset

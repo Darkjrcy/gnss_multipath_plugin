@@ -5,7 +5,7 @@ set(gnss_multipath_plugin_BUILD_DEPENDS "builtin_interfaces" "rosidl_default_gen
 set(gnss_multipath_plugin_BUILDTOOL_DEPENDS "ament_cmake")
 set(gnss_multipath_plugin_BUILD_EXPORT_DEPENDS "rclcpp" "rclpy")
 set(gnss_multipath_plugin_BUILDTOOL_EXPORT_DEPENDS )
-set(gnss_multipath_plugin_EXEC_DEPENDS "std_msgs" "builtin_interfaces" "rosidl_default_runtime" "rclcpp" "rclpy")
+set(gnss_multipath_plugin_EXEC_DEPENDS "std_msgs" "sensor_msgs" "builtin_interfaces" "rosidl_default_runtime" "rclcpp" "rclpy")
 set(gnss_multipath_plugin_TEST_DEPENDS "ament_lint_auto" "ament_lint_common")
 set(gnss_multipath_plugin_GROUP_DEPENDS )
 set(gnss_multipath_plugin_MEMBER_OF_GROUPS "rosidl_interface_packages")

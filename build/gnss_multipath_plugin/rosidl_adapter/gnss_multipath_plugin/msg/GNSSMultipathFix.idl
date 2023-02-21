@@ -12,6 +12,10 @@ module gnss_multipath_plugin {
 
       sensor_msgs::msg::NavSatFix navsatfix;
 
+      sequence<float> enu_true;
+
+      sequence<float> enu_gnss_fix;
+
       sequence<float> range_offset;
 
       sequence<int32> sats_blocked;

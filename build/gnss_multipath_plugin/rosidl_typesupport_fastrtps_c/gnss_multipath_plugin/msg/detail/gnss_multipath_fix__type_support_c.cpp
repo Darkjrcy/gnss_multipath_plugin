@@ -34,8 +34,8 @@ extern "C"
 {
 #endif
 
-#include "rosidl_runtime_c/primitives_sequence.h"  // range_offset, sats_blocked
-#include "rosidl_runtime_c/primitives_sequence_functions.h"  // range_offset, sats_blocked
+#include "rosidl_runtime_c/primitives_sequence.h"  // enu_gnss_fix, enu_true, range_offset, sats_blocked
+#include "rosidl_runtime_c/primitives_sequence_functions.h"  // enu_gnss_fix, enu_true, range_offset, sats_blocked
 #include "sensor_msgs/msg/detail/nav_sat_fix__functions.h"  // navsatfix
 #include "std_msgs/msg/detail/header__functions.h"  // header
 
@@ -107,6 +107,22 @@ static bool _GNSSMultipathFix__cdr_serialize(
     }
   }
 
+  // Field name: enu_true
+  {
+    size_t size = ros_message->enu_true.size;
+    auto array_ptr = ros_message->enu_true.data;
+    cdr << static_cast<uint32_t>(size);
+    cdr.serializeArray(array_ptr, size);
+  }
+
+  // Field name: enu_gnss_fix
+  {
+    size_t size = ros_message->enu_gnss_fix.size;
+    auto array_ptr = ros_message->enu_gnss_fix.data;
+    cdr << static_cast<uint32_t>(size);
+    cdr.serializeArray(array_ptr, size);
+  }
+
   // Field name: range_offset
   {
     size_t size = ros_message->range_offset.size;
@@ -171,6 +187,36 @@ static bool _GNSSMultipathFix__cdr_deserialize(
     {
       return false;
     }
+  }
+
+  // Field name: enu_true
+  {
+    uint32_t cdrSize;
+    cdr >> cdrSize;
+    size_t size = static_cast<size_t>(cdrSize);
+    if (ros_message->enu_true.data) {
+      rosidl_runtime_c__float__Sequence__fini(&ros_message->enu_true);
+    }
+    if (!rosidl_runtime_c__float__Sequence__init(&ros_message->enu_true, size)) {
+      return "failed to create array for field 'enu_true'";
+    }
+    auto array_ptr = ros_message->enu_true.data;
+    cdr.deserializeArray(array_ptr, size);
+  }
+
+  // Field name: enu_gnss_fix
+  {
+    uint32_t cdrSize;
+    cdr >> cdrSize;
+    size_t size = static_cast<size_t>(cdrSize);
+    if (ros_message->enu_gnss_fix.data) {
+      rosidl_runtime_c__float__Sequence__fini(&ros_message->enu_gnss_fix);
+    }
+    if (!rosidl_runtime_c__float__Sequence__init(&ros_message->enu_gnss_fix, size)) {
+      return "failed to create array for field 'enu_gnss_fix'";
+    }
+    auto array_ptr = ros_message->enu_gnss_fix.data;
+    cdr.deserializeArray(array_ptr, size);
   }
 
   // Field name: range_offset
@@ -238,6 +284,28 @@ size_t get_serialized_size_gnss_multipath_plugin__msg__GNSSMultipathFix(
 
   current_alignment += get_serialized_size_sensor_msgs__msg__NavSatFix(
     &(ros_message->navsatfix), current_alignment);
+  // field.name enu_true
+  {
+    size_t array_size = ros_message->enu_true.size;
+    auto array_ptr = ros_message->enu_true.data;
+    current_alignment += padding +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
+    (void)array_ptr;
+    size_t item_size = sizeof(array_ptr[0]);
+    current_alignment += array_size * item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
+  // field.name enu_gnss_fix
+  {
+    size_t array_size = ros_message->enu_gnss_fix.size;
+    auto array_ptr = ros_message->enu_gnss_fix.data;
+    current_alignment += padding +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
+    (void)array_ptr;
+    size_t item_size = sizeof(array_ptr[0]);
+    current_alignment += array_size * item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
   // field.name range_offset
   {
     size_t array_size = ros_message->range_offset.size;
@@ -317,6 +385,26 @@ size_t max_serialized_size_gnss_multipath_plugin__msg__GNSSMultipathFix(
         max_serialized_size_sensor_msgs__msg__NavSatFix(
         full_bounded, current_alignment);
     }
+  }
+  // member: enu_true
+  {
+    size_t array_size = 0;
+    full_bounded = false;
+    current_alignment += padding +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
+
+    current_alignment += array_size * sizeof(uint32_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
+  }
+  // member: enu_gnss_fix
+  {
+    size_t array_size = 0;
+    full_bounded = false;
+    current_alignment += padding +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, padding);
+
+    current_alignment += array_size * sizeof(uint32_t) +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, sizeof(uint32_t));
   }
   // member: range_offset
   {

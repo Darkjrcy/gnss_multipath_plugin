@@ -1,7 +1,7 @@
 std_msgs/Header header
 sensor_msgs/NavSatFix navsatfix
-float32[] enu_true
-float32[] enu_gnss_fix
+float64[] enu_true
+float64[] enu_gnss_fix
 float32[] range_offset
 int32[] sats_blocked
 int32 num_vis_sat 

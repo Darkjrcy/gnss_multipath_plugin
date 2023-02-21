@@ -380,32 +380,38 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
     // Calculate the reciever's position using the satellite's predicted coordinates and the pseudo-ranges.
     Eigen::Vector3d rec_ecef(0,0,0);              
     GetLeastSquaresEstimate(visible_sat_range_meas,  visible_sat_ecef, rec_ecef);
-    //LeastSquaresEstimate(true_range_,  sat_ecef_, rec_ecef);
-    double x,y,z, latitude=0, longitude=0, altitude=0;
+    double enu_x,enu_y,enu_z, latitude=0, longitude=0, altitude=0;
     g_geodetic_converter.ecef2Geodetic(rec_ecef(0), rec_ecef(1),rec_ecef(2), &latitude,
                       &longitude, &altitude);
     
     g_geodetic_converter.geodetic2Enu(latitude,
-                      longitude, altitude, &x,&y,&z);
-    RCLCPP_INFO(ros_node_->get_logger(), "Lat Lon Alt:%f %f %f",latitude , longitude, altitude);
-    RCLCPP_INFO(ros_node_->get_logger(), "ENU: %f %f %f", x,y,z);
-    RCLCPP_INFO(ros_node_->get_logger(), "True: %f %f %f",true_rec_world_pos_[0],true_rec_world_pos_[1],true_rec_world_pos_[2]);
+                      longitude, altitude, &enu_x,&enu_y,&enu_z);
+    // RCLCPP_INFO(ros_node_->get_logger(), "Lat Lon Alt:%f %f %f",latitude , longitude, altitude);
+    // RCLCPP_INFO(ros_node_->get_logger(), "ENU: %f %f %f", enu_x,enu_y,enu_z);
+    // RCLCPP_INFO(ros_node_->get_logger(), "True: %f %f %f",true_rec_world_pos_[0],true_rec_world_pos_[1],true_rec_world_pos_[2]);
+    
     gnss_multipath_fix_msg.navsatfix.status.status = 1;
+    
     gnss_multipath_fix_msg.navsatfix.latitude = latitude;
     gnss_multipath_fix_msg.navsatfix.longitude = longitude;
     gnss_multipath_fix_msg.navsatfix.altitude = altitude;
-    gnss_multipath_fix_msg.enu_true[0] = true_rec_world_pos_[0];
-    gnss_multipath_fix_msg.enu_true[1] = true_rec_world_pos_[1];
-    gnss_multipath_fix_msg.enu_true[2] = true_rec_world_pos_[2];
-    gnss_multipath_fix_msg.enu_gnss_fix[0] = x;
-    gnss_multipath_fix_msg.enu_gnss_fix[1] = y;
-    gnss_multipath_fix_msg.enu_gnss_fix[2] = z;
+
+    gnss_multipath_fix_msg.enu_gnss_fix[0] = enu_x;
+    gnss_multipath_fix_msg.enu_gnss_fix[1] = enu_y;
+    gnss_multipath_fix_msg.enu_gnss_fix[2] = enu_z;
   }
   else 
   {
+    //RCLCPP_INFO(ros_node_->get_logger(), "No Fix");
     gnss_multipath_fix_msg.navsatfix.status.status = 0;
-    RCLCPP_INFO(ros_node_->get_logger(), "No Fix");
+    gnss_multipath_fix_msg.enu_gnss_fix[0] = NAN;
+    gnss_multipath_fix_msg.enu_gnss_fix[1] = NAN;
+    gnss_multipath_fix_msg.enu_gnss_fix[2] = NAN;
   }
+  gnss_multipath_fix_msg.enu_true[0] = true_rec_world_pos_[0];
+  gnss_multipath_fix_msg.enu_true[1] = true_rec_world_pos_[1];
+  gnss_multipath_fix_msg.enu_true[2] = true_rec_world_pos_[2];
+  
   
   gnss_multipath_fix_msg.range_offset.resize(range_offset.size());
   std::copy(range_offset.begin(),
@@ -444,7 +450,6 @@ bool GazeboRosMultipathSensorPrivate::GetLeastSquaresEstimate(std::vector<double
                  std::vector<std::vector<double>> _sat_ecef, Eigen::Vector3d &_rec_ecef)
 {
   const int nsat = _meas.size();
-  RCLCPP_INFO(ros_node_->get_logger(), "num sat:%d",nsat);
   Eigen::MatrixXd A, b;
   A.resize(nsat, 4);
   b.resize(nsat, 1);

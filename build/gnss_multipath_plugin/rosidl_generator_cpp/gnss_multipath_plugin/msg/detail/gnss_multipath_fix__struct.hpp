@@ -69,6 +69,12 @@ struct GNSSMultipathFix_
   using _navsatfix_type =
     sensor_msgs::msg::NavSatFix_<ContainerAllocator>;
   _navsatfix_type navsatfix;
+  using _enu_true_type =
+    std::vector<float, typename ContainerAllocator::template rebind<float>::other>;
+  _enu_true_type enu_true;
+  using _enu_gnss_fix_type =
+    std::vector<float, typename ContainerAllocator::template rebind<float>::other>;
+  _enu_gnss_fix_type enu_gnss_fix;
   using _range_offset_type =
     std::vector<float, typename ContainerAllocator::template rebind<float>::other>;
   _range_offset_type range_offset;
@@ -93,6 +99,18 @@ struct GNSSMultipathFix_
     const sensor_msgs::msg::NavSatFix_<ContainerAllocator> & _arg)
   {
     this->navsatfix = _arg;
+    return *this;
+  }
+  Type & set__enu_true(
+    const std::vector<float, typename ContainerAllocator::template rebind<float>::other> & _arg)
+  {
+    this->enu_true = _arg;
+    return *this;
+  }
+  Type & set__enu_gnss_fix(
+    const std::vector<float, typename ContainerAllocator::template rebind<float>::other> & _arg)
+  {
+    this->enu_gnss_fix = _arg;
     return *this;
   }
   Type & set__range_offset(
@@ -166,6 +184,12 @@ struct GNSSMultipathFix_
       return false;
     }
     if (this->navsatfix != other.navsatfix) {
+      return false;
+    }
+    if (this->enu_true != other.enu_true) {
+      return false;
+    }
+    if (this->enu_gnss_fix != other.enu_gnss_fix) {
       return false;
     }
     if (this->range_offset != other.range_offset) {

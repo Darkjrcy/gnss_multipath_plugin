@@ -5,6 +5,8 @@
 
 # Import statements for member types
 
+# Member 'enu_true'
+# Member 'enu_gnss_fix'
 # Member 'range_offset'
 # Member 'sats_blocked'
 import array  # noqa: E402, I100
@@ -67,6 +69,8 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
     __slots__ = [
         '_header',
         '_navsatfix',
+        '_enu_true',
+        '_enu_gnss_fix',
         '_range_offset',
         '_sats_blocked',
         '_num_vis_sat',
@@ -76,6 +80,8 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
     _fields_and_field_types = {
         'header': 'std_msgs/Header',
         'navsatfix': 'sensor_msgs/NavSatFix',
+        'enu_true': 'sequence<float>',
+        'enu_gnss_fix': 'sequence<float>',
         'range_offset': 'sequence<float>',
         'sats_blocked': 'sequence<int32>',
         'num_vis_sat': 'int32',
@@ -85,6 +91,8 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
     SLOT_TYPES = (
         rosidl_parser.definition.NamespacedType(['std_msgs', 'msg'], 'Header'),  # noqa: E501
         rosidl_parser.definition.NamespacedType(['sensor_msgs', 'msg'], 'NavSatFix'),  # noqa: E501
+        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('float')),  # noqa: E501
+        rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('float')),  # noqa: E501
         rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('float')),  # noqa: E501
         rosidl_parser.definition.UnboundedSequence(rosidl_parser.definition.BasicType('int32')),  # noqa: E501
         rosidl_parser.definition.BasicType('int32'),  # noqa: E501
@@ -99,6 +107,8 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
         self.header = kwargs.get('header', Header())
         from sensor_msgs.msg import NavSatFix
         self.navsatfix = kwargs.get('navsatfix', NavSatFix())
+        self.enu_true = array.array('f', kwargs.get('enu_true', []))
+        self.enu_gnss_fix = array.array('f', kwargs.get('enu_gnss_fix', []))
         self.range_offset = array.array('f', kwargs.get('range_offset', []))
         self.sats_blocked = array.array('i', kwargs.get('sats_blocked', []))
         self.num_vis_sat = kwargs.get('num_vis_sat', int())
@@ -136,6 +146,10 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
         if self.header != other.header:
             return False
         if self.navsatfix != other.navsatfix:
+            return False
+        if self.enu_true != other.enu_true:
+            return False
+        if self.enu_gnss_fix != other.enu_gnss_fix:
             return False
         if self.range_offset != other.range_offset:
             return False
@@ -179,6 +193,62 @@ class GNSSMultipathFix(metaclass=Metaclass_GNSSMultipathFix):
                 isinstance(value, NavSatFix), \
                 "The 'navsatfix' field must be a sub message of type 'NavSatFix'"
         self._navsatfix = value
+
+    @property
+    def enu_true(self):
+        """Message field 'enu_true'."""
+        return self._enu_true
+
+    @enu_true.setter
+    def enu_true(self, value):
+        if isinstance(value, array.array):
+            assert value.typecode == 'f', \
+                "The 'enu_true' array.array() must have the type code of 'f'"
+            self._enu_true = value
+            return
+        if __debug__:
+            from collections.abc import Sequence
+            from collections.abc import Set
+            from collections import UserList
+            from collections import UserString
+            assert \
+                ((isinstance(value, Sequence) or
+                  isinstance(value, Set) or
+                  isinstance(value, UserList)) and
+                 not isinstance(value, str) and
+                 not isinstance(value, UserString) and
+                 all(isinstance(v, float) for v in value) and
+                 True), \
+                "The 'enu_true' field must be a set or sequence and each value of type 'float'"
+        self._enu_true = array.array('f', value)
+
+    @property
+    def enu_gnss_fix(self):
+        """Message field 'enu_gnss_fix'."""
+        return self._enu_gnss_fix
+
+    @enu_gnss_fix.setter
+    def enu_gnss_fix(self, value):
+        if isinstance(value, array.array):
+            assert value.typecode == 'f', \
+                "The 'enu_gnss_fix' array.array() must have the type code of 'f'"
+            self._enu_gnss_fix = value
+            return
+        if __debug__:
+            from collections.abc import Sequence
+            from collections.abc import Set
+            from collections import UserList
+            from collections import UserString
+            assert \
+                ((isinstance(value, Sequence) or
+                  isinstance(value, Set) or
+                  isinstance(value, UserList)) and
+                 not isinstance(value, str) and
+                 not isinstance(value, UserString) and
+                 all(isinstance(v, float) for v in value) and
+                 True), \
+                "The 'enu_gnss_fix' field must be a set or sequence and each value of type 'float'"
+        self._enu_gnss_fix = array.array('f', value)
 
     @property
     def range_offset(self):

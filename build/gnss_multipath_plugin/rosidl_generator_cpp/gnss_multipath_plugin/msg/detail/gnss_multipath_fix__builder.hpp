@@ -84,16 +84,48 @@ private:
   ::gnss_multipath_plugin::msg::GNSSMultipathFix msg_;
 };
 
+class Init_GNSSMultipathFix_enu_gnss_fix
+{
+public:
+  explicit Init_GNSSMultipathFix_enu_gnss_fix(::gnss_multipath_plugin::msg::GNSSMultipathFix & msg)
+  : msg_(msg)
+  {}
+  Init_GNSSMultipathFix_range_offset enu_gnss_fix(::gnss_multipath_plugin::msg::GNSSMultipathFix::_enu_gnss_fix_type arg)
+  {
+    msg_.enu_gnss_fix = std::move(arg);
+    return Init_GNSSMultipathFix_range_offset(msg_);
+  }
+
+private:
+  ::gnss_multipath_plugin::msg::GNSSMultipathFix msg_;
+};
+
+class Init_GNSSMultipathFix_enu_true
+{
+public:
+  explicit Init_GNSSMultipathFix_enu_true(::gnss_multipath_plugin::msg::GNSSMultipathFix & msg)
+  : msg_(msg)
+  {}
+  Init_GNSSMultipathFix_enu_gnss_fix enu_true(::gnss_multipath_plugin::msg::GNSSMultipathFix::_enu_true_type arg)
+  {
+    msg_.enu_true = std::move(arg);
+    return Init_GNSSMultipathFix_enu_gnss_fix(msg_);
+  }
+
+private:
+  ::gnss_multipath_plugin::msg::GNSSMultipathFix msg_;
+};
+
 class Init_GNSSMultipathFix_navsatfix
 {
 public:
   explicit Init_GNSSMultipathFix_navsatfix(::gnss_multipath_plugin::msg::GNSSMultipathFix & msg)
   : msg_(msg)
   {}
-  Init_GNSSMultipathFix_range_offset navsatfix(::gnss_multipath_plugin::msg::GNSSMultipathFix::_navsatfix_type arg)
+  Init_GNSSMultipathFix_enu_true navsatfix(::gnss_multipath_plugin::msg::GNSSMultipathFix::_navsatfix_type arg)
   {
     msg_.navsatfix = std::move(arg);
-    return Init_GNSSMultipathFix_range_offset(msg_);
+    return Init_GNSSMultipathFix_enu_true(msg_);
   }
 
 private:
