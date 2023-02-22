@@ -100,10 +100,10 @@ if [ -z "$AMENT_RETURN_ENVIRONMENT_HOOKS" ]; then
 fi
 
 # list all environment hooks of this package
-ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/multipath_sim/environment/ament_prefix_path.sh"
-ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/multipath_sim/environment/library_path.sh"
-ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/multipath_sim/environment/path.sh"
-ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/multipath_sim/environment/pythonpath.sh"
+ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/gnss_multipath_plugin/environment/ament_prefix_path.sh"
+ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/gnss_multipath_plugin/environment/library_path.sh"
+ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/gnss_multipath_plugin/environment/path.sh"
+ament_append_value AMENT_ENVIRONMENT_HOOKS "$AMENT_CURRENT_PREFIX/share/gnss_multipath_plugin/environment/pythonpath.sh"
 
 # source all shell-specific environment hooks of this package
 # if not returning them

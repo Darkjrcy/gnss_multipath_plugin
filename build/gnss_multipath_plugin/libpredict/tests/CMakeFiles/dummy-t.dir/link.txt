@@ -1,1 +1,0 @@
-/usr/bin/cc  -Wall -Werror  -rdynamic CMakeFiles/dummy-t.dir/dummy-t.c.o  -o dummy-t   -L/home/kap/ros2_ws/src/gnss_multipath_plugin/build/gnss_multipath_plugin/libpredict/src 

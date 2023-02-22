@@ -1,20 +1,20 @@
 # generated from ament_cmake_export_dependencies/cmake/ament_cmake_export_dependencies-extras.cmake.in
 
-set(_exported_dependencies "std_msgs;builtin_interfaces;std_msgs;builtin_interfaces;rosidl_runtime_c;rosidl_typesupport_interface;std_msgs;builtin_interfaces;std_msgs;builtin_interfaces;std_msgs")
+set(_exported_dependencies "std_msgs;sensor_msgs;builtin_interfaces;std_msgs;builtin_interfaces;sensor_msgs;geometry_msgs;rosidl_runtime_c;rosidl_typesupport_interface;std_msgs;builtin_interfaces;sensor_msgs;geometry_msgs;std_msgs;builtin_interfaces;sensor_msgs;geometry_msgs;std_msgs")
 
 find_package(ament_cmake_libraries QUIET REQUIRED)
 
 # find_package() all dependencies
 # and append their DEFINITIONS INCLUDE_DIRS, LIBRARIES, and LINK_FLAGS
-# variables to multipath_sim_DEFINITIONS, multipath_sim_INCLUDE_DIRS,
-# multipath_sim_LIBRARIES, and multipath_sim_LINK_FLAGS.
+# variables to gnss_multipath_plugin_DEFINITIONS, gnss_multipath_plugin_INCLUDE_DIRS,
+# gnss_multipath_plugin_LIBRARIES, and gnss_multipath_plugin_LINK_FLAGS.
 # Additionally collect the direct dependency names in
-# multipath_sim_DEPENDENCIES as well as the recursive dependency names
-# in multipath_sim_RECURSIVE_DEPENDENCIES.
+# gnss_multipath_plugin_DEPENDENCIES as well as the recursive dependency names
+# in gnss_multipath_plugin_RECURSIVE_DEPENDENCIES.
 if(NOT _exported_dependencies STREQUAL "")
   find_package(ament_cmake_core QUIET REQUIRED)
-  set(multipath_sim_DEPENDENCIES ${_exported_dependencies})
-  set(multipath_sim_RECURSIVE_DEPENDENCIES ${_exported_dependencies})
+  set(gnss_multipath_plugin_DEPENDENCIES ${_exported_dependencies})
+  set(gnss_multipath_plugin_RECURSIVE_DEPENDENCIES ${_exported_dependencies})
   set(_libraries)
   foreach(_dep ${_exported_dependencies})
     if(NOT ${_dep}_FOUND)
@@ -31,7 +31,7 @@ if(NOT _exported_dependencies STREQUAL "")
         if(TARGET "${_target}")
           get_target_property(_include_dirs ${_target} INTERFACE_INCLUDE_DIRECTORIES)
           if(_include_dirs)
-            list_append_unique(multipath_sim_INCLUDE_DIRS "${_include_dirs}")
+            list_append_unique(gnss_multipath_plugin_INCLUDE_DIRS "${_include_dirs}")
           endif()
 
           get_target_property(_imported_configurations ${_target} IMPORTED_CONFIGURATIONS)
@@ -69,24 +69,24 @@ if(NOT _exported_dependencies STREQUAL "")
     endif()
     if(NOT use_modern_cmake)
       if(${_dep}_DEFINITIONS)
-        list_append_unique(multipath_sim_DEFINITIONS "${${_dep}_DEFINITIONS}")
+        list_append_unique(gnss_multipath_plugin_DEFINITIONS "${${_dep}_DEFINITIONS}")
       endif()
       if(${_dep}_INCLUDE_DIRS)
-        list_append_unique(multipath_sim_INCLUDE_DIRS "${${_dep}_INCLUDE_DIRS}")
+        list_append_unique(gnss_multipath_plugin_INCLUDE_DIRS "${${_dep}_INCLUDE_DIRS}")
       endif()
       if(${_dep}_LIBRARIES)
         list(APPEND _libraries "${${_dep}_LIBRARIES}")
       endif()
       if(${_dep}_LINK_FLAGS)
-        list_append_unique(multipath_sim_LINK_FLAGS "${${_dep}_LINK_FLAGS}")
+        list_append_unique(gnss_multipath_plugin_LINK_FLAGS "${${_dep}_LINK_FLAGS}")
       endif()
       if(${_dep}_RECURSIVE_DEPENDENCIES)
-        list_append_unique(multipath_sim_RECURSIVE_DEPENDENCIES "${${_dep}_RECURSIVE_DEPENDENCIES}")
+        list_append_unique(gnss_multipath_plugin_RECURSIVE_DEPENDENCIES "${${_dep}_RECURSIVE_DEPENDENCIES}")
       endif()
     endif()
     if(_libraries)
       ament_libraries_deduplicate(_libraries "${_libraries}")
-      list(APPEND multipath_sim_LIBRARIES "${_libraries}")
+      list(APPEND gnss_multipath_plugin_LIBRARIES "${_libraries}")
     endif()
   endforeach()
 endif()

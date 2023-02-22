@@ -278,22 +278,22 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   timeinfo_->tm_mon = 5 - 1;
   timeinfo_->tm_mday = 15;
   timeinfo_->tm_hour = 2;
-  timeinfo_->tm_min = 35;
+  timeinfo_->tm_min = 17;
   timeinfo_->tm_sec = 0;
   timeinfo_->tm_isdst = 0;
-
-  // GetSatellitesECEF(timeinfo_, sat_ecef_);
-  // GetSatellitesTrueRange(rec_lla_, sat_true_range_);
-  // GetSatellitesAzimuthElevationAngles(rec_lla_, azimuth_, elevation_);
+  // Collect positive elevation satellites ECEF, true ranges and angles 
   GetSatellitesInfo(timeinfo_,rec_lla_, sat_ecef_, sat_true_range_, azimuth_, elevation_ );
-  num_sat_ = sat_true_range_.size();
-  for ( int i = 0; i < num_sat_; i++ )
+  int vis_num_sat_ = sat_true_range_.size();
+  RCLCPP_INFO(ros_node_->get_logger(), "num sat:%d", vis_num_sat_);
+  for ( int i = 0; i < vis_num_sat_; i++ )
   {
     // Setting the azimuth and elevation angles for the satellite ray and the reflected ray for each satellite.
     ray_azimuth_.push_back(azimuth_[i]);
     ray_azimuth_.push_back(azimuth_[i]+ M_PI); // assume reflection is 180 deg azimuth from the direct ray
     ray_elevation_.push_back(elevation_[i]);
     ray_elevation_.push_back(elevation_[i]); // assume reflection has the same elevation as the direct ray
+
+      RCLCPP_INFO(ros_node_->get_logger(), "sat elevation:%f", elevation_[i]*180/M_PI);
   }
   //Updating the ray angles for sateliite and reflected ray.
   SetRayAngles(ray_azimuth_, ray_elevation_);
@@ -319,7 +319,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   std::vector<std::vector<double>> visible_sat_ecef;
   
   // Iterate for all the visible satellites (positive elevation angles)
-  for (int i=0; i < num_sat_; i++)
+  for (int i=0; i < vis_num_sat_; i++)
   {
     // noise
     double noise_;
@@ -327,7 +327,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
     {  
         noise_ = ignition::math::Rand::DblNormal(0.0, 1.0);
     }
-    if (ray_elevation_[2*i] > (20*M_PI)/180)
+    if (ray_elevation_[2*i] > (15*M_PI)/180)
     {
       // ray is obstructed
       if (ray_ranges_[2*i] < _msg->scan().range_max()) 
@@ -339,6 +339,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
         if (mir_ray_range_ < _msg->scan().range_max())
         {
           double range_offset =  mir_ray_range_ * ( 1 + sin(M_PI/2.0 - 2*ray_elevation_[2*i]));
+          // Ignore the offset if the multipath range is too high
           if (range_offset < 100)
           {
             visible_sat_range_meas.push_back(sat_true_range_[i] + range_offset +  noise_);
@@ -369,7 +370,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
       num_sat_blocked_++;
     }
   }
-  if ((num_sat_ - num_sat_blocked_) > 4)
+  if ((vis_num_sat_ - num_sat_blocked_) > 4)
   {
     // Calculate the reciever's position using the satellite's predicted coordinates and the pseudo-ranges.
     Eigen::Vector3d rec_ecef(0,0,0);              
@@ -405,7 +406,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   gnss_multipath_fix_msg.enu_true[0] = true_rec_world_pos_[0];
   gnss_multipath_fix_msg.enu_true[1] = true_rec_world_pos_[1];
   gnss_multipath_fix_msg.enu_true[2] = true_rec_world_pos_[2];
-  gnss_multipath_fix_msg.visible_sat_count = num_sat_ - num_sat_blocked_;
+  gnss_multipath_fix_msg.visible_sat_count = vis_num_sat_ - num_sat_blocked_;
   gnss_multipath_fix_publisher_->publish(gnss_multipath_fix_msg);
 
   // Convert Laser scan to ROS LaserScan
@@ -504,7 +505,7 @@ time_t GazeboRosMultipathSensorPrivate::MakeTimeUTC(const struct tm* timeinfo_ut
 
 void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
 {
-  num_sat_ = 8;
+  num_sat_ = 31;
   RCLCPP_INFO(ros_node_->get_logger(), "Num sat:%d", num_sat_);
   // Initialization of data structures for satellite prediction 
   tle_lines_ = (const char**) calloc(2*num_sat_, sizeof(const char*));
@@ -518,37 +519,137 @@ void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
   {
       sat_orbit_elements_[i] = (predict_orbital_elements_t*) calloc(1, sizeof( predict_orbital_elements_t));
   }
-  //G01
-  tle_lines_[0] = "1 37753U 11036A   23033.10118579 -.00000081  00000+0  00000+0 0  9997";
-  tle_lines_[1] = "2 37753  56.6933  19.7748 0121088  52.9316 129.8426  2.00566862 84583";
 
-  //G04
-  tle_lines_[2] = "1 43873U 18109A   23032.57137684 -.00000044  00000+0  00000+0 0  9992";
-  tle_lines_[3] = "2 43873  55.1375 140.8489 0023229 190.4825 204.0790  2.00558671 30373";
+  
+  tle_lines_[0] = "1 24876U 97035A   23033.20764968 -.00000038  00000+0  00000+0 0  9994";
+  tle_lines_[1] = "2 24876  55.5459 146.7067 0065794  52.6664 307.9046  2.00564086187267";
+ 
+  tle_lines_[2] = "1 26360U 00025A   23033.06431156 -.00000048  00000+0  00000+0 0  9992";
+  tle_lines_[3] = "2 26360  54.2496  69.3979 0045611 194.8807 151.7827  2.00555919166578";
 
-  //G07
-  tle_lines_[4] = "1 32711U 08012A   23032.64592938  .00000056  00000+0  00000+0 0  9990";
-  tle_lines_[5] = "2 32711  54.4610 199.0507 0168701 232.8355 125.5954  2.00572261109059";
+  tle_lines_[4] = "1 27663U 03005A   23033.62997381  .00000047  00000+0  00000+0 0  9997";
+  tle_lines_[5] = "2 27663  55.3642 263.9131 0131905  42.8180 326.5456  2.00551168146626";
 
-  //G08
-  tle_lines_[6] = "1 40730U 15033A   23033.72582779 -.00000076  00000+0  00000+0 0  9996";
-  tle_lines_[7] = "2 40730  55.0217 317.3848 0082059  10.2474 349.9421  2.00566329 55333";
+  tle_lines_[6] = "1 27704U 03010A   23033.55723828 -.00000091  00000+0  00000+0 0  9994";
+  tle_lines_[7] = "2 27704  55.0899  13.9998 0249685 312.4590 223.4527  2.00565951145429";
 
-  //G09
-  tle_lines_[8] = "1 40105U 14045A   23032.56334991 -.00000048  00000+0  00000+0 0  9995";
-  tle_lines_[9] = "2 40105  54.7481 137.6538 0023243 114.6825 245.5467  2.00562646 61376";
+  tle_lines_[8] = "1 28190U 04009A   23034.15509573 -.00000085  00000+0  00000+0 0  9992";
+  tle_lines_[9] = "2 28190  55.8516 324.9248 0088848 128.9769  57.1221  2.00572247138304";
 
-  //G16
-  tle_lines_[10] = "1 27663U 03005A   23033.62997381  .00000047  00000+0  00000+0 0  9997";
-  tle_lines_[11] = "2 27663  55.3642 263.9131 0131905  42.8180 326.5456  2.00551168146626";
+  tle_lines_[10] = "1 28474U 04045A   23033.60153542 -.00000090  00000+0  00000+0 0  9993";
+  tle_lines_[11] = "2 28474  55.4150  14.2264 0202589 283.4591  74.0418  2.00562393133746";
 
-  //G21
-  tle_lines_[12] = "1 27704U 03010A   23033.55723828 -.00000091  00000+0  00000+0 0  9994";
-  tle_lines_[13] = "2 27704  55.0899  13.9998 0249685 312.4590 223.4527  2.00565951145429";
+  tle_lines_[12] = "1 28874U 05038A   23033.61665581 -.00000084  00000+0  00000+0 0  9995";
+  tle_lines_[13] = "2 28874  55.9094 322.3891 0139570 278.1790 267.2996  2.00560021127153";
 
-  //G27
-  tle_lines_[14] = "1 39166U 13023A   23033.18918996 -.00000082  00000+0  00000+0 0  9995";
-  tle_lines_[15] = "2 39166  55.5293 318.6885 0111059  38.9232 321.8895  2.00565200 71193";
+  tle_lines_[14] = "1 29486U 06042A   23033.78720829  .00000046  00000+0  00000+0 0  9993";
+  tle_lines_[15] = "2 29486  54.6970 200.1224 0106835  27.4847 197.4334  2.00565983119862";
+
+  tle_lines_[16] = "1 29601U 06052A   23032.92873802  .00000048  00000+0  00000+0 0  9990";
+  tle_lines_[17] = "2 29601  55.3786 262.8889 0086684  75.9810 285.0549  2.00564342118716";
+    
+  tle_lines_[18] = "1 32260U 07047A   23033.23014611 -.00000051  00000+0  00000+0 0  9995";
+  tle_lines_[19] = "2 32260  53.3839 131.0174 0145380  67.1246 294.4003  2.00563380112126";
+
+  tle_lines_[20] = "1 32384U 07062A   23033.85587446 -.00000084  00000+0  00000+0 0  9994";
+  tle_lines_[21] = "2 32384  56.0351 323.1715 0020102 142.8969  77.6124  2.00574229110895";
+
+  tle_lines_[22] = "1 32711U 08012A   23032.64592938  .00000056  00000+0  00000+0 0  9990";
+  tle_lines_[23] = "2 32711  54.4610 199.0507 0168701 232.8355 125.5954  2.00572261109059";
+
+  tle_lines_[24] = "1 35752U 09043A   23034.15624287 -.00000035  00000+0  00000+0 0  9992";
+  tle_lines_[25] = "2 35752  55.2549  76.2529 0055618  63.8864 319.4178  2.00571659 98673";
+
+  tle_lines_[26] = "1 36585U 10022A   23033.21070384  .00000056  00000+0  00000+0 0  9997";
+  tle_lines_[27] = "2 36585  54.6695 258.2376 0109114  58.2673 124.2846  2.00550759 92904";
+  
+  tle_lines_[28] = "1 37753U 11036A   23033.10118579 -.00000081  00000+0  00000+0 0  9997";
+  tle_lines_[29] = "2 37753  56.6933  19.7748 0121088  52.9316 129.8426  2.00566862 84583";
+
+  tle_lines_[30] = "1 38833U 12053A   23033.33039722  .00000038  00000+0  00000+0 0  9995";
+  tle_lines_[31] = "2 38833  53.5190 193.9407 0135373  49.9651 311.1852  2.00564336 74752";
+
+  tle_lines_[32] = "1 39166U 13023A   23033.18918996 -.00000082  00000+0  00000+0 0  9995";
+  tle_lines_[33] = "2 39166  55.5293 318.6885 0111059  38.9232 321.8895  2.00565200 71193";
+
+  tle_lines_[34] = "1 39533U 14008A   23033.19159522  .00000049  00000+0  00000+0 0  9992";
+  tle_lines_[35] = "2 39533  53.6091 199.4781 0062019 209.5871 150.0417  2.00566418 65548";
+
+  tle_lines_[36] = "1 39741U 14026A   23033.96686822 -.00000082  00000+0  00000+0 0  9994";
+  tle_lines_[37] = "2 39741  56.6508  19.2656 0030744 308.2184  51.5125  2.00572503 63854";
+
+  tle_lines_[38] = "1 39741U 14026A   23033.96686822 -.00000082  00000+0  00000+0 0  9994";
+  tle_lines_[39] = "2 39741  56.6508  19.2656 0030744 308.2184  51.5125  2.00572503 63854";
+
+  tle_lines_[40] = "1 40105U 14045A   23032.56334991 -.00000048  00000+0  00000+0 0  9995";
+  tle_lines_[41] = "2 40105  54.7481 137.6538 0023243 114.6825 245.5467  2.00562646 61376";
+
+  tle_lines_[42] = "1 40294U 14068A   23032.43441650 -.00000049  00000+0  00000+0 0  9997";
+  tle_lines_[43] = "2 40294  55.9964  78.9035 0042465  56.8096 303.6631  2.00557360 60507";
+
+  tle_lines_[44] = "1 40534U 15013A   23033.06804744  .00000058  00000+0  00000+0 0  9991";
+  tle_lines_[45] = "2 40534  53.5692 255.1758 0077227  23.8247 336.6011  2.00567871 57134";
+
+  tle_lines_[46] = "1 40730U 15033A   23033.72582779 -.00000076  00000+0  00000+0 0  9996";
+  tle_lines_[47] = "2 40730  55.0217 317.3848 0082059  10.2474 349.9421  2.00566329 55333";
+
+  tle_lines_[48] = "1 41019U 15062A   23033.28107185 -.00000041  00000+0  00000+0 0  9996";
+  tle_lines_[49] = "2 41019  55.9834  78.7168 0085778 220.7636 138.6587  2.00562556 53141";
+
+  tle_lines_[50] = "1 41328U 16007A   23033.36788295 -.00000045  00000+0  00000+0 0  9999";
+  tle_lines_[51] = "2 41328  54.9593 138.3485 0067345 231.5397 127.8428  2.00559919 51156";
+
+  tle_lines_[52] = "1 43873U 18109A   23032.57137684 -.00000044  00000+0  00000+0 0  9992";
+  tle_lines_[53] = "2 43873  55.1375 140.8489 0023229 190.4825 204.0790  2.00558671 30373";
+
+  tle_lines_[54] = "1 44506U 19056A   23033.40051584 -.00000083  00000+0  00000+0 0  9998";
+  tle_lines_[55] = "2 44506  55.7692  19.9151 0029851 186.7930 347.2623  2.00561526 25382";
+
+  tle_lines_[54] = "1 45854U 20041A   23034.26264002 -.00000033  00000+0  00000+0 0  9992";
+  tle_lines_[55] = "2 45854  55.7045  77.1516 0029948 185.9714 192.1492  2.00567044 19363";
+
+  tle_lines_[56] = "1 46826U 20078A   23032.06127720  .00000047  00000+0  00000+0 0  9997";
+  tle_lines_[57] = "2 46826  54.4254 260.8119 0026417 188.1073  16.6882  2.00564630 16797";
+
+  tle_lines_[58] = "1 48859U 21054A   23033.87596315 -.00000082  00000+0  00000+0 0  9990";
+  tle_lines_[59] = "2 48859  55.2812  21.7836 0009051 219.9340  39.0694  2.00560997 12067";
+
+  tle_lines_[60] = "1 55268U 23009A   23033.46134089  .00000045  00000+0  00000+0 0  9993";
+  tle_lines_[61] = "2 55268  55.1007 196.8026 0008185  97.8399 262.2308  2.00570647   571";
+
+  // //G01
+  // tle_lines_[0] = "1 37753U 11036A   23033.10118579 -.00000081  00000+0  00000+0 0  9997";
+  // tle_lines_[1] = "2 37753  56.6933  19.7748 0121088  52.9316 129.8426  2.00566862 84583";
+
+  // //G04
+  // tle_lines_[2] = "1 43873U 18109A   23032.57137684 -.00000044  00000+0  00000+0 0  9992";
+  // tle_lines_[3] = "2 43873  55.1375 140.8489 0023229 190.4825 204.0790  2.00558671 30373";
+
+  // //G07
+  // tle_lines_[4] = "1 32711U 08012A   23032.64592938  .00000056  00000+0  00000+0 0  9990";
+  // tle_lines_[5] = "2 32711  54.4610 199.0507 0168701 232.8355 125.5954  2.00572261109059";
+
+  // //G08
+  // tle_lines_[6] = "1 40730U 15033A   23033.72582779 -.00000076  00000+0  00000+0 0  9996";
+  // tle_lines_[7] = "2 40730  55.0217 317.3848 0082059  10.2474 349.9421  2.00566329 55333";
+
+  // //G09
+  // tle_lines_[8] = "1 40105U 14045A   23032.56334991 -.00000048  00000+0  00000+0 0  9995";
+  // tle_lines_[9] = "2 40105  54.7481 137.6538 0023243 114.6825 245.5467  2.00562646 61376";
+
+  // //G16
+  // tle_lines_[10] = "1 27663U 03005A   23033.62997381  .00000047  00000+0  00000+0 0  9997";
+  // tle_lines_[11] = "2 27663  55.3642 263.9131 0131905  42.8180 326.5456  2.00551168146626";
+
+  // //G21
+  // tle_lines_[12] = "1 27704U 03010A   23033.55723828 -.00000091  00000+0  00000+0 0  9994";
+  // tle_lines_[13] = "2 27704  55.0899  13.9998 0249685 312.4590 223.4527  2.00565951145429";
+
+  // //G27
+  // tle_lines_[14] = "1 39166U 13023A   23033.18918996 -.00000082  00000+0  00000+0 0  9995";
+  // tle_lines_[15] = "2 39166  55.5293 318.6885 0111059  38.9232 321.8895  2.00565200 71193";
+
+
   
   for ( int i = 0; i < num_sat_; i++ )
   {
@@ -573,10 +674,14 @@ void GazeboRosMultipathSensorPrivate::GetSatellitesInfo(struct tm *_timeinfo, st
     predict_observer_t *obs = predict_create_observer("obs", _rec_lla[0]*M_PI/180.0, _rec_lla[1]*M_PI/180.0, _rec_lla[2]);
     struct predict_observation reciever_obs;
     predict_observe_orbit(obs, &sat_position_[i], &reciever_obs);
-    _sat_ecef.push_back(ecef);
-    _true_range.push_back(reciever_obs.range*1000); //From Km to m  
-    _azimuth.push_back(reciever_obs.azimuth);
-    _elevation.push_back(reciever_obs.elevation);
+    if (reciever_obs.elevation >0)
+    {
+      _sat_ecef.push_back(ecef);
+      _true_range.push_back(reciever_obs.range*1000); //From Km to m  
+      _azimuth.push_back(reciever_obs.azimuth);
+      _elevation.push_back(reciever_obs.elevation);
+    }
+    
   }
 }
 

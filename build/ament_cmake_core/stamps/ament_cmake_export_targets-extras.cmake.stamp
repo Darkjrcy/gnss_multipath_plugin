@@ -1,11 +1,11 @@
 # generated from ament_cmake_export_targets/cmake/ament_cmake_export_targets-extras.cmake.in
 
-set(_exported_targets "multipath_sim__rosidl_generator_c;multipath_sim__rosidl_typesupport_introspection_c;multipath_sim__rosidl_typesupport_c;multipath_sim__rosidl_generator_cpp;multipath_sim__rosidl_typesupport_introspection_cpp;multipath_sim__rosidl_typesupport_cpp")
+set(_exported_targets "gnss_multipath_plugin__rosidl_generator_c;gnss_multipath_plugin__rosidl_typesupport_introspection_c;gnss_multipath_plugin__rosidl_typesupport_c;gnss_multipath_plugin__rosidl_generator_cpp;gnss_multipath_plugin__rosidl_typesupport_introspection_cpp;gnss_multipath_plugin__rosidl_typesupport_cpp")
 
 # include all exported targets
 if(NOT _exported_targets STREQUAL "")
   foreach(_target ${_exported_targets})
-    set(_export_file "${multipath_sim_DIR}/${_target}Export.cmake")
+    set(_export_file "${gnss_multipath_plugin_DIR}/${_target}Export.cmake")
     include("${_export_file}")
 
     # extract the target names associated with the export
@@ -22,6 +22,6 @@ if(NOT _exported_targets STREQUAL "")
     string(REPLACE " " ";" _targets "${_targets}")
     list(LENGTH _targets _length)
 
-    list(APPEND multipath_sim_TARGETS ${_targets})
+    list(APPEND gnss_multipath_plugin_TARGETS ${_targets})
   endforeach()
 endif()

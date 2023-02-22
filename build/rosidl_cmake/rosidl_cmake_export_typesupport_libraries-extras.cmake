@@ -2,9 +2,9 @@
 # rosidl_cmake/cmake/template/rosidl_cmake_export_typesupport_libraries.cmake.in
 
 set(_exported_typesupport_libraries
-  "__rosidl_typesupport_fastrtps_c:multipath_sim__rosidl_typesupport_fastrtps_c;__rosidl_typesupport_fastrtps_cpp:multipath_sim__rosidl_typesupport_fastrtps_cpp")
+  "__rosidl_typesupport_fastrtps_c:gnss_multipath_plugin__rosidl_typesupport_fastrtps_c;__rosidl_typesupport_fastrtps_cpp:gnss_multipath_plugin__rosidl_typesupport_fastrtps_cpp")
 
-# populate multipath_sim_LIBRARIES_<suffix>
+# populate gnss_multipath_plugin_LIBRARIES_<suffix>
 if(NOT _exported_typesupport_libraries STREQUAL "")
   # loop over typesupport libraries
   foreach(_tuple ${_exported_typesupport_libraries})
@@ -17,29 +17,29 @@ if(NOT _exported_typesupport_libraries STREQUAL "")
       set(_lib "NOTFOUND")
       find_library(
         _lib NAMES "${_library}"
-        PATHS "${multipath_sim_DIR}/../../../lib"
+        PATHS "${gnss_multipath_plugin_DIR}/../../../lib"
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH
       )
 
       if(NOT _lib)
         # the library wasn't found
-        message(FATAL_ERROR "Package 'multipath_sim' exports the typesupport library '${_library}' which couldn't be found")
+        message(FATAL_ERROR "Package 'gnss_multipath_plugin' exports the typesupport library '${_library}' which couldn't be found")
       elseif(NOT IS_ABSOLUTE "${_lib}")
         # the found library must be an absolute path
-        message(FATAL_ERROR "Package 'multipath_sim' found the typesupport library '${_library}' at '${_lib}' which is not an absolute path")
+        message(FATAL_ERROR "Package 'gnss_multipath_plugin' found the typesupport library '${_library}' at '${_lib}' which is not an absolute path")
       elseif(NOT EXISTS "${_lib}")
         # the found library must exist
-        message(FATAL_ERROR "Package 'multipath_sim' found the typesupport library '${_lib}' which doesn't exist")
+        message(FATAL_ERROR "Package 'gnss_multipath_plugin' found the typesupport library '${_lib}' which doesn't exist")
       else()
-        list(APPEND multipath_sim_LIBRARIES${_suffix} ${_cfg} "${_lib}")
+        list(APPEND gnss_multipath_plugin_LIBRARIES${_suffix} ${_cfg} "${_lib}")
       endif()
 
     else()
       if(NOT EXISTS "${_library}")
         # the found library must exist
-        message(WARNING "Package 'multipath_sim' exports the typesupport library '${_library}' which doesn't exist")
+        message(WARNING "Package 'gnss_multipath_plugin' exports the typesupport library '${_library}' which doesn't exist")
       else()
-        list(APPEND multipath_sim_LIBRARIES${_suffix} "${_library}")
+        list(APPEND gnss_multipath_plugin_LIBRARIES${_suffix} "${_library}")
       endif()
     endif()
   endforeach()

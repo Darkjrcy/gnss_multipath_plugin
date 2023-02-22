@@ -45,6 +45,7 @@ libpredict/src/sgp4.c
 libpredict/src/sun.c
 libpredict/src/unsorted.c
 libpredict/src/version.c)
+
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/GNSSMultipathFix.msg"
   DEPENDENCIES std_msgs sensor_msgs builtin_interfaces
