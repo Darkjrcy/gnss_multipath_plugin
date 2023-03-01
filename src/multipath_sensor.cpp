@@ -278,13 +278,13 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   timeinfo_->tm_mon = 5 - 1;
   timeinfo_->tm_mday = 15;
   timeinfo_->tm_hour = 2;
-  timeinfo_->tm_min = 17;
+  timeinfo_->tm_min = 30;
   timeinfo_->tm_sec = 0;
   timeinfo_->tm_isdst = 0;
   // Collect positive elevation satellites ECEF, true ranges and angles 
   GetSatellitesInfo(timeinfo_,rec_lla_, sat_ecef_, sat_true_range_, azimuth_, elevation_ );
   int vis_num_sat_ = sat_true_range_.size();
-  RCLCPP_INFO(ros_node_->get_logger(), "num sat:%d", vis_num_sat_);
+  //RCLCPP_INFO(ros_node_->get_logger(), "num sat:%d", vis_num_sat_);
   for ( int i = 0; i < vis_num_sat_; i++ )
   {
     // Setting the azimuth and elevation angles for the satellite ray and the reflected ray for each satellite.
@@ -293,7 +293,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
     ray_elevation_.push_back(elevation_[i]);
     ray_elevation_.push_back(elevation_[i]); // assume reflection has the same elevation as the direct ray
 
-      RCLCPP_INFO(ros_node_->get_logger(), "sat elevation:%f", elevation_[i]*180/M_PI);
+    //RCLCPP_INFO(ros_node_->get_logger(), "sat elevation:%f", elevation_[i]*180/M_PI);
   }
   //Updating the ray angles for sateliite and reflected ray.
   SetRayAngles(ray_azimuth_, ray_elevation_);
@@ -339,9 +339,11 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
         if (mir_ray_range_ < _msg->scan().range_max())
         {
           double range_offset =  mir_ray_range_ * ( 1 + sin(M_PI/2.0 - 2*ray_elevation_[2*i]));
+          // RCLCPP_INFO(ros_node_->get_logger(), "range:%f %f %f ", range_offset,mir_ray_range_, ray_elevation_[2*i] );
           // Ignore the offset if the multipath range is too high
           if (range_offset < 100)
           {
+           
             visible_sat_range_meas.push_back(sat_true_range_[i] + range_offset +  noise_);
             visible_sat_ecef.push_back(sat_ecef_[i]);
           }
@@ -674,7 +676,7 @@ void GazeboRosMultipathSensorPrivate::GetSatellitesInfo(struct tm *_timeinfo, st
     predict_observer_t *obs = predict_create_observer("obs", _rec_lla[0]*M_PI/180.0, _rec_lla[1]*M_PI/180.0, _rec_lla[2]);
     struct predict_observation reciever_obs;
     predict_observe_orbit(obs, &sat_position_[i], &reciever_obs);
-    if (reciever_obs.elevation >0)
+    if (reciever_obs.elevation > 0)
     {
       _sat_ecef.push_back(ecef);
       _true_range.push_back(reciever_obs.range*1000); //From Km to m  

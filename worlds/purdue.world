@@ -36,89 +36,18 @@
       <speed>12</speed>
     </clouds>
     </sky>
-    <!-- <fog>
-      <type>linear</type>
-      <start>10</start>
-      <end>500</end>
-      <density>1</density>
-    </fog> -->
     </scene>
-    <!-- <include>
-      <uri>model://purdue</uri>
-    </include> -->
     <model name="purdue">
       <include>
         <uri>model://purdue</uri>
         <name>purdue</name>
       </include>
-      <pose>0 0 0 0 0 0</pose>  
-      <!-- <pose>0 -60 0 0 0 -0.73</pose>   -->
+      <pose>-40 0 0 0 0 0</pose>  
     </model>
-    <!-- <model name="sphere">
-      <pose>0 0 1 0 0 0</pose>
-      <link name="sphere_link">
-        <visual name="sphere_visual">
-          <geometry>
-            <sphere>
-              <radius>2</radius>
-            </sphere>
-          </geometry>
-          <transparency>0.5</transparency>
-          <plugin name="sphere_plugin" filename="libSphereModelPlugin.so"/>
-        </visual>
-        <collision name='sphere_collision'>
-          <laser_retro>0</laser_retro>
-          <max_contacts>10</max_contacts>
-          <pose>0 0 0 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.02 .01 .01</size>
-            </box>
-          </geometry>
-        </collision>
-      </link>
-    </model> -->
-    
-    <!-- <model name="drone_0">
-      <static>false</static>
-      <pose>37 320 1 0 0 0</pose>
-      <include>
-        <uri>model://x500</uri>
-        <name>drone_0</name>
-      </include>
-    </model>
-    <model name="drone_1">
-      <static>false</static>
-      <pose>37 320 1 0 0 0</pose>
-      <include>
-        <uri>model://x500</uri>
-        <name>drone_0</name>
-      </include>
-    </model>
-    <model name="drone_2">
-      <static>false</static>
-      <pose>37 320 1 0 0 0</pose>
-      <include>
-        <uri>model://x500</uri>
-        <name>drone_0</name>
-      </include>
-    </model>
-    <model name="drone_3">
-      <static>false</static>
-      <pose>37 320 1 0 0 0</pose>
-      <include>
-        <uri>model://x500</uri>
-        <name>drone_0</name>
-      </include>
-    </model> -->
+
     <model name="laser_0">
       <static>false</static>
       <pose>37 320 1 0 0 0</pose>
-      <!-- <include>
-        <uri>model://x500</uri>
-        <name>drone_0</name>
-      </include> -->
-
       <link name="laser_link">
         <visual name="laser_visual">
           <geometry>
@@ -201,17 +130,17 @@
             </range>
           </ray>
           <always_on>true</always_on>
-          <update_rate>10.0</update_rate>
+          <update_rate>1000.0</update_rate>
           <plugin name="laserscan" filename="libGNSSMultipathSensorPlugin.so">
             <ros>
-              <namespace>/multipath</namespace>
+              <namespace>/gnss_multipath_plugin</namespace>
               <remapping>~/out:=scan</remapping>
             </ros>
             <output_type>sensor_msgs/LaserScan</output_type>
             <disableNoise>0</disableNoise>
-            <satNum>8</satNum>
-             <satAzimuth>2.9359 3.3952 5.5647 0.2379 4.0208 1.3869 2.2305 0.6545</satAzimuth>
-            <satElevation>0.7836 0.3240 1.0243 0.9085 0.4755 0.2695 1.0933 0.3891</satElevation>
+            <origin_latitude>40.427751</origin_latitude>
+            <origin_longitude>-86.912004</origin_longitude>
+            <origin_altitude>0</origin_altitude>
           </plugin>
         </sensor>
         <self_collide>0</self_collide>

@@ -114,8 +114,8 @@ def main(args=None):
     rclpy.init(args=args)
     executor = rclpy.get_global_executor()
 
-    start = -610
-    end = 610
+    start = -310
+    end = 310
     num_points = int(abs(end-start +1)/5)
     car_data_x = np.linspace(start,end, num_points)
     car_data_y = np.linspace(start,end,num_points)
