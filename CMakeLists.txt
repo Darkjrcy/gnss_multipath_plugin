@@ -19,32 +19,15 @@ find_package(rclpy REQUIRED)
 find_package(gazebo_ros REQUIRED)
 find_package(gazebo REQUIRED)
 find_package(gazebo_plugins REQUIRED)
-include_directories(include ${GAZEBO_INCLUDE_DIRS})
-add_subdirectory(libpredict)
-# add_library(libpredict SHARED 
-# libpredict/src/julian_date.c 
-# libpredict/src/moon.c 
-# libpredict/src/observer.c 
-# libpredict/src/orbit.c 
-# libpredict/src/refraction.c 
-# libpredict/src/sdp4.c 
-# libpredict/src/sgp4.c 
-# libpredict/src/sun.c
-# libpredict/src/unsorted.c
-# libpredict/src/version.c   
-# )
+find_package(PkgConfig REQUIRED)
+set(ENV{PKG_CONFIG_PATH} "${CMAKE_INSTALL_PREFIX}/../libpredict/lib/pkgconfig/\
+:/usr/share/pkg-config\
+:/usr/lib/pkg-config
+:$ENV{PKG_CONFIG_PATH}")
+pkg_check_modules(PREDICT REQUIRED IMPORTED_TARGET predict)
 
-add_library(GNSSMultipathSensorPlugin SHARED src/multipath_sensor.cpp
-libpredict/src/julian_date.c 
-libpredict/src/moon.c 
-libpredict/src/observer.c 
-libpredict/src/orbit.c 
-libpredict/src/refraction.c 
-libpredict/src/sdp4.c 
-libpredict/src/sgp4.c 
-libpredict/src/sun.c
-libpredict/src/unsorted.c
-libpredict/src/version.c)
+include_directories(include ${GAZEBO_INCLUDE_DIRS})
+add_library(GNSSMultipathSensorPlugin SHARED src/multipath_sensor.cpp)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/GNSSMultipathFix.msg"
@@ -78,7 +61,7 @@ target_include_directories(GNSSMultipathSensorPlugin PUBLIC
 #   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/libpredict/include>
 #   $<INSTALL_INTERFACE:libpredict/include>)  
 
-target_link_libraries(GNSSMultipathSensorPlugin ${GAZEBO_LIBRARIES} ${rclcpp_LIBRARIES} ${std_msgs_LIBRARIES})
+target_link_libraries(GNSSMultipathSensorPlugin ${GAZEBO_LIBRARIES} ${rclcpp_LIBRARIES} ${std_msgs_LIBRARIES} predict)
 ament_target_dependencies(GNSSMultipathSensorPlugin
  "gazebo_ros"
  "rclcpp"
