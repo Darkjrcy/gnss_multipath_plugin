@@ -47,7 +47,7 @@
 
     <model name="laser_0">
       <static>false</static>
-      <pose>37 320 1 0 0 0</pose>
+      <pose>-207 -304 1 0 0 0</pose>
       <link name="laser_link">
         <visual name="laser_visual">
           <geometry>
@@ -112,7 +112,7 @@
           <ray>
             <scan>
               <horizontal>
-                <samples>16</samples>
+                <samples>62</samples>
                 <resolution>1</resolution>
                 <min_angle>0</min_angle>
                 <max_angle>0</max_angle>
@@ -141,8 +141,41 @@
             <origin_latitude>40.427751</origin_latitude>
             <origin_longitude>-86.912004</origin_longitude>
             <origin_altitude>0</origin_altitude>
+            <date_time>15/05/2021 02:30:00</date_time>
           </plugin>
         </sensor>
+
+      <!-- <sensor name="laser_link" type="ray">
+      <visualize>1</visualize>
+      <update_rate>50</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>100</samples>
+            <resolution>1</resolution>
+            <min_angle>1.57</min_angle>
+            <max_angle>-1.57</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.05</min>
+          <max>50.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <alwaysOn>true</alwaysOn>
+      <plugin filename="libgazebo_ros_ray_sensor.so" name="gazebo_ros_laser_link_controller">
+        <ros>
+          <remapping>~/out:=scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+      </plugin>
+    </sensor> -->
         <self_collide>0</self_collide>
       </link>
     </model>

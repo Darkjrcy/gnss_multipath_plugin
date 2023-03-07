@@ -70,164 +70,14 @@ CMakeFiles/GNSSMultipathSensorPlugin.dir/src/multipath_sensor.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/src/multipath_sensor.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/src/multipath_sensor.cpp -o CMakeFiles/GNSSMultipathSensorPlugin.dir/src/multipath_sensor.cpp.s
 
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.o: CMakeFiles/GNSSMultipathSensorPlugin.dir/flags.make
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.o: ../libpredict/src/julian_date.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.o   -c /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/julian_date.c
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/julian_date.c > CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.i
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/julian_date.c -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.s
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.o: CMakeFiles/GNSSMultipathSensorPlugin.dir/flags.make
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.o: ../libpredict/src/moon.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.o   -c /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/moon.c
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/moon.c > CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.i
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/moon.c -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.s
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.o: CMakeFiles/GNSSMultipathSensorPlugin.dir/flags.make
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.o: ../libpredict/src/observer.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.o   -c /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/observer.c
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/observer.c > CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.i
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/observer.c -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.s
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.o: CMakeFiles/GNSSMultipathSensorPlugin.dir/flags.make
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.o: ../libpredict/src/orbit.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.o   -c /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/orbit.c
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/orbit.c > CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.i
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/orbit.c -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.s
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.o: CMakeFiles/GNSSMultipathSensorPlugin.dir/flags.make
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.o: ../libpredict/src/refraction.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.o   -c /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/refraction.c
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/refraction.c > CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.i
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/refraction.c -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.s
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.o: CMakeFiles/GNSSMultipathSensorPlugin.dir/flags.make
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.o: ../libpredict/src/sdp4.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.o   -c /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/sdp4.c
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/sdp4.c > CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.i
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/sdp4.c -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.s
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.o: CMakeFiles/GNSSMultipathSensorPlugin.dir/flags.make
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.o: ../libpredict/src/sgp4.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.o   -c /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/sgp4.c
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/sgp4.c > CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.i
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/sgp4.c -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.s
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.o: CMakeFiles/GNSSMultipathSensorPlugin.dir/flags.make
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.o: ../libpredict/src/sun.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.o   -c /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/sun.c
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/sun.c > CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.i
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/sun.c -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.s
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.o: CMakeFiles/GNSSMultipathSensorPlugin.dir/flags.make
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.o: ../libpredict/src/unsorted.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.o   -c /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/unsorted.c
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/unsorted.c > CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.i
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/unsorted.c -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.s
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.o: CMakeFiles/GNSSMultipathSensorPlugin.dir/flags.make
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.o: ../libpredict/src/version.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.o"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.o   -c /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/version.c
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.i"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/version.c > CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.i
-
-CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.s"
-	/usr/bin/gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/kap/ros2_ws/src/gnss_multipath_plugin/libpredict/src/version.c -o CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.s
-
 # Object files for target GNSSMultipathSensorPlugin
 GNSSMultipathSensorPlugin_OBJECTS = \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/src/multipath_sensor.cpp.o" \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.o" \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.o" \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.o" \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.o" \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.o" \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.o" \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.o" \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.o" \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.o" \
-"CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.o"
+"CMakeFiles/GNSSMultipathSensorPlugin.dir/src/multipath_sensor.cpp.o"
 
 # External object files for target GNSSMultipathSensorPlugin
 GNSSMultipathSensorPlugin_EXTERNAL_OBJECTS =
 
 libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/src/multipath_sensor.cpp.o
-libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/julian_date.c.o
-libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/moon.c.o
-libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/observer.c.o
-libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/orbit.c.o
-libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/refraction.c.o
-libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sdp4.c.o
-libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sgp4.c.o
-libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/sun.c.o
-libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/unsorted.c.o
-libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/libpredict/src/version.c.o
 libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/build.make
 libGNSSMultipathSensorPlugin.so: /usr/lib/x86_64-linux-gnu/libgazebo.so
 libGNSSMultipathSensorPlugin.so: /usr/lib/x86_64-linux-gnu/libgazebo_client.so
@@ -743,7 +593,7 @@ libGNSSMultipathSensorPlugin.so: /opt/ros/foxy/lib/librcpputils.so
 libGNSSMultipathSensorPlugin.so: /opt/ros/foxy/lib/librosidl_runtime_c.so
 libGNSSMultipathSensorPlugin.so: /opt/ros/foxy/lib/librcutils.so
 libGNSSMultipathSensorPlugin.so: CMakeFiles/GNSSMultipathSensorPlugin.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX shared library libGNSSMultipathSensorPlugin.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kap/ros2_ws/src/gnss_multipath_plugin/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX shared library libGNSSMultipathSensorPlugin.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/GNSSMultipathSensorPlugin.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

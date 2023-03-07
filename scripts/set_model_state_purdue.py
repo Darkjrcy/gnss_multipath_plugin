@@ -36,7 +36,7 @@ def quaternion_from_euler(ai, aj, ak):
 
 def target_traj_gps(t, *args):
     car_data_gzb = args[0]
-    index = int((t*10) % car_data_gzb.shape[0])
+    index = int((t*25) % car_data_gzb.shape[0])
     next_index = index + 1
     # Stacking the position, orientation and velocity of the model 
     pos = [car_data_gzb[index,0], car_data_gzb[index,1], 1]
@@ -107,7 +107,7 @@ class TargetTrajNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     executor = rclpy.get_global_executor()
-    #For HonKong Dataset 
+
     data_dir = os.path.abspath( os.path.join(os.path.dirname(__file__), os.pardir)) + "/data/" 
     with open(data_dir + "purdue.json", "r") as fstream:
         data = json.load(fstream)

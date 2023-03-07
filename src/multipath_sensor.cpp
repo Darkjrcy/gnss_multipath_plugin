@@ -107,6 +107,8 @@ public:
 
   void SetRayAngles(std::vector<double> _azimuth, std::vector<double> _elevation); 
   bool GetLeastSquaresEstimate(std::vector<double> _meas, std::vector<std::vector<double>> _sat_ecef, Eigen::Vector3d & _rec_ecef);
+  void CalculateDOP(std::vector<std::vector<double>> _sat_ecef, 
+                    Eigen::Vector3d _rec_ecef, std::vector<double> &_dop);
   void ParseSatelliteTLE();
   void GetSatellitesInfo(struct tm *_timeinfo, std::vector<double> _rec_lla,
       std::vector<std::vector<double>> &_sat_ecef, std::vector<double> &_true_range, std::vector<double> &_azimuth,
@@ -229,10 +231,23 @@ void GazeboRosMultipathSensor::Load(gazebo::sensors::SensorPtr _sensor, sdf::Ele
     ss >> origin_alt_;
     impl_->origin_alt_ = origin_alt_;
   }
+
+  // if(!_sdf->HasElement("date_time"))
+  // {
+  //   RCLCPP_DEBUG(impl_->ros_node_->get_logger(),  "Must provide date and time");
+  // }
+  // else
+  // {
+  //   std::string date_time_ = _sdf->Get<std::string>("date_time");
+  //   std::istringstream ss(date_time_);
+  //   std::string dateTimeFormat{"%d/%m/%Y %H:%M:%S"};
+  //   struct tm timeinfo_;
+  //   ss >> std::get_time( &timeinfo_, dateTimeFormat.c_str());
+  //   impl_->timeinfo_ = &timeinfo_;
+  // }
   // Initializing the converter with the geodetic location of the origin.
   impl_->g_geodetic_converter.initialiseReference(impl_->origin_lat_, impl_->origin_lon_, impl_->origin_alt_);
   RCLCPP_INFO(impl_->ros_node_->get_logger(), "Origin Lat Lon Alt:%f %f %f",impl_->origin_lat_, impl_->origin_lon_, impl_->origin_alt_);
-
   RCLCPP_INFO(impl_->ros_node_->get_logger(), "Num sat:%d", impl_->num_sat_);
   RCLCPP_INFO(impl_->ros_node_->get_logger(), std::filesystem::current_path());
   impl_->ParseSatelliteTLE();
@@ -273,12 +288,13 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   g_geodetic_converter.enu2Geodetic(true_rec_world_pos_[0], true_rec_world_pos_[1],
                               true_rec_world_pos_[2], &rec_lla_[0], &rec_lla_[1], &rec_lla_[2]);
   
+  //RCLCPP_INFO(ros_node_->get_logger(), "time :%d:%d:%d", timeinfo_->tm_year, timeinfo_->tm_mon,timeinfo_->tm_mday );
   // Constructing a time structure for getting satellites position
   timeinfo_->tm_year = 2021 - 1900;
   timeinfo_->tm_mon = 5 - 1;
   timeinfo_->tm_mday = 15;
-  timeinfo_->tm_hour = 2;
-  timeinfo_->tm_min = 30;
+  timeinfo_->tm_hour = 1;
+  timeinfo_->tm_min = 55;
   timeinfo_->tm_sec = 0;
   timeinfo_->tm_isdst = 0;
   // Collect positive elevation satellites ECEF, true ranges and angles 
@@ -292,8 +308,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
     ray_azimuth_.push_back(azimuth_[i]+ M_PI); // assume reflection is 180 deg azimuth from the direct ray
     ray_elevation_.push_back(elevation_[i]);
     ray_elevation_.push_back(elevation_[i]); // assume reflection has the same elevation as the direct ray
-
-    //RCLCPP_INFO(ros_node_->get_logger(), "sat elevation:%f", elevation_[i]*180/M_PI);
+    //RCLCPP_INFO(ros_node_->get_logger(), "sat angle:%f %f", azimuth_[i]*180/M_PI, elevation_[i]*180/M_PI);
   }
   //Updating the ray angles for sateliite and reflected ray.
   SetRayAngles(ray_azimuth_, ray_elevation_);
@@ -314,15 +329,16 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   gnss_multipath_fix_msg.navsatfix.header.frame_id = frame_name_;
   gnss_multipath_fix_msg.enu_true.resize(3);
   gnss_multipath_fix_msg.enu_gnss_fix.resize(3);
+  gnss_multipath_fix_msg.dop.resize(5);
   int num_sat_blocked_ = 0;
   std::vector<double> visible_sat_range_meas;
   std::vector<std::vector<double>> visible_sat_ecef;
   
   // Iterate for all the visible satellites (positive elevation angles)
-  for (int i=0; i < vis_num_sat_; i++)
+  for (int i = 0; i < vis_num_sat_; i++)
   {
     // noise
-    double noise_;
+    double noise_ = 0.0;
     if (!disable_noise_)
     {  
         noise_ = ignition::math::Rand::DblNormal(0.0, 1.0);
@@ -341,9 +357,9 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
           double range_offset =  mir_ray_range_ * ( 1 + sin(M_PI/2.0 - 2*ray_elevation_[2*i]));
           // RCLCPP_INFO(ros_node_->get_logger(), "range:%f %f %f ", range_offset,mir_ray_range_, ray_elevation_[2*i] );
           // Ignore the offset if the multipath range is too high
-          if (range_offset < 100)
+          if (range_offset < 50)
           {
-           
+            //RCLCPP_INFO(ros_node_->get_logger(), "offset:%d %f", i, range_offset);
             visible_sat_range_meas.push_back(sat_true_range_[i] + range_offset +  noise_);
             visible_sat_ecef.push_back(sat_ecef_[i]);
           }
@@ -377,16 +393,14 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
     // Calculate the reciever's position using the satellite's predicted coordinates and the pseudo-ranges.
     Eigen::Vector3d rec_ecef(0,0,0);              
     GetLeastSquaresEstimate(visible_sat_range_meas,  visible_sat_ecef, rec_ecef);
+    std::vector<double> dop;
+    CalculateDOP(visible_sat_ecef, rec_ecef, dop);
     double enu_x,enu_y,enu_z, latitude=0, longitude=0, altitude=0;
     g_geodetic_converter.ecef2Geodetic(rec_ecef(0), rec_ecef(1),rec_ecef(2), &latitude,
                       &longitude, &altitude);
     
     g_geodetic_converter.geodetic2Enu(latitude,
                       longitude, altitude, &enu_x,&enu_y,&enu_z);
-    // RCLCPP_INFO(ros_node_->get_logger(), "Lat Lon Alt:%f %f %f",latitude , longitude, altitude);
-    // RCLCPP_INFO(ros_node_->get_logger(), "ENU: %f %f %f", enu_x,enu_y,enu_z);
-    // RCLCPP_INFO(ros_node_->get_logger(), "True: %f %f %f",true_rec_world_pos_[0],true_rec_world_pos_[1],true_rec_world_pos_[2]);
-    
     gnss_multipath_fix_msg.navsatfix.status.status = 1;
     
     gnss_multipath_fix_msg.navsatfix.latitude = latitude;
@@ -396,6 +410,11 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
     gnss_multipath_fix_msg.enu_gnss_fix[0] = enu_x;
     gnss_multipath_fix_msg.enu_gnss_fix[1] = enu_y;
     gnss_multipath_fix_msg.enu_gnss_fix[2] = enu_z;
+    
+    //Copy DOP values to the message.
+    std::copy(dop.begin(),
+            dop.end(),
+            gnss_multipath_fix_msg.dop.begin());
   }
   else 
   {
@@ -417,8 +436,6 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   ls.header.frame_id = frame_name_;
   // Publish output
   boost::get<LaserScanPub>(pub_)->publish(ls);
-  // rclcpp::Time t2 = rclcpp::Clock{}.now();
-  // RCLCPP_INFO(ros_node_->get_logger(), "Exec time %f", t1.seconds()- t2.seconds());
 }
 
 void GazeboRosMultipathSensorPrivate::SetRayAngles(std::vector<double> _azimuth, std::vector<double> _elevation) 
@@ -428,6 +445,7 @@ void GazeboRosMultipathSensorPrivate::SetRayAngles(std::vector<double> _azimuth,
   ignition::math::Quaterniond ray;
   for(unsigned int i=0; i < _elevation.size(); i++ ) 
   {
+    //RCLCPP_INFO(ros_node_->get_logger(), "ray angle:%f %f", _azimuth[i]*180/M_PI, _elevation[i]*180/M_PI);
     double yaw_angle = _azimuth[i];
     double pitch_angle = _elevation[i];
     // since we're rotating a unit x vector, a pitch rotation will now be
@@ -468,12 +486,70 @@ bool GazeboRosMultipathSensorPrivate::GetLeastSquaresEstimate(std::vector<double
     dx = solver.solve(b);
     _rec_ecef += dx.topRows<3>();
   } while (dx.norm() > 1e-6 && iter < 10);
-  //RCLCPP_INFO(ros_node_->get_logger(), "%f %f %f",_rec_ecef(0),_rec_ecef(1),_rec_ecef(2));
-  // Q = (A.transpose()*A).inverse();
-  // GDOP = math::sqrt(Q.trace());
   return iter < 10;
 }
 
+void GazeboRosMultipathSensorPrivate::CalculateDOP(std::vector<std::vector<double>> _sat_ecef, 
+                    Eigen::Vector3d _rec_ecef, std::vector<double> &_dop)
+{
+  const int nsat = _sat_ecef.size();
+ 
+  Eigen::MatrixXd A, Q, Q_local;
+  A.resize(nsat, 4);
+  for (int i = 0 ; i < nsat; i++)
+  {
+    Eigen::Vector3d sat_pos(_sat_ecef[i][0], _sat_ecef[i][1], _sat_ecef[i][2]);
+    A.block<1,3>(i,0) = (_rec_ecef - sat_pos).normalized();
+    A(i,3) = -1;
+  }
+  Q = (A.transpose()*A).inverse();
+  //GDOP
+  _dop.push_back(std::sqrt(Q.trace()));
+  //PDOP
+  _dop.push_back(std::sqrt((Q.block<3,3>(0,0)).trace()));
+	//TDOP
+  _dop.push_back(std::sqrt(Q(3,3)));
+  double latitude = 0.0, longitude=0.0, altitude=0.0;
+  g_geodetic_converter.ecef2Geodetic(_rec_ecef(0), _rec_ecef(1),_rec_ecef(2), &latitude,
+                      &longitude, &altitude);
+	double phi = latitude; 			
+	double lambda = longitude;	
+
+  double sl = sin(lambda);
+  double cl = cos(lambda);
+  double sp = sin(phi);
+  double cp = cos(phi);
+  
+  Eigen::MatrixXd Rot_matrix(4, 4);
+  Rot_matrix(0, 0) = -cl*sp;
+  Rot_matrix(0, 1) = -sl*sp;
+  Rot_matrix(0, 2) = cp;
+  Rot_matrix(0, 3) = 0;
+
+  Rot_matrix(1, 0) = -sl;
+  Rot_matrix(1, 1) = cl;
+  Rot_matrix(1, 2) = 0;
+  Rot_matrix(1, 3) = 0;
+
+  Rot_matrix(2, 0) = cl*cp;
+  Rot_matrix(2, 1) = cp*sl;
+  Rot_matrix(2, 2) = sp;
+  Rot_matrix(2, 3) = 0;
+
+  Rot_matrix(3, 0) = 0;
+  Rot_matrix(3, 1) = 0;
+  Rot_matrix(3, 2) = 0;
+  Rot_matrix(3, 3) = 1;
+
+	// calculate the local cofactor matrix
+	Q_local = Rot_matrix*Q*Rot_matrix.transpose();
+  // calculate 'HDOP' and 'VDOP' 
+	// HDOP
+  _dop.push_back(std::sqrt(Q_local(0,0)*Q_local(1,1)));
+	// VDOP
+  _dop.push_back(std::sqrt(Q_local(2,2)));
+  //RCLCPP_INFO(ros_node_->get_logger(), "gdop:%f pdop:%f tdop:%f hdop:%f vdop:%f", _dop[0],_dop[1],_dop[2],_dop[3], _dop[4]);
+}
 
 time_t GazeboRosMultipathSensorPrivate::MakeTimeUTC(const struct tm* timeinfo_utc)
 {
@@ -521,7 +597,6 @@ void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
   {
       sat_orbit_elements_[i] = (predict_orbital_elements_t*) calloc(1, sizeof( predict_orbital_elements_t));
   }
-
   
   tle_lines_[0] = "1 24876U 97035A   23033.20764968 -.00000038  00000+0  00000+0 0  9994";
   tle_lines_[1] = "2 24876  55.5459 146.7067 0065794  52.6664 307.9046  2.00564086187267";
@@ -618,39 +693,6 @@ void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
 
   tle_lines_[60] = "1 55268U 23009A   23033.46134089  .00000045  00000+0  00000+0 0  9993";
   tle_lines_[61] = "2 55268  55.1007 196.8026 0008185  97.8399 262.2308  2.00570647   571";
-
-  // //G01
-  // tle_lines_[0] = "1 37753U 11036A   23033.10118579 -.00000081  00000+0  00000+0 0  9997";
-  // tle_lines_[1] = "2 37753  56.6933  19.7748 0121088  52.9316 129.8426  2.00566862 84583";
-
-  // //G04
-  // tle_lines_[2] = "1 43873U 18109A   23032.57137684 -.00000044  00000+0  00000+0 0  9992";
-  // tle_lines_[3] = "2 43873  55.1375 140.8489 0023229 190.4825 204.0790  2.00558671 30373";
-
-  // //G07
-  // tle_lines_[4] = "1 32711U 08012A   23032.64592938  .00000056  00000+0  00000+0 0  9990";
-  // tle_lines_[5] = "2 32711  54.4610 199.0507 0168701 232.8355 125.5954  2.00572261109059";
-
-  // //G08
-  // tle_lines_[6] = "1 40730U 15033A   23033.72582779 -.00000076  00000+0  00000+0 0  9996";
-  // tle_lines_[7] = "2 40730  55.0217 317.3848 0082059  10.2474 349.9421  2.00566329 55333";
-
-  // //G09
-  // tle_lines_[8] = "1 40105U 14045A   23032.56334991 -.00000048  00000+0  00000+0 0  9995";
-  // tle_lines_[9] = "2 40105  54.7481 137.6538 0023243 114.6825 245.5467  2.00562646 61376";
-
-  // //G16
-  // tle_lines_[10] = "1 27663U 03005A   23033.62997381  .00000047  00000+0  00000+0 0  9997";
-  // tle_lines_[11] = "2 27663  55.3642 263.9131 0131905  42.8180 326.5456  2.00551168146626";
-
-  // //G21
-  // tle_lines_[12] = "1 27704U 03010A   23033.55723828 -.00000091  00000+0  00000+0 0  9994";
-  // tle_lines_[13] = "2 27704  55.0899  13.9998 0249685 312.4590 223.4527  2.00565951145429";
-
-  // //G27
-  // tle_lines_[14] = "1 39166U 13023A   23033.18918996 -.00000082  00000+0  00000+0 0  9995";
-  // tle_lines_[15] = "2 39166  55.5293 318.6885 0111059  38.9232 321.8895  2.00565200 71193";
-
 
   
   for ( int i = 0; i < num_sat_; i++ )

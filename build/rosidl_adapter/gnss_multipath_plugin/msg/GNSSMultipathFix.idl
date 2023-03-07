@@ -16,6 +16,8 @@ module gnss_multipath_plugin {
 
       sequence<double> enu_gnss_fix;
 
+      sequence<double> dop;
+
       int32 visible_sat_count;
     };
   };
