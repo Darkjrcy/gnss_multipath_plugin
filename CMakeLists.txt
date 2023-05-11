@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8)
 project(gnss_multipath_plugin)
 
 # Default to C99
@@ -25,7 +25,6 @@ set(ENV{PKG_CONFIG_PATH} "${CMAKE_INSTALL_PREFIX}/../libpredict/lib/pkgconfig/\
 :/usr/lib/pkg-config
 :$ENV{PKG_CONFIG_PATH}")
 pkg_check_modules(PREDICT REQUIRED IMPORTED_TARGET predict)
-
 include_directories(include ${GAZEBO_INCLUDE_DIRS})
 add_library(GNSSMultipathSensorPlugin SHARED src/multipath_sensor.cpp)
 
@@ -55,22 +54,16 @@ if(BUILD_TESTING)
 endif()
 target_include_directories(GNSSMultipathSensorPlugin PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-
-# target_include_directories(libpredict PUBLIC
-#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/libpredict/include>
-#   $<INSTALL_INTERFACE:libpredict/include>)  
-
-target_link_libraries(GNSSMultipathSensorPlugin ${GAZEBO_LIBRARIES} ${rclcpp_LIBRARIES} ${std_msgs_LIBRARIES} predict)
+  $<INSTALL_INTERFACE:include> ${PREDICT_INCLUDE_DIRS} ${PREDICT_LIBRARY_DIRS})
+target_link_libraries(GNSSMultipathSensorPlugin ${GAZEBO_LIBRARIES} ${rclcpp_LIBRARIES} ${std_msgs_LIBRARIES}  ${PREDICT} )
 ament_target_dependencies(GNSSMultipathSensorPlugin
  "gazebo_ros"
  "rclcpp"
  "sensor_msgs"
  "std_msgs")
 
-rosidl_target_interfaces(GNSSMultipathSensorPlugin
- ${PROJECT_NAME} "rosidl_typesupport_cpp")
-
+ rosidl_get_typesupport_target(cpp_typesupport_target ${PROJECT_NAME} "rosidl_typesupport_cpp")
+ target_link_libraries(GNSSMultipathSensorPlugin "${cpp_typesupport_target}")
 install(TARGETS GNSSMultipathSensorPlugin
   DESTINATION lib)
 install(DIRECTORY include/

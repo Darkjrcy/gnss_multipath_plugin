@@ -147,7 +147,7 @@ void GazeboRosMultipathSensor::Load(gazebo::sensors::SensorPtr _sensor, sdf::Ele
   impl_->world_ = gazebo::physics::get_world(worldName);
   std::string parent_entity_name = impl_->parent_ray_sensor_->ParentName();
   impl_->parent_entity_ = impl_->world_->EntityByName("laser_0");
-  RCLCPP_INFO(impl_->ros_node_->get_logger(), parent_entity_name);
+  //RCLCPP_INFO(impl_->ros_node_->get_logger(), parent_entity_name);
   // Get QoS profiles
   const gazebo_ros::QoS & qos = impl_->ros_node_->get_qos();
 
@@ -249,7 +249,7 @@ void GazeboRosMultipathSensor::Load(gazebo::sensors::SensorPtr _sensor, sdf::Ele
   impl_->g_geodetic_converter.initialiseReference(impl_->origin_lat_, impl_->origin_lon_, impl_->origin_alt_);
   RCLCPP_INFO(impl_->ros_node_->get_logger(), "Origin Lat Lon Alt:%f %f %f",impl_->origin_lat_, impl_->origin_lon_, impl_->origin_alt_);
   RCLCPP_INFO(impl_->ros_node_->get_logger(), "Num sat:%d", impl_->num_sat_);
-  RCLCPP_INFO(impl_->ros_node_->get_logger(), std::filesystem::current_path());
+  //RCLCPP_INFO(impl_->ros_node_->get_logger(), std::filesystem::current_path());
   impl_->ParseSatelliteTLE();
   // Create gazebo transport node and subscribe to sensor's laser scan
   impl_->gazebo_node_ = boost::make_shared<gazebo::transport::Node>();
