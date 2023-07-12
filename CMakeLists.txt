@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.5)
 project(gnss_multipath_plugin)
 
 # Default to C99
@@ -55,7 +55,7 @@ endif()
 target_include_directories(GNSSMultipathSensorPlugin PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include> ${PREDICT_INCLUDE_DIRS} ${PREDICT_LIBRARY_DIRS})
-target_link_libraries(GNSSMultipathSensorPlugin ${GAZEBO_LIBRARIES} ${rclcpp_LIBRARIES} ${std_msgs_LIBRARIES}  ${PREDICT} )
+target_link_libraries(GNSSMultipathSensorPlugin ${GAZEBO_LIBRARIES} ${rclcpp_LIBRARIES} ${std_msgs_LIBRARIES}  ${PREDICT_LINK_LIBRARIES})
 ament_target_dependencies(GNSSMultipathSensorPlugin
  "gazebo_ros"
  "rclcpp"
