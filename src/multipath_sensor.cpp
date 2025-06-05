@@ -23,6 +23,7 @@
 
 #include <gazebo/transport/transport.hh>
 #include <gazebo/common/Exception.hh>
+#include <gazebo/common/Events.hh>
 #include <gazebo/physics/physics.hh>
 #include <gazebo/physics/World.hh>
 #include <gazebo/physics/HingeJoint.hh>
@@ -30,12 +31,15 @@
 #include <gazebo/sensors/RaySensor.hh>
 
 #include <gazebo_ros/conversions/sensor_msgs.hpp>
+#include <gazebo_ros/conversions/geometry_msgs.hpp>
 #include <gazebo_ros/node.hpp>
 #include <gazebo_ros/utils.hpp>
 
 #include <rclcpp/rclcpp.hpp>
 #include <rclcpp/logging.hpp>
 #include <rclcpp/time.hpp>
+
+#include <geometry_msgs/msg/twist.hpp>
 
 #include <ignition/math/Rand.hh>
 #include <ignition/math/Vector3.hh>
@@ -75,6 +79,7 @@ public:
 
   /// Gazebo transport topic to subscribe to for laser scan
   std::string sensor_topic_;
+  std::string entity_name_;
 
   /// Minimum intensity value to publish for laser scan / pointcloud messages
   double min_intensity_{0.0};
@@ -118,6 +123,11 @@ public:
   
   //Offset publisher to publish multipath offset
   rclcpp::Publisher<gnss_multipath_plugin::msg::GNSSMultipathFix>::SharedPtr gnss_multipath_fix_publisher_;
+  rclcpp::Publisher<sensor_msgs::msg::NavSatFix>::SharedPtr gnss_multipath_gps_publisher_;
+  rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr gps_vel_publisher_;
+
+  // Get the last publishing time:
+  gazebo::common::Time last_publish_time_;
 };
 
 GazeboRosMultipathSensor::GazeboRosMultipathSensor()
@@ -137,6 +147,9 @@ GazeboRosMultipathSensor::~GazeboRosMultipathSensor()
 
 void GazeboRosMultipathSensor::Load(gazebo::sensors::SensorPtr _sensor, sdf::ElementPtr _sdf)
 {
+  
+  // Get the entity name for the GNSS:
+  impl_->entity_name_ = _sdf->Get<std::string>("entity_name");
   // Initialize time data structure
   impl_->timeinfo_ = (struct tm*)calloc(1, sizeof(struct tm));
   // Create ros_node configured from sdf
@@ -146,11 +159,12 @@ void GazeboRosMultipathSensor::Load(gazebo::sensors::SensorPtr _sensor, sdf::Ele
   std::string worldName = _sensor->WorldName();
   impl_->world_ = gazebo::physics::get_world(worldName);
   std::string parent_entity_name = impl_->parent_ray_sensor_->ParentName();
-  impl_->parent_entity_ = impl_->world_->EntityByName("laser_0");
+  impl_->parent_entity_ = impl_->world_->EntityByName(impl_->entity_name_);
   //RCLCPP_INFO(impl_->ros_node_->get_logger(), parent_entity_name);
   // Get QoS profiles
   const gazebo_ros::QoS & qos = impl_->ros_node_->get_qos();
-
+  // Get the las publishin time from gazebo:
+  impl_->last_publish_time_ = impl_->world_->SimTime();
   // Get QoS profile for the publisher
   rclcpp::QoS pub_qos = qos.get_publisher_qos("~/out", rclcpp::SensorDataQoS().reliable());
 
@@ -175,7 +189,7 @@ void GazeboRosMultipathSensor::Load(gazebo::sensors::SensorPtr _sensor, sdf::Ele
       return;
     }
   }
-  
+
   if (!_sdf->HasElement("min_intensity")) {
     RCLCPP_DEBUG(
       impl_->ros_node_->get_logger(), "missing <min_intensity>, defaults to %f",
@@ -258,6 +272,8 @@ void GazeboRosMultipathSensor::Load(gazebo::sensors::SensorPtr _sensor, sdf::Ele
   // TODO(ironmig): use lazy publisher to only process laser data when output has a subscriber
   impl_->sensor_topic_ = _sensor->Topic();
   impl_->gnss_multipath_fix_publisher_ = impl_->ros_node_->create_publisher<gnss_multipath_plugin::msg::GNSSMultipathFix>("gnss_multipath_fix", 10); 
+  impl_->gnss_multipath_gps_publisher_=impl_->ros_node_->create_publisher<sensor_msgs::msg::NavSatFix>("gnss_gps", 10); 
+  impl_->gps_vel_publisher_=impl_->ros_node_->create_publisher<geometry_msgs::msg::Twist>("gps_vel", 10); 
   impl_->SubscribeGazeboLaserScan();
 }
 
@@ -333,7 +349,21 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   int num_sat_blocked_ = 0;
   std::vector<double> visible_sat_range_meas;
   std::vector<std::vector<double>> visible_sat_ecef;
-  
+  //Publishing the gps of the GNSS GPS
+  sensor_msgs::msg::NavSatFix gnss_gps;
+  gnss_gps.header.stamp = rclcpp::Time(_msg->time().sec(), _msg->time().nsec());
+  gnss_gps.header.frame_id = frame_name_;
+  // Publishing the velocity
+  geometry_msgs::msg::Twist gps_vel;
+  double seconds_since_last_update=(world_->SimTime() - last_publish_time_).Double();
+  double last_x;
+  double last_y;
+  std::vector<double> actual_neu;
+  if (seconds_since_last_update==0)
+  {
+    seconds_since_last_update=-1;
+  }
+  last_publish_time_=world_->SimTime();
   // Iterate for all the visible satellites (positive elevation angles)
   for (int i = 0; i < vis_num_sat_; i++)
   {
@@ -341,6 +371,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
     double noise_ = 0.0;
     if (!disable_noise_)
     {  
+        // White noise
         noise_ = ignition::math::Rand::DblNormal(0.0, 1.0);
     }
     if (ray_elevation_[2*i] > (15*M_PI)/180)
@@ -388,7 +419,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
       num_sat_blocked_++;
     }
   }
-  if ((vis_num_sat_ - num_sat_blocked_) > 4)
+  if ((vis_num_sat_ - num_sat_blocked_) > 3) //Normally 4
   {
     // Calculate the reciever's position using the satellite's predicted coordinates and the pseudo-ranges.
     Eigen::Vector3d rec_ecef(0,0,0);              
@@ -410,7 +441,28 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
     gnss_multipath_fix_msg.enu_gnss_fix[0] = enu_x;
     gnss_multipath_fix_msg.enu_gnss_fix[1] = enu_y;
     gnss_multipath_fix_msg.enu_gnss_fix[2] = enu_z;
+
+    // Publish teh altitude, latirude, and longitude in a new node:
+    gnss_gps.status.status = 1;
     
+    gnss_gps.latitude = latitude;
+    gnss_gps.longitude = longitude;
+    gnss_gps.altitude = altitude;    
+    
+    // Publish the velocity using the gps
+    if (seconds_since_last_update==-1)
+    {
+      last_x=enu_x;
+      last_y=enu_y;
+      gps_vel.linear.x=0;
+      gps_vel.linear.y=0;
+    } else{
+      gps_vel.linear.x=(enu_x-last_x)/seconds_since_last_update; //Change with respect to the update rate:
+      gps_vel.linear.y=(enu_y-last_y)/seconds_since_last_update;
+      last_x=enu_x;
+      last_y=enu_y;
+    }
+
     //Copy DOP values to the message.
     std::copy(dop.begin(),
             dop.end(),
@@ -420,6 +472,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   {
     // RCLCPP_INFO(ros_node_->get_logger(), "No Fix");
     gnss_multipath_fix_msg.navsatfix.status.status = 0;
+    gnss_gps.status.status = 0;
     gnss_multipath_fix_msg.enu_gnss_fix[0] = NAN;
     gnss_multipath_fix_msg.enu_gnss_fix[1] = NAN;
     gnss_multipath_fix_msg.enu_gnss_fix[2] = NAN;
@@ -429,6 +482,9 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   gnss_multipath_fix_msg.enu_true[2] = true_rec_world_pos_[2];
   gnss_multipath_fix_msg.visible_sat_count = vis_num_sat_ - num_sat_blocked_;
   gnss_multipath_fix_publisher_->publish(gnss_multipath_fix_msg);
+  gnss_multipath_gps_publisher_->publish(gnss_gps);
+  gps_vel_publisher_->publish(gps_vel);
+
 
   // Convert Laser scan to ROS LaserScan
   auto ls = gazebo_ros::Convert<sensor_msgs::msg::LaserScan>(*_msg);
@@ -583,7 +639,7 @@ time_t GazeboRosMultipathSensorPrivate::MakeTimeUTC(const struct tm* timeinfo_ut
 
 void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
 {
-  num_sat_ = 31;
+  num_sat_ = 51; //Originally 51
   RCLCPP_INFO(ros_node_->get_logger(), "Num sat:%d", num_sat_);
   // Initialization of data structures for satellite prediction 
   tle_lines_ = (const char**) calloc(2*num_sat_, sizeof(const char*));
@@ -631,7 +687,7 @@ void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
   tle_lines_[20] = "1 32384U 07062A   23033.85587446 -.00000084  00000+0  00000+0 0  9994";
   tle_lines_[21] = "2 32384  56.0351 323.1715 0020102 142.8969  77.6124  2.00574229110895";
 
-  tle_lines_[22] = "1 32711U 08012A   23032.64592938  .00000056  00000+0  00000+0 0  9990";
+  tle_lines_[22] = "1 32711U 08012A   23032.64592938  .00000056  00000+0  00000+0 0  9990"; //4 11-satellites 
   tle_lines_[23] = "2 32711  54.4610 199.0507 0168701 232.8355 125.5954  2.00572261109059";
 
   tle_lines_[24] = "1 35752U 09043A   23034.15624287 -.00000035  00000+0  00000+0 0  9992";
@@ -679,11 +735,8 @@ void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
   tle_lines_[52] = "1 43873U 18109A   23032.57137684 -.00000044  00000+0  00000+0 0  9992";
   tle_lines_[53] = "2 43873  55.1375 140.8489 0023229 190.4825 204.0790  2.00558671 30373";
 
-  tle_lines_[54] = "1 44506U 19056A   23033.40051584 -.00000083  00000+0  00000+0 0  9998";
+  tle_lines_[54] = "1 44506U 19056A   23033.40051584 -.00000083  00000+0  00000+0 0  9998"; //5 27-satellites 
   tle_lines_[55] = "2 44506  55.7692  19.9151 0029851 186.7930 347.2623  2.00561526 25382";
-
-  tle_lines_[54] = "1 45854U 20041A   23034.26264002 -.00000033  00000+0  00000+0 0  9992";
-  tle_lines_[55] = "2 45854  55.7045  77.1516 0029948 185.9714 192.1492  2.00567044 19363";
 
   tle_lines_[56] = "1 46826U 20078A   23032.06127720  .00000047  00000+0  00000+0 0  9997";
   tle_lines_[57] = "2 46826  54.4254 260.8119 0026417 188.1073  16.6882  2.00564630 16797";
@@ -693,6 +746,69 @@ void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
 
   tle_lines_[60] = "1 55268U 23009A   23033.46134089  .00000045  00000+0  00000+0 0  9993";
   tle_lines_[61] = "2 55268  55.1007 196.8026 0008185  97.8399 262.2308  2.00570647   571";
+
+  tle_lines_[62] = "1 45854U 20041A   23034.26264002 -.00000033  00000+0  00000+0 0  9992"; //6 31-satellites
+  tle_lines_[63] = "2 45854  55.7045  77.1516 0029948 185.9714 192.1492  2.00567044 19363";
+
+  tle_lines_[64] = "1 25544U 98067A   23336.68982639  .00000705  00000+0  20032-4 0  9990"; // ISS (ZARYA)
+  tle_lines_[65] = "2 25544  51.6458 312.3924 0006825  45.6224  86.8994 15.50176866302416";
+
+  tle_lines_[66] = "1 33591U 09005A   23336.78231046  .00000022  00000+0  00000+0 0  9991"; // COSMOS 2441
+  tle_lines_[67] = "2 33591  65.8835  10.6343 0015421 212.0573 319.0167 13.71492753204816";
+
+  tle_lines_[68] = "1 43013U 17073A   23336.68968102  .00001320  00000+0  17721-3 0  9996"; // FENGYUN 3D
+  tle_lines_[69] = "2 43013  98.7671  22.3744 0010496  60.3647 299.8618 14.22169261292645";
+
+  tle_lines_[70] = "1 43014U 17073B   23336.68403268  .00001134  00000+0  16483-3 0  9994"; // FENGYUN 3E
+  tle_lines_[71] = "2 43014  98.7701  22.3847 0010669  58.2738 301.9546 14.22256701292678";
+
+  tle_lines_[72] = "1 25338U 98030A   23336.58333612 -.00000047  00000+0  00000+0 0  9996"; // NOAA 15
+  tle_lines_[73] = "2 25338  98.7363 345.6201 0010145  47.2243 312.9661 14.25842157379948";
+
+  tle_lines_[74] = "1 28654U 05018A   23336.72564822  .00000091  00000+0  00000+0 0  9998"; // GPS BIIR-12
+  tle_lines_[75] = "2 28654  55.0495 112.3124 0025531 156.0256 204.1698  2.00558564 69498";
+
+  tle_lines_[76] = "1 29486U 06042A   23336.58487498  .00000245  00000+0  00000+0 0  9993"; // GALILEO 1
+  tle_lines_[77] = "2 29486  56.7452 134.5862 0001234 156.2487  56.9785  1.70477253 84314";
+
+  tle_lines_[78] = "1 43226U 18011A   23336.57623611  .00000042  00000+0  00000+0 0  9994"; // O3B F4 - 7 39 Satellites
+  tle_lines_[79] = "2 43226  0.0412 164.6235 0000235  95.2137 261.3258  1.00270012 21067";
+
+  tle_lines_[80] = "1 37820U 11042A   23336.61869874 -.00000047  00000+0  00000+0 0  9993"; // SES 3 - 8 40 Satellites
+  tle_lines_[81] = "2 37820  0.0473 268.0842 0003035 193.1284 166.8629  1.00270002 44459";
+
+  tle_lines_[82] = "1 37843U 11055A   23336.58663952 -.00000120  00000+0  00000+0 0  9999"; // ECHOSTAR 17 - 9 41 Satellites
+  tle_lines_[83] = "2 37843  0.0112  35.1122 0002091 221.0164  62.3124  1.00270334 44164";
+
+  tle_lines_[84] = "1 28884U 05042A   23336.59899847  .00000076  00000+0  00000+0 0  9994"; // FENGYUN 1D
+  tle_lines_[85] = "2 28884  98.7543 201.4762 0000123 165.0474 195.2548 14.25743222499999";
+
+  tle_lines_[86] = "1 37214U 10063A   23336.58262118  .00000121  00000+0  00000+0 0  9996"; // METOP-B
+  tle_lines_[87] = "2 37214  98.7446 211.3456 0002134  47.2564 313.5761 14.21403416257473";
+
+  tle_lines_[88] = "1 43010U 17071A   23336.57936790  .00000092  00000+0  00000+0 0  9990"; // SENTINEL-5P
+  tle_lines_[89] = "2 43010  97.6261 200.2365 0001523  45.2474 314.7512 14.19812367457891";
+
+  tle_lines_[90] = "1 43613U 18091A   23336.57658938  .00000113  00000+0  00000+0 0  9994"; // METEOSAT 11
+  tle_lines_[91] = "2 43613  98.7426 345.3684 0001235 156.2875 303.0985 14.21469201288847";
+
+  tle_lines_[92] = "1 24208U 96056A   23336.59899365 -.00000056  00000+0  00000+0 0  9999"; // RADARSAT-1
+  tle_lines_[93] = "2 24208  98.5875 345.2112 0000127 356.3156  10.1326 14.19843398247563";
+
+  tle_lines_[94] = "1 41822U 16059A   23336.62343650 -.00000023  00000+0  00000+0 0  9990"; // NOAA 20
+  tle_lines_[95] = "2 41822  98.7394 345.4693 0000154  52.1873 307.7654 14.25844198496873";
+
+  tle_lines_[96] = "1 43012U 17072A   23336.56893665 -.00000034  00000+0  00000+0 0  9995"; // JPSS-1
+  tle_lines_[97] = "2 43012  98.7395 214.4783 0000124  25.2564 334.8676 14.20483763245648";
+
+  tle_lines_[98] = "1 27424U 02022A   23336.61712693 -.00000014  00000+0  00000+0 0  9998"; // AQUA
+  tle_lines_[99] = "2 27424  98.2014 345.1122 0002214 356.2316   3.7499 14.56923289954738";
+
+  tle_lines_[100] = "1 25544U 98067A   23336.57396889 -.00000123  00000+0  00000+0 0  9993"; // ISS 10-51 Satellites
+  tle_lines_[101] = "2 25544  51.6407  42.0623 0001422 259.2353  98.2229 15.49373111404088";
+
+
+
 
   
   for ( int i = 0; i < num_sat_; i++ )

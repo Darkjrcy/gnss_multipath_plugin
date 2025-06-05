@@ -79,41 +79,17 @@
       </link>
     </model> -->
     
-    <!-- <model name="drone_0">
+    <model name="drone_0">
       <static>false</static>
-      <pose>37 320 1 0 0 0</pose>
+      <pose>0 0 1 0 0 0</pose>
       <include>
         <uri>model://x500</uri>
         <name>drone_0</name>
       </include>
     </model>
-    <model name="drone_1">
-      <static>false</static>
-      <pose>37 320 1 0 0 0</pose>
-      <include>
-        <uri>model://x500</uri>
-        <name>drone_0</name>
-      </include>
-    </model>
-    <model name="drone_2">
-      <static>false</static>
-      <pose>37 320 1 0 0 0</pose>
-      <include>
-        <uri>model://x500</uri>
-        <name>drone_0</name>
-      </include>
-    </model>
-    <model name="drone_3">
-      <static>false</static>
-      <pose>37 320 1 0 0 0</pose>
-      <include>
-        <uri>model://x500</uri>
-        <name>drone_0</name>
-      </include>
-    </model> -->
     <model name="laser_0">
       <static>false</static>
-      <pose>37 320 1 0 0 0</pose>
+      <pose>0 0 1 0 0 0</pose>
       <!-- <include>
         <uri>model://x500</uri>
         <name>drone_0</name>
@@ -180,6 +156,7 @@
         </sensor>
         <!-- ray sensor -->
         <sensor name="sensor_ray" type="ray">
+          <visualize>true</visualize>
           <ray>
             <scan>
               <horizontal>

@@ -22,7 +22,7 @@ def generate_launch_description():
   pkg_share = FindPackageShare(package='gnss_multipath_plugin').find('gnss_multipath_plugin')
  
   # Set the path to the world file
-  world_file_name = 'purdue.world'
+  world_file_name = 'purdue_second.world'
 
   
   world_path = os.path.join(pkg_share, 'worlds', world_file_name)
