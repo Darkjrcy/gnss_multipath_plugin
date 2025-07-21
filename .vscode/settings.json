@@ -83,6 +83,15 @@
         "lu": "cpp",
         "qr": "cpp",
         "svd": "cpp",
-        "stdvector": "cpp"
+        "stdvector": "cpp",
+        "charconv": "cpp",
+        "compare": "cpp",
+        "concepts": "cpp",
+        "forward_list": "cpp",
+        "format": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp",
+        "span": "cpp",
+        "stop_token": "cpp"
     }
 }

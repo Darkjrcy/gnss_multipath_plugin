@@ -195,6 +195,12 @@ namespace gnss_multipath_plugin
       impl_->elevation_limit_ = elevation_limit_;
     }
 
+    // Obtain the topic of to publish the GNSS data:
+    std::string cmd_GNSS_topic = "gnss_multipath_fix";
+    if (_sdf->HasElement("cmdGNSSTopic")){
+      cmd_GNSS_topic = _sdf->Get<std::string>("cmdGNSSTopic");
+    }
+
 
 
     // Constructing a time structure for getting satellites position
@@ -208,7 +214,7 @@ namespace gnss_multipath_plugin
     // Open the satellite information:
     impl_->ParseSatelliteTLE();
     // Start the publisher of the ROS2 PointClouds:
-    impl_->gnss_multipath_fix_publisher_ = impl_->ros_node_->create_publisher<gnss_multipath_plugin::msg::GNSSMultipathFix>("gnss_multipath_fix", 10); 
+    impl_->gnss_multipath_fix_publisher_ = impl_->ros_node_->create_publisher<gnss_multipath_plugin::msg::GNSSMultipathFix>(cmd_GNSS_topic, 10); 
     // Start the subscriber of the gz_node of gpu-lidar:
     impl_->gz_node_.Subscribe(impl_->lidar_topic_,std::function<void(const gz::msgs::PointCloudPacked&)>([this](const gz::msgs::PointCloudPacked &msg){
       this->impl_->OnLidarPoints(msg);
@@ -446,7 +452,7 @@ namespace gnss_multipath_plugin
   // Define the Satlleite net and trajecotires:
   void GNSSMultipathPluginPrivate::ParseSatelliteTLE()
   {
-    num_sat_ = 50;
+    num_sat_ = 30; // Maximum ther are 50 satellites in the list.
     RCLCPP_INFO(ros_node_->get_logger(), "Num sat: %d", num_sat_);
 
     // Initialize predict memory
