@@ -361,7 +361,7 @@ namespace gnss_multipath_plugin
     for (int i = 0;i < starting_vis_sat_;i++){
       // Continue incase the vis_num_sat_ is equal to the max number of satellites:
       if (vis_num_sat_ == max_num_sat_){
-        continue;
+        break;
       }
       // Get the azimuth and elevation of each satellite:
       double sat_az = std::fmod(azimuth_[i] + 2 * M_PI, 2 * M_PI);
