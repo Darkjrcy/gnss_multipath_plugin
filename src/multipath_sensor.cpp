@@ -17,6 +17,7 @@
 // - Make the plugin universal so it can be used in any entity inside Gazebo sim
 // - Use Lidars as the sensor as ray sensors are not inside Gazebo sim.
 // - Use the actual date and time for the Satellite trajectory.
+// - Add a SDF configuration to define the number of maximum visible satellites. 
 
 // Basic libraries:
 #include <thread>
@@ -98,6 +99,8 @@ namespace gnss_multipath_plugin
     gz::math::Pose3d current_pose_; // Save the current pose of the entity:
     // Time information for the satellite position:
     struct tm *timeinfo_;
+    // Maximum number of satellites:
+    int max_num_sat_;
 
 
 
@@ -193,6 +196,14 @@ namespace gnss_multipath_plugin
       double elevation_limit_;
       ss >> elevation_limit_;
       impl_->elevation_limit_ = elevation_limit_;
+    }
+    // Maximum number of satellites:
+    if (_sdf->HasElement("MaxSatellites")){
+      std::string max_num_sat = _sdf->Get<std::string>("MaxSatellites");
+      std::istringstream ss(max_num_sat);
+      int max_num_sat_;
+      ss >> max_num_sat_;
+      impl_->max_num_sat_ = max_num_sat_;
     }
 
     // Obtain the topic of to publish the GNSS data:
@@ -348,6 +359,11 @@ namespace gnss_multipath_plugin
     int vis_num_sat_ =  0;//Using the multipath
     // Check which satellites are really visible:
     for (int i = 0;i < starting_vis_sat_;i++){
+      // Continue incase the vis_num_sat_ is equal to the max number of satellites:
+      if (vis_num_sat_ == max_num_sat_){
+        continue;
+      }
+      // Get the azimuth and elevation of each satellite:
       double sat_az = std::fmod(azimuth_[i] + 2 * M_PI, 2 * M_PI);
       double sat_elev = elevation_[i];
       // Add the noise in case is not disabled
@@ -452,7 +468,7 @@ namespace gnss_multipath_plugin
   // Define the Satlleite net and trajecotires:
   void GNSSMultipathPluginPrivate::ParseSatelliteTLE()
   {
-    num_sat_ = 30; // Maximum ther are 50 satellites in the list.
+    num_sat_ = 50; // Maximum ther are 50 satellites in the list.
     RCLCPP_INFO(ros_node_->get_logger(), "Num sat: %d", num_sat_);
 
     // Initialize predict memory
