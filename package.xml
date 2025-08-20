@@ -14,8 +14,6 @@
   <build_depend>eigen3</build_depend>
   <exec_depend>eigen3</exec_depend>
 
-
-  <!-- Messages dependencies-->
   <buildtool_depend>rosidl_default_generators</buildtool_depend>
   <depend>std_msgs</depend>
   <depend>sensor_msgs</depend>
