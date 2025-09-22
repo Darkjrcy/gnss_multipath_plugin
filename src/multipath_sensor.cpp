@@ -622,7 +622,7 @@ bool GazeboRosMultipathSensorPrivate::GetLeastSquaresEstimate(std::vector<double
   b.resize(nsat, 1);
   Eigen::Matrix<double, 4, 1> dx;
   Eigen::ColPivHouseholderQR<Eigen::MatrixXd> solver;
-  double cdt = 0;
+  double dt = 0.0;
   int iter = 0;
   do
   {
@@ -633,13 +633,14 @@ bool GazeboRosMultipathSensorPrivate::GetLeastSquaresEstimate(std::vector<double
       Eigen::Vector3d sat_pos(_sat_ecef[i][0], _sat_ecef[i][1], _sat_ecef[i][2]);
       double dist = (_rec_ecef - sat_pos).norm();
       A.block<1,3>(i,0) = (_rec_ecef - sat_pos).normalized();
-      b(i) = _meas[i] - (dist + cdt);
-      A(i,3) = -1;
+      b(i) = _meas[i] - (dist + c0_*dt);
+      A(i,3) = c0_;
       
     }
     solver.compute(A);
     dx = solver.solve(b);
     _rec_ecef += dx.topRows<3>();
+    dt = dx[3];
   } while (dx.norm() > 1e-6 && iter < 10);
   return iter < 10;
 }
