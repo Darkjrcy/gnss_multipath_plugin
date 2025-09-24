@@ -42,7 +42,6 @@
 #include <geometry_msgs/msg/twist.hpp>
 #include <std_msgs/msg/bool.hpp>
 
-
 #include <ignition/math/Rand.hh>
 #include <ignition/math/Vector3.hh>
 #include <ignition/math/Matrix3.hh>
@@ -97,7 +96,8 @@ public:
   gazebo::physics::EntityPtr parent_entity_;
 
   // Time information to get the satellite position
-  struct tm *timeinfo_;
+  time_t utc_anchor_;
+  double sim_anchor_;
 
   // Varible to define if the Noise is used or not:
   bool disable_noise_;
@@ -124,6 +124,8 @@ public:
   // Speed of ligth used for hte delay:
   double c0_ = 299792458; //m/s
 
+  
+
   // Boolean to start the dropout:
   bool dropout_flag_{false};
   
@@ -131,15 +133,13 @@ public:
 
   // Define the funcitons:
   void SetRayAngles(std::vector<double> _azimuth, std::vector<double> _elevation); 
-  bool GetLeastSquaresEstimate(std::vector<double> _meas, std::vector<std::vector<double>> _sat_ecef, Eigen::Vector3d & _rec_ecef);
+  bool GetLeastSquaresEstimate(std::vector<double>& _meas, std::vector<std::vector<double>>& _sat_ecef, Eigen::Vector3d& _rec_ecef);
   void CalculateDOP(std::vector<std::vector<double>> _sat_ecef, 
                     Eigen::Vector3d _rec_ecef, std::vector<double> &_dop);
   void ParseSatelliteTLE();
-  void GetSatellitesInfo(struct tm *_timeinfo, std::vector<double> _rec_lla,
+  void GetSatellitesInfo(predict_julian_date_t jd, std::vector<double> _rec_lla,
       std::vector<std::vector<double>> &_sat_ecef, std::vector<double> &_true_range, std::vector<double> &_azimuth,
       std::vector<double> &_elevation);
-  time_t MakeTimeUTC(const struct tm* timeinfo_utc);
-  
 
 
   //Offset publisher to publish multipath offset
@@ -185,8 +185,6 @@ void GazeboRosMultipathSensor::Load(gazebo::sensors::SensorPtr _sensor, sdf::Ele
   
   // Get the entity name for the GNSS:
   impl_->entity_name_ = _sdf->Get<std::string>("entity_name");
-  // Initialize time data structure
-  impl_->timeinfo_ = (struct tm*)calloc(1, sizeof(struct tm));
   // Create ros_node configured from sdf
   impl_->ros_node_ = gazebo_ros::Node::Get(_sdf);
   impl_->parent_ray_sensor_ =
@@ -320,25 +318,10 @@ void GazeboRosMultipathSensor::Load(gazebo::sensors::SensorPtr _sensor, sdf::Ele
   // Save the vlaue in the bsae variable:
   impl_->base_max_num_sat_ = impl_->max_num_sat_;
 
+  // Anchor times to modify the timeinfo_:
+  impl_->sim_anchor_ = impl_->world_->SimTime().Double();
+  impl_->utc_anchor_ = std::time(nullptr);
 
-  // Constructing a time structure for getting satellites position
-  std::time_t now = std::time(nullptr);
-  impl_->timeinfo_ = std::gmtime(&now);
-
-
-  // if(!_sdf->HasElement("date_time"))
-  // {
-  //   RCLCPP_DEBUG(impl_->ros_node_->get_logger(),  "Must provide date and time");
-  // }
-  // else
-  // {
-  //   std::string date_time_ = _sdf->Get<std::string>("date_time");
-  //   std::istringstream ss(date_time_);
-  //   std::string dateTimeFormat{"%d/%m/%Y %H:%M:%S"};
-  //   struct tm timeinfo_;
-  //   ss >> std::get_time( &timeinfo_, dateTimeFormat.c_str());
-  //   impl_->timeinfo_ = &timeinfo_;
-  // }
   // Initializing the converter with the geodetic location of the origin.
   impl_->g_geodetic_converter.initialiseReference(impl_->origin_lat_, impl_->origin_lon_, impl_->origin_alt_);
   RCLCPP_INFO(impl_->ros_node_->get_logger(), "Origin Lat Lon Alt:%f %f %f",impl_->origin_lat_, impl_->origin_lon_, impl_->origin_alt_);
@@ -376,11 +359,25 @@ void GazeboRosMultipathSensorPrivate::SubscribeGazeboLaserScan()
 // Function to publish the laser Scan messages and use their information:
 void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr & _msg)
 {
-  //rclcpp::Time t1 = rclcpp::Clock{}.now();
+  // Constructing a time structure for getting satellites position
+  double sim_now = world_->SimTime().Double();
+  double dt_s = sim_now - sim_anchor_;
+  time_t t_utc = utc_anchor_ + static_cast<time_t>(dt_s);
+  double frac_s = dt_s - std::floor(dt_s);
+  predict_julian_date_t update_time = predict_to_julian(t_utc) + frac_s/86400.0;
+  
+  //Satellite characteristics needed for the position and velcoity estimation:
+  // True satellite range:
   std::vector<double> sat_true_range_;
+  // Satellite ECEF position:
   std::vector<std::vector<double>> sat_ecef_;
+  std::vector<std::vector<double>> sat_ecef_vel_;
+  // Satellites angle characteristics
   std::vector<double> elevation_;
   std::vector<double> azimuth_; 
+  // Meassured range rate:
+  std::vector<double> rec_dot_;
+  // Ray requirements:
   std::vector<double> ray_elevation_;
   std::vector<double> ray_azimuth_;
   std::vector<double> rec_lla_{0,0,0};
@@ -392,7 +389,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   
   //RCLCPP_INFO(ros_node_->get_logger(), "time :%d:%d:%d", timeinfo_->tm_year, timeinfo_->tm_mon,timeinfo_->tm_mday );
   // Collect positive elevation satellites ECEF, true ranges and angles 
-  GetSatellitesInfo(timeinfo_,rec_lla_, sat_ecef_, sat_true_range_, azimuth_, elevation_ );
+  GetSatellitesInfo(update_time,rec_lla_, sat_ecef_, sat_true_range_, azimuth_, elevation_);
   int vis_num_sat_ = sat_true_range_.size();
   //RCLCPP_INFO(ros_node_->get_logger(), "num sat:%d", vis_num_sat_);
   for ( int i = 0; i < vis_num_sat_; i++ )
@@ -424,6 +421,8 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
   gnss_multipath_fix_msg.enu_gnss_fix.resize(3);
   gnss_multipath_fix_msg.dop.resize(5);
   int num_sat_blocked_ = 0;
+  
+  // Variables to safe the visible range_meas, range rel vel, sat_ecef position and velocity:
   std::vector<double> visible_sat_range_meas;
   std::vector<std::vector<double>> visible_sat_ecef;
 
@@ -519,6 +518,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
     // Calculate the reciever's position using the satellite's predicted coordinates and the pseudo-ranges.
     Eigen::Vector3d rec_ecef(0,0,0);              
     GetLeastSquaresEstimate(visible_sat_range_meas,  visible_sat_ecef, rec_ecef);
+    // Calculate the DOP:
     std::vector<double> dop;
     CalculateDOP(visible_sat_ecef, rec_ecef, dop);
     double enu_x,enu_y,enu_z, latitude=0, longitude=0, altitude=0;
@@ -535,7 +535,7 @@ void GazeboRosMultipathSensorPrivate::PublishLaserScan(ConstLaserScanStampedPtr 
 
     gnss_multipath_fix_msg.enu_gnss_fix[0] = enu_x;
     gnss_multipath_fix_msg.enu_gnss_fix[1] = enu_y;
-    gnss_multipath_fix_msg.enu_gnss_fix[2] = enu_z;
+    gnss_multipath_fix_msg.enu_gnss_fix[2] = true_rec_world_pos_[2];
 
     // Publish teh altitude, latirude, and longitude in a new node:
     gnss_gps.status.status = 1;
@@ -613,8 +613,7 @@ void GazeboRosMultipathSensorPrivate::SetRayAngles(std::vector<double> _azimuth,
 
 
 // Solve dor the reciever position using Least Squares 
-bool GazeboRosMultipathSensorPrivate::GetLeastSquaresEstimate(std::vector<double> _meas,
-                 std::vector<std::vector<double>> _sat_ecef, Eigen::Vector3d &_rec_ecef)
+bool GazeboRosMultipathSensorPrivate::GetLeastSquaresEstimate(std::vector<double>& _meas, std::vector<std::vector<double>>& _sat_ecef, Eigen::Vector3d& _rec_ecef)
 {
   const int nsat = _meas.size();
   Eigen::MatrixXd A, b;
@@ -622,7 +621,7 @@ bool GazeboRosMultipathSensorPrivate::GetLeastSquaresEstimate(std::vector<double
   b.resize(nsat, 1);
   Eigen::Matrix<double, 4, 1> dx;
   Eigen::ColPivHouseholderQR<Eigen::MatrixXd> solver;
-  double dt = 0.0;
+  double c0dt = 0.0;
   int iter = 0;
   do
   {
@@ -633,16 +632,15 @@ bool GazeboRosMultipathSensorPrivate::GetLeastSquaresEstimate(std::vector<double
       Eigen::Vector3d sat_pos(_sat_ecef[i][0], _sat_ecef[i][1], _sat_ecef[i][2]);
       double dist = (_rec_ecef - sat_pos).norm();
       A.block<1,3>(i,0) = (_rec_ecef - sat_pos).normalized();
-      b(i) = _meas[i] - (dist + c0_*dt);
-      A(i,3) = c0_;
+      b(i) = _meas[i] - (dist + c0dt);
+      A(i,3) = -1;
       
     }
     solver.compute(A);
     dx = solver.solve(b);
     _rec_ecef += dx.topRows<3>();
-    dt = dx[3];
   } while (dx.norm() > 1e-6 && iter < 10);
-  return iter < 10;
+  return iter < 15;
 }
 
 
@@ -708,35 +706,6 @@ void GazeboRosMultipathSensorPrivate::CalculateDOP(std::vector<std::vector<doubl
   //RCLCPP_INFO(ros_node_->get_logger(), "gdop:%f pdop:%f tdop:%f hdop:%f vdop:%f", _dop[0],_dop[1],_dop[2],_dop[3], _dop[4]);
 }
 
-time_t GazeboRosMultipathSensorPrivate::MakeTimeUTC(const struct tm* timeinfo_utc)
-{
-	time_t curr_time = time(NULL);
-	int timezone_diff = 0; //deviation of the current timezone from UTC in seconds
-
-	//get UTC time, interpret resulting tm as a localtime
-	struct tm timeinfo_gmt;
-	gmtime_r(&curr_time, &timeinfo_gmt);
-	time_t time_gmt = mktime(&timeinfo_gmt);
-
-	//get localtime, interpret resulting tm as localtime
-	struct tm timeinfo_local;
-	localtime_r(&curr_time, &timeinfo_local);
-	time_t time_local = mktime(&timeinfo_local);
-
-	//find the time difference between the two interpretations
-	timezone_diff += difftime(time_local, time_gmt);
-
-	//hack for preventing mktime from assuming localtime: add timezone difference to the input struct.
-	struct tm ret_timeinfo;
-	ret_timeinfo.tm_sec = timeinfo_utc->tm_sec + timezone_diff;
-	ret_timeinfo.tm_min = timeinfo_utc->tm_min;
-	ret_timeinfo.tm_hour = timeinfo_utc->tm_hour;
-	ret_timeinfo.tm_mday = timeinfo_utc->tm_mday;
-	ret_timeinfo.tm_mon = timeinfo_utc->tm_mon;
-	ret_timeinfo.tm_year = timeinfo_utc->tm_year;
-	ret_timeinfo.tm_isdst = timeinfo_utc->tm_isdst;
-	return mktime(&ret_timeinfo);
-}
 
 void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
 {
@@ -916,21 +885,23 @@ void GazeboRosMultipathSensorPrivate::ParseSatelliteTLE()
   }
 }
 
-void GazeboRosMultipathSensorPrivate::GetSatellitesInfo(struct tm *_timeinfo, std::vector<double> _rec_lla,
+void GazeboRosMultipathSensorPrivate::GetSatellitesInfo(predict_julian_date_t jd, std::vector<double> _rec_lla,
       std::vector<std::vector<double>> &_sat_ecef, std::vector<double> &_true_range, std::vector<double> &_azimuth,
       std::vector<double> &_elevation)
 {
-  // Predict the julian time using the current utc time
-  predict_julian_date_t curr_time = predict_to_julian(MakeTimeUTC(_timeinfo));
-  std::vector<double> ecef = {0,0,0};
+  // Safe the ecf position of the satellite:
+  std::vector<double> ecef(3, 0.0);
   for ( int i = 0; i < num_sat_; i++ )
   {
     // Predict satellite's position based on the current time.
-    predict_orbit(sat_orbit_elements_[i], &sat_position_[i], curr_time);
+    predict_orbit(sat_orbit_elements_[i], &sat_position_[i], jd);
+    // Change the latitude and altitude to ECEF coordinates.
     g_geodetic_converter.geodetic2Ecef(sat_position_[i].latitude*180.0/M_PI, sat_position_[i].longitude*180.0/M_PI , 
                   sat_position_[i].altitude*1000 , &ecef[0], &ecef[1], &ecef[2]);
     predict_observer_t *obs = predict_create_observer("obs", _rec_lla[0]*M_PI/180.0, _rec_lla[1]*M_PI/180.0, _rec_lla[2]);
     struct predict_observation reciever_obs;
+
+    // Get the realtive conditions of the obsver from the satellite
     predict_observe_orbit(obs, &sat_position_[i], &reciever_obs);
     if (reciever_obs.elevation > 0)
     {
@@ -939,6 +910,9 @@ void GazeboRosMultipathSensorPrivate::GetSatellitesInfo(struct tm *_timeinfo, st
       _azimuth.push_back(reciever_obs.azimuth);
       _elevation.push_back(reciever_obs.elevation);
     }
+    // Eliminate hte observer to avoid leakages:
+    predict_destroy_observer(obs);
+    
     
   }
 }
