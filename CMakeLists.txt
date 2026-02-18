@@ -16,13 +16,16 @@ find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(builtin_interfaces REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
-find_package(gz-sim8 REQUIRED) 
+find_package(gz-sim7 REQUIRED) 
 find_package(gz-math7 REQUIRED)
 find_package(gz-plugin2 REQUIRED)
 
 # Add the libpredict library for the Satellite simualtion:
 find_package(PkgConfig REQUIRED)
-set(ENV{PKG_CONFIG_PATH} "${CMAKE_INSTALL_PREFIX}/../libpredict/lib/pkgconfig:/usr/lib/pkgconfig:$ENV{PKG_CONFIG_PATH}")
+set(ENV{PKG_CONFIG_PATH} "${CMAKE_INSTALL_PREFIX}/../libpredict/lib/pkgconfig/\
+:/usr/share/pkg-config\
+:/usr/lib/pkg-config
+:$ENV{PKG_CONFIG_PATH}")
 pkg_check_modules(PREDICT REQUIRED IMPORTED_TARGET predict)
 
 # Make the message avaliable for the plugin:
@@ -46,7 +49,7 @@ add_library(gnss_multipath_plugin_node SHARED
 ament_target_dependencies(gnss_multipath_plugin_node
   rclcpp
   sensor_msgs
-  gz-sim8
+  gz-sim7
   gz-math7
   gz-plugin2
 )

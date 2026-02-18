@@ -18,7 +18,7 @@
   <depend>std_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>builtin_interfaces</depend>
-  <depend>gz-sim8</depend>
+  <depend>gz-sim7</depend>
   <depend>gz-plugin2</depend>
   <build_depend>libpredict</build_depend>
   <exec_depend>libpredict</exec_depend>
