@@ -33,6 +33,7 @@ pkg_check_modules(PREDICT REQUIRED IMPORTED_TARGET predict)
 # Make the message avaliable for the plugin:
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/GNSSMultipathFix.msg"
+  "msg/AdsbInfo.msg"
   DEPENDENCIES std_msgs sensor_msgs builtin_interfaces
 )
 
