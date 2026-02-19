@@ -43,6 +43,7 @@
 #include <gz/sim/System.hh>
 #include <gz/sim/Model.hh>
 #include <gz/sim/components/Pose.hh> 
+#include <gz/msgs/pose.pb.h>
 #include <gz/transport/Node.hh>
 #include <gz/msgs/pointcloud_packed.pb.h>
 #include <gz/math/Quaternion.hh>
@@ -63,6 +64,8 @@ namespace gnss_multipath_plugin
     rclcpp::Node::SharedPtr ros_node_;
     // Publisher of the Point Clouds coming form the gz Lidar-gpu:
     rclcpp::Publisher<gnss_multipath_plugin::msg::GNSSMultipathFix>::SharedPtr gnss_multipath_fix_publisher_;
+    // Varibale to see if hte ROS2 messgaes should be published:
+    bool pub_ros2_;
 
 
 
@@ -102,6 +105,9 @@ namespace gnss_multipath_plugin
     // Maximum number of satellites:
     int max_num_sat_;
 
+    // Define the GZ publsiher of position:
+    gz::transport::Node::Publisher pose_gz_pub_;
+
 
 
     // IMPORTANT PRIVATE FUNCTIONS:
@@ -136,22 +142,13 @@ namespace gnss_multipath_plugin
     // Obtain the eniity where the plugin is applied:
     this->impl_->model_entity_ = _entity;
     this->impl_->model_ = gz::sim::Model(_entity);
-    // Check if ROS2 is started:
-    if (!rclcpp::ok()){
-      return;
-    }
-    // Start the ROS2 Node:
-    impl_->ros_node_ = std::make_shared<rclcpp::Node>("gnss_lidar_node");
-    // Make the ROS2 Node to spin:
-    std::thread([node = impl_->ros_node_]() {
-            rclcpp::executors::SingleThreadedExecutor exec;
-            exec.add_node(node);
-            exec.spin();
-        }).detach();
-
 
 
     // Obtain varibles from the SDF:
+    // Check if you want to publish ROS2 messages:
+    if (_sdf->HasElement("pub_ros2")){
+      impl_->pub_ros2_ = _sdf->Get<bool>("pub_ros2");
+    }
     // Obtian the frame id from the sdf:
     if (_sdf->HasElement("frame_id")){
       impl_->frame_id_ = _sdf->Get<std::string>("frame_id");
@@ -211,7 +208,24 @@ namespace gnss_multipath_plugin
     if (_sdf->HasElement("cmdGNSSTopic")){
       cmd_GNSS_topic = _sdf->Get<std::string>("cmdGNSSTopic");
     }
-
+   
+    // Publish if its only required
+    if (impl_->pub_ros2_) {
+      // Check if ROS2 is started:
+      if (!rclcpp::ok()){
+        return;
+      }
+      // Start the ROS2 Node:
+      impl_->ros_node_ = std::make_shared<rclcpp::Node>("gnss_lidar_node");
+      // Make the ROS2 Node to spin:
+      std::thread([node = impl_->ros_node_]() {
+              rclcpp::executors::SingleThreadedExecutor exec;
+              exec.add_node(node);
+              exec.spin();
+          }).detach();
+      // Start the publisher of the ROS2 PointClouds:
+      impl_->gnss_multipath_fix_publisher_ = impl_->ros_node_->create_publisher<gnss_multipath_plugin::msg::GNSSMultipathFix>(cmd_GNSS_topic, 10); 
+    }
 
 
     // Constructing a time structure for getting satellites position
@@ -224,12 +238,13 @@ namespace gnss_multipath_plugin
     impl_->g_geodetic_converter.initialiseReference(impl_->origin_lat_, impl_->origin_lon_, impl_->origin_alt_);
     // Open the satellite information:
     impl_->ParseSatelliteTLE();
-    // Start the publisher of the ROS2 PointClouds:
-    impl_->gnss_multipath_fix_publisher_ = impl_->ros_node_->create_publisher<gnss_multipath_plugin::msg::GNSSMultipathFix>(cmd_GNSS_topic, 10); 
     // Start the subscriber of the gz_node of gpu-lidar:
     impl_->gz_node_.Subscribe(impl_->lidar_topic_,std::function<void(const gz::msgs::PointCloudPacked&)>([this](const gz::msgs::PointCloudPacked &msg){
       this->impl_->OnLidarPoints(msg);
     }));
+    // Start the publisher in GZ sim:
+    this->impl_->pose_gz_pub_ = this->impl_->gz_node_.Advertise<gz::msgs::Pose>(cmd_GNSS_topic);
+
   }
 
 
@@ -273,9 +288,11 @@ namespace gnss_multipath_plugin
     }
 
     // Return in case the x, y, z fileds are empty:
-    if (x_offset < 0 || y_offset < 0 || z_offset < 0){
-      RCLCPP_ERROR(this->ros_node_->get_logger(), "Missing x, y, or z fields in PointCloudPacked");
-      return;
+    if (pub_ros2_){
+      if (x_offset < 0 || y_offset < 0 || z_offset < 0){
+        RCLCPP_ERROR(this->ros_node_->get_logger(), "Missing x, y, or z fields in PointCloudPacked");
+        return;
+      }
     }
 
     // Obtain the x,y,z position iterationg from the Point Clouds:
@@ -413,52 +430,74 @@ namespace gnss_multipath_plugin
 
 
     //OBTAIN TEH POSITION OF THE RECIEVER:
-    // Generate teh message that is going to be published in ROS2:
-    gnss_multipath_plugin::msg::GNSSMultipathFix gnss_multipath_fix_msg;
-    gnss_multipath_fix_msg.header.stamp = this->ros_node_->get_clock()->now();
-    gnss_multipath_fix_msg.header.frame_id = this->frame_id_;
-    gnss_multipath_fix_msg.navsatfix.header.stamp = this->ros_node_->get_clock()->now();
-    gnss_multipath_fix_msg.navsatfix.header.frame_id = this->frame_id_;
-    gnss_multipath_fix_msg.enu_true.resize(3);
-    gnss_multipath_fix_msg.enu_gnss_fix.resize(3);
-    gnss_multipath_fix_msg.dop.resize(5);
-    // Find the position using REcursive Least Squares:
+    // Defain the status of the GNSS:
+    int gps_status = 0; 
+    // Satrt teh values of the position and latitude:
+    double enu_x,enu_y,enu_z, latitude=0, longitude=0, altitude=0;
+    // Deifne the dop vector:
+    std::vector<double> dop_vals;
+    // Get the position from the GNSS:
     if (vis_num_sat_ > 3){
+      gps_status = 1;
       Eigen::Vector3d rec_ecef(0,0,0);  
       GetLeastSquaresEstimate(visible_sat_range_meas,  visible_sat_ecef, rec_ecef);
-      // Calculate thte DOP (Dilution of Precision.):
-      std::vector<double> dop;
-      CalculateDOP(visible_sat_ecef, rec_ecef, dop);
+      // Calculate thte DOP (Dilution of Precision.)
+      CalculateDOP(visible_sat_ecef, rec_ecef, dop_vals);
       // Obtain the positions calcualted and real:
-      double enu_x,enu_y,enu_z, latitude=0, longitude=0, altitude=0;
       g_geodetic_converter.ecef2Geodetic(rec_ecef(0), rec_ecef(1),rec_ecef(2), &latitude,&longitude, &altitude);
       g_geodetic_converter.geodetic2Enu(latitude,longitude, altitude, &enu_x,&enu_y,&enu_z);
-      gnss_multipath_fix_msg.navsatfix.status.status = 1;
-      gnss_multipath_fix_msg.navsatfix.latitude = latitude;
-      gnss_multipath_fix_msg.navsatfix.longitude = longitude;
-      gnss_multipath_fix_msg.navsatfix.altitude = altitude;
-      gnss_multipath_fix_msg.enu_gnss_fix[0] = enu_x;
-      gnss_multipath_fix_msg.enu_gnss_fix[1] = enu_y;
-      gnss_multipath_fix_msg.enu_gnss_fix[2] = enu_z;
-
-      //Copy DOP values to the message.
-      std::copy(dop.begin(), dop.end(),gnss_multipath_fix_msg.dop.begin());
     }
-    else{
-      gnss_multipath_fix_msg.navsatfix.status.status = 0;
-      gnss_multipath_fix_msg.enu_gnss_fix[0] = NAN;
-      gnss_multipath_fix_msg.enu_gnss_fix[1] = NAN;
-      gnss_multipath_fix_msg.enu_gnss_fix[2] = NAN;
+
+    if (pub_ros2_){
+      // Publish in ROS2 Messages:
+      gnss_multipath_plugin::msg::GNSSMultipathFix gnss_multipath_fix_msg;
+      gnss_multipath_fix_msg.header.stamp = this->ros_node_->get_clock()->now();
+      gnss_multipath_fix_msg.header.frame_id = this->frame_id_;
+      gnss_multipath_fix_msg.navsatfix.header.stamp = this->ros_node_->get_clock()->now();
+      gnss_multipath_fix_msg.navsatfix.header.frame_id = this->frame_id_;
+      gnss_multipath_fix_msg.enu_true.resize(3);
+      gnss_multipath_fix_msg.enu_gnss_fix.resize(3);
+      gnss_multipath_fix_msg.dop.resize(5);
+      // Save the real ENU location too:
+      gnss_multipath_fix_msg.enu_true[0] = pos.X();
+      gnss_multipath_fix_msg.enu_true[1] = pos.Y();
+      gnss_multipath_fix_msg.enu_true[2] = pos.Z();
+      gnss_multipath_fix_msg.visible_sat_count = vis_num_sat_;
+      if (gps_status == 1){
+        gnss_multipath_fix_msg.navsatfix.status.status = gps_status;
+        gnss_multipath_fix_msg.navsatfix.latitude = latitude;
+        gnss_multipath_fix_msg.navsatfix.longitude = longitude;
+        gnss_multipath_fix_msg.navsatfix.altitude = altitude;
+        gnss_multipath_fix_msg.enu_gnss_fix[0] = enu_x;
+        gnss_multipath_fix_msg.enu_gnss_fix[1] = enu_y;
+        gnss_multipath_fix_msg.enu_gnss_fix[2] = enu_z;
+        //Copy DOP values to the message.
+        std::copy(dop_vals.begin(), dop_vals.end(),gnss_multipath_fix_msg.dop.begin());
+      } else {
+        gnss_multipath_fix_msg.navsatfix.status.status = gps_status;
+        gnss_multipath_fix_msg.enu_gnss_fix[0] = NAN;
+        gnss_multipath_fix_msg.enu_gnss_fix[1] = NAN;
+        gnss_multipath_fix_msg.enu_gnss_fix[2] = NAN;
+      }
+      // Publish the message:
+      gnss_multipath_fix_publisher_->publish(gnss_multipath_fix_msg);
     }
-    // Save the real ENU location too:
-    gnss_multipath_fix_msg.enu_true[0] = pos.X();
-    gnss_multipath_fix_msg.enu_true[1] = pos.Y();
-    gnss_multipath_fix_msg.enu_true[2] = pos.Z();
-    gnss_multipath_fix_msg.visible_sat_count = vis_num_sat_;
-    gnss_multipath_fix_publisher_->publish(gnss_multipath_fix_msg);
 
 
-
+      // Publish the gz pose message:
+      gz::msgs::Pose msg_gz;
+  
+      // Set position
+      msg_gz.mutable_position()->set_x(enu_x);
+      msg_gz.mutable_position()->set_y(enu_y);
+      msg_gz.mutable_position()->set_z(enu_z);
+      if (this->ros_node_) {
+        auto ros_now = this->ros_node_->get_clock()->now();
+        msg_gz.mutable_header()->mutable_stamp()->set_sec(ros_now.seconds());
+        msg_gz.mutable_header()->mutable_stamp()->set_nsec(ros_now.nanoseconds() % 1000000000);
+      }
+      // Publish to Gazebo Transport
+      this->pose_gz_pub_.Publish(msg_gz);
 
   }
 
@@ -469,8 +508,9 @@ namespace gnss_multipath_plugin
   void GNSSMultipathPluginPrivate::ParseSatelliteTLE()
   {
     num_sat_ = 50; // Maximum ther are 50 satellites in the list.
-    RCLCPP_INFO(ros_node_->get_logger(), "Num sat: %d", num_sat_);
-
+    if (pub_ros2_){
+      RCLCPP_INFO(ros_node_->get_logger(), "Num sat: %d", num_sat_);
+    }
     // Initialize predict memory
     tle_lines_.clear();
     sat_orbit_elements_ = (predict_orbital_elements_t **)calloc(num_sat_, sizeof(predict_orbital_elements_t *));

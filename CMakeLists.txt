@@ -19,6 +19,8 @@ find_package(rosidl_default_generators REQUIRED)
 find_package(gz-sim7 REQUIRED) 
 find_package(gz-math7 REQUIRED)
 find_package(gz-plugin2 REQUIRED)
+find_package(gz-transport12 REQUIRED)
+find_package(gz-msgs9 REQUIRED)
 
 # Add the libpredict library for the Satellite simualtion:
 find_package(PkgConfig REQUIRED)
@@ -56,6 +58,12 @@ ament_target_dependencies(gnss_multipath_plugin_node
 
 target_link_libraries(gnss_multipath_plugin_node
   PkgConfig::PREDICT
+  gz-transport12::core
+  gz-msgs9::gz-msgs9
+)
+target_include_directories(gnss_multipath_plugin_node PRIVATE
+  ${GZ_TRANSPORT_INCLUDE_DIRS}
+  ${GZ_MSGS_INCLUDE_DIRS}
 )
 
 rosidl_get_typesupport_target(cpp_typesupport_target "${PROJECT_NAME}" "rosidl_typesupport_cpp")
