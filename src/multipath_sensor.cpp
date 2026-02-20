@@ -104,9 +104,20 @@ namespace gnss_multipath_plugin
     struct tm *timeinfo_;
     // Maximum number of satellites:
     int max_num_sat_;
+    // Last satellite update time:
+    std::chrono::steady_clock::time_point last_sat_update_time_;
+    bool first_sat_update_ = true;
+    // Past satelliet information:
+    std::vector<std::vector<double>> cached_sat_ecef_;
+    std::vector<double> cached_sat_true_range_;
+    std::vector<double> cached_azimuth_;
+    std::vector<double> cached_elevation_;
 
     // Define the GZ publsiher of position:
     gz::transport::Node::Publisher pose_gz_pub_;
+
+    // Define the last gz sim time hte GNS publihs:
+    std::chrono::nanoseconds last_sim_time_{0};
 
 
 
@@ -265,6 +276,9 @@ namespace gnss_multipath_plugin
     }
     // Save the position in the current position:
     impl_->current_pose_ = pose_comp->Data();
+
+    // Get the last update time:
+    this->impl_->last_sim_time_ = _info.simTime;
     
   }
 
@@ -288,11 +302,11 @@ namespace gnss_multipath_plugin
     }
 
     // Return in case the x, y, z fileds are empty:
-    if (pub_ros2_){
-      if (x_offset < 0 || y_offset < 0 || z_offset < 0){
-        RCLCPP_ERROR(this->ros_node_->get_logger(), "Missing x, y, or z fields in PointCloudPacked");
-        return;
+    if (x_offset < 0 || y_offset < 0 || z_offset < 0){
+      if (pub_ros2_){
+      RCLCPP_ERROR(this->ros_node_->get_logger(), "Missing x, y, or z fields in PointCloudPacked");
       }
+      return;
     }
 
     // Obtain the x,y,z position iterationg from the Point Clouds:
@@ -301,55 +315,63 @@ namespace gnss_multipath_plugin
     const auto &data = pc_msg.data();
     float horizontal_step = 2 * M_PI / static_cast<float>(pc_msg.width());
     float vertical_step = elevation_limit_ /static_cast<float>(pc_msg.height());
-    // Traformation from the Lidar frame to the world frame:
-    gz::math::Quaterniond orientation = this->current_pose_.Rot();
-    // Varibles to speed the visible satellite identification:
-    float max_elevation_collected = 0;
-    float min_azimuth_collected = 2 * M_PI;
-    float max_azimuth_collected = 0;
+    this->lidar_data.reserve(this->lidar_data.size() + num_points);
+
+    // PRE-COMPUTE ROTATION: Matrix multiplication is faster than Quaternion rotation
+    gz::math::Matrix3d rotation_matrix(this->current_pose_.Rot());
+
+    // Initialize tracking variables
+    float max_elevation_collected = -M_PI; // Start at the actual mathematical minimum
+    float min_azimuth_collected = 2.0f * M_PI;
+    float max_azimuth_collected = 0.0f;
     int number_of_collected_rays = 0;
-    for (int i = 0; i< num_points; ++i){
-      // Get the specific ith point:
-      const unsigned char *point_ptr = reinterpret_cast<const unsigned char *>(&data[i * point_step]);
-      // Extract position data from the lidar link frame:
-      float x = *reinterpret_cast<const float *>(point_ptr + x_offset);
-      float y = *reinterpret_cast<const float *>(point_ptr + y_offset);
-      float z = *reinterpret_cast<const float *>(point_ptr + z_offset);
-      // Check if any value is Nan (The ray doesn't find an structure):
-      if (!std::isfinite(x) || !std::isfinite(y) || !std::isfinite(z)){
-        continue;
-      }
-      // Pass these coordinates to the world frame:
-      gz::math::Vector3d position_lidar(x,y,z);
-      gz::math::Vector3d position_world = orientation.RotateVector(position_lidar);
-      float x1 = position_world.X();
-      float y1 = position_world.Y();
-      float z1 = position_world.Z();
-      // Obtain the range value:
-      float range = std::sqrt(x1*x1 + y1*y1 + z1*z1);
-      // Check if any of the ranges are 0 (CRASH):
-      if (range == 0.0f){
-        continue;
-      }
-      // Determine the azimuth and elevation 
-      float azimuth = std::atan2(y1,x1);
-      float elevation = std::asin(z1/range);
-      if (azimuth < 0){
-        azimuth += 2 * M_PI;
-      }
-      // Define the limits of the Lidar readings:
-      if (elevation > max_elevation_collected){
-        max_elevation_collected = elevation;
-      }
-      if (azimuth > max_azimuth_collected){
-        max_azimuth_collected = azimuth;
-      }
-      if (azimuth < min_azimuth_collected){
-        min_azimuth_collected = azimuth;
-      }
-      number_of_collected_rays += 1;
-      // Save the informaion in the vector:vis_num_sat_
-      this->lidar_data.push_back({range,azimuth,elevation});
+
+    for (int i = 0; i < num_points; ++i) {
+        // Get the specific ith point
+        const unsigned char *point_ptr = reinterpret_cast<const unsigned char *>(&data[i * point_step]);
+        
+        // Extract position data
+        float x = *reinterpret_cast<const float *>(point_ptr + x_offset);
+        float y = *reinterpret_cast<const float *>(point_ptr + y_offset);
+        float z = *reinterpret_cast<const float *>(point_ptr + z_offset);
+
+        // Check if any value is Nan
+        if (!std::isfinite(x) || !std::isfinite(y) || !std::isfinite(z)) {
+            continue;
+        }
+
+        // 3. INVARIANT RANGE: Range doesn't change when rotated. Calculate it now.
+        float range = std::sqrt(x*x + y*y + z*z);
+        
+        // Check if range is effectively 0 (using a small epsilon is safer than == 0.0f)
+        if (range < 1e-6f) {
+            continue;
+        }
+
+        // APPLY ROTATION MATRIX: Cheaper than orientation.RotateVector()
+        gz::math::Vector3d position_world = rotation_matrix * gz::math::Vector3d(x, y, z);
+        
+        float x1 = position_world.X();
+        float y1 = position_world.Y();
+        float z1 = position_world.Z();
+
+        // Determine the azimuth and elevation 
+        float azimuth = std::atan2(y1, x1);
+        float elevation = std::asin(z1 / range);
+        
+        if (azimuth < 0.0f) {
+            azimuth += 2.0f * M_PI;
+        }
+
+        // 5. BRANCHLESS MIN/MAX: Helps the compiler avoid branch prediction misses
+        max_elevation_collected = std::max(max_elevation_collected, elevation);
+        max_azimuth_collected = std::max(max_azimuth_collected, azimuth);
+        min_azimuth_collected = std::min(min_azimuth_collected, azimuth);
+        
+        number_of_collected_rays++;
+        
+        // Push back is now O(1) time because memory is already reserved
+        this->lidar_data.push_back({range, azimuth, elevation});
     }
 
 
@@ -369,8 +391,34 @@ namespace gnss_multipath_plugin
     gz::math::Vector3d pos = this->current_pose_.Pos();
     // Reciever's position in geodetic (LLA) coordinates
     this->g_geodetic_converter.enu2Geodetic(pos.X(), pos.Y(), pos.Z(),&rec_lla_[0], &rec_lla_[1], &rec_lla_[2]);
+
+
     // Collect positive elevation satellites ECEF, true ranges and angles 
-    GetSatellitesInfo(timeinfo_,rec_lla_, sat_ecef_, sat_true_range_, azimuth_, elevation_ );
+    auto current_time = std::chrono::steady_clock::now();
+    double elapsed_seconds = std::chrono::duration<double>(current_time - this->last_sat_update_time_).count();
+
+    if (this->first_sat_update_ || elapsed_seconds > 1.0) {
+        // Clear the old cache
+        this->cached_sat_ecef_.clear();
+        this->cached_sat_true_range_.clear();
+        this->cached_azimuth_.clear();
+        this->cached_elevation_.clear();
+
+        // Call the heavy math function
+        GetSatellitesInfo(timeinfo_, rec_lla_, this->cached_sat_ecef_, this->cached_sat_true_range_, this->cached_azimuth_, this->cached_elevation_);
+        
+        // Reset timers
+        this->last_sat_update_time_ = current_time;
+        this->first_sat_update_ = false;
+    }
+
+    // Copy cached values to local variables for the rest of your logic
+    sat_ecef_ = this->cached_sat_ecef_;
+    sat_true_range_ = this->cached_sat_true_range_;
+    azimuth_ = this->cached_azimuth_;
+    elevation_ = this->cached_elevation_;
+    
+    
     // number fo visible satellites
     int starting_vis_sat_ = sat_true_range_.size(); //Overall
     int vis_num_sat_ =  0;//Using the multipath
@@ -491,14 +539,20 @@ namespace gnss_multipath_plugin
       msg_gz.mutable_position()->set_x(enu_x);
       msg_gz.mutable_position()->set_y(enu_y);
       msg_gz.mutable_position()->set_z(enu_z);
-      if (this->ros_node_) {
-        auto ros_now = this->ros_node_->get_clock()->now();
-        msg_gz.mutable_header()->mutable_stamp()->set_sec(ros_now.seconds());
-        msg_gz.mutable_header()->mutable_stamp()->set_nsec(ros_now.nanoseconds() % 1000000000);
-      }
-      // Publish to Gazebo Transport
-      this->pose_gz_pub_.Publish(msg_gz);
+      // Convert the stored nanoseconds to seconds and leftover nanoseconds
+      auto seconds = std::chrono::duration_cast<std::chrono::seconds>(this->last_sim_time_);
+      auto nsecs = std::chrono::duration_cast<std::chrono::nanoseconds>(this->last_sim_time_ - seconds);
 
+      msg_gz.mutable_header()->mutable_stamp()->set_sec(seconds.count());
+      msg_gz.mutable_header()->mutable_stamp()->set_nsec(nsecs.count());
+
+      // Set the frame_id
+      auto *frame_data = msg_gz.mutable_header()->add_data();
+      frame_data->set_key("frame_id");
+      frame_data->add_value(this->frame_id_);
+
+      // 4. Publish to Gazebo Transport
+      this->pose_gz_pub_.Publish(msg_gz);
   }
 
 
@@ -693,13 +747,17 @@ namespace gnss_multipath_plugin
     // Predict the julian time using the current utc time
     predict_julian_date_t curr_time = predict_to_julian(MakeTimeUTC(_timeinfo));
     std::vector<double> ecef = {0,0,0};
+
+    // Create the osberver:
+    predict_observer_t *obs = predict_create_observer("obs", _rec_lla[0]*M_PI/180.0, _rec_lla[1]*M_PI/180.0, _rec_lla[2]);
+
+    // Get the position using the LOS rays of each satellite
     for ( int i = 0; i < num_sat_; i++ )
     {
       // Predict satellite's position based on the current time.
       predict_orbit(sat_orbit_elements_[i], &sat_position_[i], curr_time);
       g_geodetic_converter.geodetic2Ecef(sat_position_[i].latitude*180.0/M_PI, sat_position_[i].longitude*180.0/M_PI , 
                     sat_position_[i].altitude*1000 , &ecef[0], &ecef[1], &ecef[2]);
-      predict_observer_t *obs = predict_create_observer("obs", _rec_lla[0]*M_PI/180.0, _rec_lla[1]*M_PI/180.0, _rec_lla[2]);
       struct predict_observation reciever_obs;
       predict_observe_orbit(obs, &sat_position_[i], &reciever_obs);
       if (reciever_obs.elevation > 0)
@@ -752,8 +810,10 @@ namespace gnss_multipath_plugin
   std::tuple<bool, bool, double> GNSSMultipathPluginPrivate::IsSatelliteVisible(double sat_az, double sat_elev,double az_span, double el_span)
   {
     auto angular_diff = [](double a1, double a2) -> double {
-      double diff = std::fmod(a1 - a2 + 3 * M_PI, 2 * M_PI) - M_PI;
-      return std::abs(diff);
+        double diff = a1 - a2;
+        if (diff > M_PI) diff -= 2.0 * M_PI;
+        if (diff < -M_PI) diff += 2.0 * M_PI;
+        return std::abs(diff);
     };
 
     bool obstructed = false;

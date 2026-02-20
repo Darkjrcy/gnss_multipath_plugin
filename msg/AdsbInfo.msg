@@ -1,6 +1,3 @@
-# TIme header of the message:
-std_msgs/Header header
-
 # Position of the UAV
 float64 north
 float64 east

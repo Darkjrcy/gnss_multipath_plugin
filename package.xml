@@ -24,6 +24,8 @@
   <exec_depend>libpredict</exec_depend>
   <exec_depend>rosidl_default_runtime</exec_depend>
   <depend>gz-math7</depend>
+  <depend>eigen</depend>
+  <depend>std_srvs</depend>
 
   <!-- Libraries to create the gz messages-->
   <depend>gz-transport12</depend>
