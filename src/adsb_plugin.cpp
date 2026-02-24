@@ -107,6 +107,11 @@ namespace adsb_plugin
             double vy_next_;
             double vz_next_;
 
+            // Variable to save the roll, pitch and yaw speeds:
+            double p_;
+            double q_;
+            double r_;
+
 
             // Define the matrices used in the EKF:
             using Mat66 = Eigen::Matrix<double,6,6>;
@@ -133,7 +138,7 @@ namespace adsb_plugin
                 std::shared_ptr<std_srvs::srv::Trigger::Response> response);
             // Function to publish the adsb_info:
             void publish_adsb(double east, double north, double up, double v_east, double v_north, double v_up, 
-                double course, double fpa, double roll);
+                double course, double fpa, double roll, double p, double q, double r);
     };
 
 
@@ -190,6 +195,11 @@ namespace adsb_plugin
         if (_sdf->HasElement("adsb_start_srv_stopic")){
             adsb_start_srv_stopic = _sdf->Get<std::string>("adsb_start_srv_stopic");
         }
+        // Get the name fo the model:
+        std::string robot_namespace = "airplane_1";
+        if (_sdf->HasElement("statesFrame")){
+            robot_namespace = _sdf->Get<std::string>("statesFrame");
+        }
 
         // Subscribe to the IMU gz sensor data:
         impl_->gz_node_.Subscribe(impl_->imu_topic_ , std::function<void(const gz::msgs::IMU&)>([this](const gz::msgs::IMU &msg){
@@ -204,7 +214,10 @@ namespace adsb_plugin
         if (!rclcpp::ok()){
             return;
         }
-        impl_->ros_node_ = std::make_shared<rclcpp::Node>("adsb_estimator_node");
+
+        rclcpp::NodeOptions options;
+        options.arguments({ "--ros-args", "-r", "__ns:=/" + robot_namespace });
+        impl_->ros_node_ = std::make_shared<rclcpp::Node>("adsb_estimator_node", options);
         // Spin the ROS2 node:
         std::thread([node = impl_->ros_node_]() {
                 rclcpp::executors::SingleThreadedExecutor exec;
@@ -289,6 +302,11 @@ namespace adsb_plugin
         course_ = M_PI/2 - yaw_;
         fpa_ = -pitch_;
 
+        // Get the angular speeds comming from the IMU:
+        p_ = msg.angular_velocity().x();
+        q_ = -msg.angular_velocity().y();
+        r_ = -msg.angular_velocity().z();
+
         // Get teh actual time:
         actual_time_ = msg.header().stamp().sec() + (msg.header().stamp().nsec() * 1e-9);
 
@@ -323,7 +341,7 @@ namespace adsb_plugin
         P0 = Ak*P0*Ak.transpose() + Q*dt;
 
         // Publish the results, this is going to be done alter:
-        publish_adsb(x_next_, y_next_, z_next_, vx_next_, vy_next_, vz_next_, course_, fpa_, roll_);
+        publish_adsb(x_next_, y_next_, z_next_, vx_next_, vy_next_, vz_next_, course_, fpa_, roll_, p_, q_, r_);
 
         // Reset the initial conditions to make the system forloop:
         x0_ = x_next_;
@@ -417,7 +435,7 @@ namespace adsb_plugin
         past_time_ = msg.header().stamp().sec() + (msg.header().stamp().nsec() * 1e-9);
 
         // Publish to the adsb:
-        publish_adsb(x0_, y0_, z0_, vx0_, vy0_, vz0_, course_, fpa_, roll_);
+        publish_adsb(x0_, y0_, z0_, vx0_, vy0_, vz0_, course_, fpa_, roll_, p_, q_, r_);
 
         // After the GNSS gives the meassurement make it be negative:
         update_gnss_ = false;
@@ -442,7 +460,8 @@ namespace adsb_plugin
 
 
     // Function to publish the adsb data:
-    void ADSBPluginPrivate::publish_adsb(double east, double north, double up, double v_east, double v_north, double v_up, double course, double fpa, double roll)
+    void ADSBPluginPrivate::publish_adsb(double east, double north, double up, double v_east, double v_north, double v_up, 
+        double course, double fpa, double roll, double p, double q, double r)
     {
         gnss_multipath_plugin::msg::AdsbInfo msg;
 
@@ -460,6 +479,11 @@ namespace adsb_plugin
         msg.course = course;
         msg.fpa = fpa;
         msg.roll = roll;
+
+        // Body angualr speeds:
+        msg.p = p;
+        msg.q = q;
+        msg.r = r;
 
         adsb_pub_->publish(msg);
     }

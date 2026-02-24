@@ -12,3 +12,8 @@ float64 v_up
 float64 course
 float64 fpa
 float64 roll
+
+# Angular speed in the body frame:
+float64 r
+float64 q
+float64 p
