@@ -22,7 +22,7 @@
 #include <Eigen/Dense>
 // ROS2 libraties:
 #include <rclcpp/rclcpp.hpp>
-#include "gnss_multipath_plugin/msg/adsb_info.hpp"
+#include "gnss_multipath_plugin/msg/states_info.hpp"
 #include <std_srvs/srv/trigger.hpp>
 // Custom header:
 #include "gnss_multipath_plugin/adsb_plugin.hpp"
@@ -63,7 +63,7 @@ namespace adsb_plugin
             // ROS2 node:
             rclcpp::Node::SharedPtr ros_node_;
             // Publsiher to publish the ADS-B estiation:
-            rclcpp::Publisher<gnss_multipath_plugin::msg::AdsbInfo>::SharedPtr adsb_pub_;
+            rclcpp::Publisher<gnss_multipath_plugin::msg::StatesInfo>::SharedPtr adsb_pub_;
             // Topic where the adsb_est is published:
             std::string adsb_topic_;
             // Create a trigger service to restart the adsb estimation process:
@@ -107,10 +107,27 @@ namespace adsb_plugin
             double vy_next_;
             double vz_next_;
 
-            // Variable to save the roll, pitch and yaw speeds:
-            double p_;
-            double q_;
-            double r_;
+            // Variable to save the previous roll, pitch and yaw speeds:
+            double p0_ = 0.0;
+            double q0_ = 0.0;
+            double r0_ = 0.0;
+            // Variable to save actual rolll, pitch and yaw speeds:
+            double p_next_;
+            double q_next_;
+            double r_next_;
+
+            // Characteristics required for the GUAM simulation:
+            // Vertical acceleration:
+            double acc_up_;
+            // Total acceleration:
+            double acc_tot_;
+            // FLight characteristics:
+            double alpha_;
+            double beta_;
+            // ANgular accelertaion:
+            double p_dot_;
+            double q_dot_;
+            double r_dot_;
 
 
             // Define the matrices used in the EKF:
@@ -138,7 +155,8 @@ namespace adsb_plugin
                 std::shared_ptr<std_srvs::srv::Trigger::Response> response);
             // Function to publish the adsb_info:
             void publish_adsb(double east, double north, double up, double v_east, double v_north, double v_up, 
-                double course, double fpa, double roll, double p, double q, double r);
+                double course, double fpa, double roll, double p, double q, double r, double acc_up, 
+                double acc_tot, double alpha, double beta, double p_dot, double q_dot, double r_dot);
     };
 
 
@@ -225,7 +243,7 @@ namespace adsb_plugin
                 exec.spin();
             }).detach();
         // Publisher the adsb_information:
-        impl_->adsb_pub_ =  impl_->ros_node_->create_publisher<gnss_multipath_plugin::msg::AdsbInfo>(adsb_topic, 10); 
+        impl_->adsb_pub_ =  impl_->ros_node_->create_publisher<gnss_multipath_plugin::msg::StatesInfo>(adsb_topic, 10); 
         // Service to star the estimation:
         impl_->start_adsb_srv_ = impl_->ros_node_->create_service<std_srvs::srv::Trigger>(
             adsb_start_srv_stopic,
@@ -265,11 +283,11 @@ namespace adsb_plugin
             // This gives you vx, vy, vz in the World Frame
             this->impl_->true_linear_vel_ = linear_vel_comp->Data();
             // ka ethe initial_conditio 2 satisfied:
-            if (this->impl_->true_linear_vel_.Length()>1.00 && !this->impl_->initial_cond_2_ ){
+            if (this->impl_->true_linear_vel_.Length() >= 0.0 && !this->impl_->initial_cond_2_ ){
                 this->impl_->initial_cond_2_ = true;
                 this->impl_->vx0_ = 0.5 * this->impl_->true_linear_vel_.X();
                 this->impl_->vy0_ = 0.5 * this->impl_->true_linear_vel_.Y();
-                this->impl_->vz0_ = 0.5 * this->impl_->true_linear_vel_.Z();
+                this->impl_->vz0_ = 0.5  * this->impl_->true_linear_vel_.Z();
             }
         }
     }
@@ -303,9 +321,9 @@ namespace adsb_plugin
         fpa_ = -pitch_;
 
         // Get the angular speeds comming from the IMU:
-        p_ = msg.angular_velocity().x();
-        q_ = -msg.angular_velocity().y();
-        r_ = -msg.angular_velocity().z();
+        p_next_ = msg.angular_velocity().x();
+        q_next_ = -msg.angular_velocity().y();
+        r_next_ = -msg.angular_velocity().z();
 
         // Get teh actual time:
         actual_time_ = msg.header().stamp().sec() + (msg.header().stamp().nsec() * 1e-9);
@@ -315,6 +333,10 @@ namespace adsb_plugin
             msg.linear_acceleration().z());
         // Rotate it to the WOrld frame:
         gz::math::Vector3d world_accel = q.RotateVector(local_accel);
+
+        // Get the acceleration up:
+        acc_up_ = world_accel.Z();
+        acc_tot_ = local_accel.Length();
 
         // Propagte the system using first order dynamics:
         const double dt = (actual_time_-past_time_);
@@ -340,8 +362,32 @@ namespace adsb_plugin
         // Propagate P0:
         P0 = Ak*P0*Ak.transpose() + Q*dt;
 
+        // EStimate teh angular accleration:
+        if (dt > 0.0) {
+            p_dot_ = (p_next_ - p0_) / dt;
+            q_dot_ = (q_next_ - q0_) / dt;
+            r_dot_ = (r_next_ - r0_) / dt;
+        } else {
+            p_dot_ = 0.0;
+            q_dot_ = 0.0;
+            r_dot_ = 0.0;
+        }
+
+        // Estimte teh angle of attack and sideslip:
+        gz::math::Vector3d global_vel(vx_next_, vy_next_, vz_next_);
+        // Pass it to the body frame:
+        gz::math::Vector3d body_vel = q.RotateVectorReverse(global_vel);
+        // Extraxt the body velocities (Forward-Left-Up) body frame: 
+        double u = body_vel.X();
+        double v = body_vel.Y();
+        double w = body_vel.Z();
+        // Get teh flight characteristics:
+        alpha_ = std::atan2(-w, u);
+        beta_  = std::atan2(-v, std::sqrt(u * u + w * w));
+
         // Publish the results, this is going to be done alter:
-        publish_adsb(x_next_, y_next_, z_next_, vx_next_, vy_next_, vz_next_, course_, fpa_, roll_, p_, q_, r_);
+        publish_adsb(x_next_, y_next_, z_next_, vx_next_, vy_next_, vz_next_, course_, fpa_, roll_, p_next_, q_next_, r_next_, 
+            acc_up_, acc_tot_, alpha_, beta_, p_dot_, q_dot_, r_dot_);
 
         // Reset the initial conditions to make the system forloop:
         x0_ = x_next_;
@@ -351,6 +397,10 @@ namespace adsb_plugin
         vy0_ = vy_next_;
         vz0_ = vz_next_;
         past_time_ = actual_time_;
+        // Define the actual 
+        q0_ = q_next_;
+        p0_ = p_next_;
+        r0_ = r_next_;
 
 
     }
@@ -435,7 +485,8 @@ namespace adsb_plugin
         past_time_ = msg.header().stamp().sec() + (msg.header().stamp().nsec() * 1e-9);
 
         // Publish to the adsb:
-        publish_adsb(x0_, y0_, z0_, vx0_, vy0_, vz0_, course_, fpa_, roll_, p_, q_, r_);
+        publish_adsb(x_next_, y_next_, z_next_, vx_next_, vy_next_, vz_next_, course_, fpa_, roll_, p_next_, q_next_, r_next_, 
+            acc_up_, acc_tot_, alpha_, beta_, p_dot_, q_dot_, r_dot_);
 
         // After the GNSS gives the meassurement make it be negative:
         update_gnss_ = false;
@@ -461,9 +512,10 @@ namespace adsb_plugin
 
     // Function to publish the adsb data:
     void ADSBPluginPrivate::publish_adsb(double east, double north, double up, double v_east, double v_north, double v_up, 
-        double course, double fpa, double roll, double p, double q, double r)
+        double course, double fpa, double roll, double p, double q, double r, double acc_up,
+        double acc_tot, double alpha, double beta, double p_dot, double q_dot, double r_dot)
     {
-        gnss_multipath_plugin::msg::AdsbInfo msg;
+        gnss_multipath_plugin::msg::StatesInfo msg;
 
         // Position (your states are ENU; the message expects N/E/U):
         msg.north = north;
@@ -475,15 +527,31 @@ namespace adsb_plugin
         msg.v_east  = v_east;
         msg.v_up    = v_up;
 
+        // Publish the accelation up and the toal acceleration:
+        msg.acc_up = acc_up;
+        msg.acc_tot = acc_tot;
+
+        // Send the total velocity:
+        msg.v_tot = v_north*v_north + v_east*v_east + v_up*v_up;
+
         // Course: ground track from North (use velocity, not yaw)
         msg.course = course;
         msg.fpa = fpa;
         msg.roll = roll;
 
+        // Publish FLight characteristiccs:
+        msg.angle_attack = alpha;
+        msg.sideslip = beta;
+
         // Body angualr speeds:
         msg.p = p;
         msg.q = q;
         msg.r = r;
+
+        // Add the angular accelrations:
+        msg.p_dot = p_dot;
+        msg.q_dot = q_dot;
+        msg.r_dot = r_dot;
 
         adsb_pub_->publish(msg);
     }

@@ -36,6 +36,7 @@ pkg_check_modules(PREDICT REQUIRED IMPORTED_TARGET predict)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/GNSSMultipathFix.msg"
   "msg/AdsbInfo.msg"
+  "msg/StatesInfo.msg"
   DEPENDENCIES std_msgs sensor_msgs builtin_interfaces
 )
 
