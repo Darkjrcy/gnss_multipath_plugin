@@ -285,9 +285,9 @@ namespace adsb_plugin
             // ka ethe initial_conditio 2 satisfied:
             if (this->impl_->true_linear_vel_.Length() >= 0.0 && !this->impl_->initial_cond_2_ ){
                 this->impl_->initial_cond_2_ = true;
-                this->impl_->vx0_ = 0.5 * this->impl_->true_linear_vel_.X();
-                this->impl_->vy0_ = 0.5 * this->impl_->true_linear_vel_.Y();
-                this->impl_->vz0_ = 0.5  * this->impl_->true_linear_vel_.Z();
+                this->impl_->vx0_ = this->impl_->true_linear_vel_.X();
+                this->impl_->vy0_ = this->impl_->true_linear_vel_.Y();
+                this->impl_->vz0_ = this->impl_->true_linear_vel_.Z();
             }
         }
     }
@@ -532,7 +532,7 @@ namespace adsb_plugin
         msg.acc_tot = acc_tot;
 
         // Send the total velocity:
-        msg.v_tot = v_north*v_north + v_east*v_east + v_up*v_up;
+        msg.v_tot = std::sqrt(v_north*v_north + v_east*v_east + v_up*v_up);
 
         // Course: ground track from North (use velocity, not yaw)
         msg.course = course;
